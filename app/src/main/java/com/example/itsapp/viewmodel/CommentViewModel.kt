@@ -12,8 +12,7 @@ import kotlinx.coroutines.launch
 
 class CommentViewModel(application: Application): AndroidViewModel(application) {
     val context = getApplication<Application>().applicationContext
-    val service: APIInterface = RetrofitClient.getInstance(context).create(
-        APIInterface::class.java)
+    val service: APIInterface = RetrofitClient.getInstance(context).create(APIInterface::class.java)
 
     val commentLiveData = MutableLiveData<CommentInfo>()
     val writeCommentLiveData = MutableLiveData<CommentInfo>()
