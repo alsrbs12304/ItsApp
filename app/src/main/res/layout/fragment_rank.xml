@@ -1,57 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".view.fragment.RankFragment">
 
-    <TextView
-        android:id="@+id/rank_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="랭킹"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:gravity="left"
-        android:textStyle="bold"
-        android:background="@color/white"
-        android:layout_marginTop="6dp"
-        />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/white"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/gray300"
         >
-        <Button
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="성별"
+            android:text="남성이 선호하는 노트북 순위"
+            android:fontFamily="@font/nanum_barun_gothic"
             android:textColor="@color/black"
-            android:fontFamily="@font/google_sans"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:drawableRight="@drawable/arrow_right_foreground"
+            android:background="@color/white"
+            android:padding="5dp"
             />
-        <Button
-            android:layout_width="wrap_content"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray300" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="브랜드별"
-            android:textColor="@color/black"
-            android:fontFamily="@font/google_sans"
+            android:background="@color/white"
             />
-        <Button
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="연령별"
+            android:text="20대가 선호하는 노트북 순위"
+            android:drawableRight="@drawable/arrow_right_foreground"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/nanum_barun_gothic"
             android:textColor="@color/black"
-            android:fontFamily="@font/google_sans"
+            android:background="@color/white"
+            android:padding="5dp"
             />
-        <Button
-            android:layout_width="wrap_content"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray300" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="직업별"
+            android:background="@color/white"
+            />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="직장인이 선호하는 노트북 순위"
+            android:drawableRight="@drawable/arrow_right_foreground"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/nanum_barun_gothic"
             android:textColor="@color/black"
-            android:fontFamily="@font/google_sans"
+            android:background="@color/white"
+            android:padding="5dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray300" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
             />
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

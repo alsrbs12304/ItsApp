@@ -158,4 +158,7 @@ interface APIInterface {
     suspend fun retireApp(
         @Field("loginMethod") loginMethod: String
     ):String
+
+    @GET("/android/getRank")
+    suspend fun getRank()
 }
