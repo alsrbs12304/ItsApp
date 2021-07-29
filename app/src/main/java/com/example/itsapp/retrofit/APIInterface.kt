@@ -3,6 +3,9 @@ package com.example.itsapp.retrofit
 import com.example.itsapp.model.vo.*
 import com.example.itsapp.model.vo.DeviceInfo
 import com.example.itsapp.model.vo.UserInfo
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.http.*
 
 interface APIInterface {
@@ -161,4 +164,9 @@ interface APIInterface {
 
     @GET("/android/getRank")
     suspend fun getRank()
+
+    /*이미지 업로드*/
+    @FormUrlEncoded
+    @POST("/upload")
+    suspend fun upload(@Field("image") image:String) : String
 }
