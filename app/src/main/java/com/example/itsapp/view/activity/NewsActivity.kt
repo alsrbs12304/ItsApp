@@ -1,36 +1,29 @@
 package com.example.itsapp.view.activity
 
-import android.app.Activity
-import android.content.ClipData
+import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.media.Image
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Base64
-import android.util.Base64.NO_WRAP
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.loader.content.CursorLoader
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.example.itsapp.R
-import com.example.itsapp.view.adapter.NewsAdapter
 import com.example.itsapp.viewmodel.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_news.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.io.ByteArrayOutputStream
-import java.io.InputStream
-import java.lang.Exception
-import java.util.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 
 
 class NewsActivity : AppCompatActivity() {
@@ -39,6 +32,7 @@ class NewsActivity : AppCompatActivity() {
     private val REQUEST_CODE = 1
     private var currentImageURL: Uri? =null
     private var profileImageBase64:String = ""
+    private val SELECT_IMAGE = 100
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
@@ -92,52 +86,54 @@ class NewsActivity : AppCompatActivity() {
         })
 
         upload_img.setOnClickListener {
-            openGallery()
+            openAlbum()
             //viewModel.uploadImage(profileImageBase64)
         }
     }
+    private fun openAlbum(){
+        val imageIntent = Intent(Intent.ACTION_PICK)
+        imageIntent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*")
+        startActivityForResult(imageIntent,SELECT_IMAGE)
+    }
 
-    private fun openGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
+    private fun uploadImage(imageUri:Uri, context:Context) {
+        val image:File = File(getRealPathFromURI(imageUri,context))
+        val requestBody:RequestBody = RequestBody.create(MediaType.parse("image/*"),image)
 
-        intent.type = MediaStore.Images.Media.CONTENT_TYPE
-        intent.type = "image/*"
-        startActivityForResult(intent,REQUEST_CODE)
+        val body:MultipartBody.Part = MultipartBody.Part.createFormData("image",image.name)
+
+        viewModel.uploadImage(body)
     }
     private fun LiveData(){
-//        viewModel.imgLiveData.observe(this, Observer {
-//            if(it.equals("200")){
-//                Snackbar.make(activity_news, "이미지 전송 성공", Snackbar.LENGTH_SHORT).show()
-//            }else{
-//                Snackbar.make(activity_news, "이미지 전송 실패", Snackbar.LENGTH_SHORT).show()
-//            }
-//        })
+        viewModel.imgLiveData.observe(this, androidx.lifecycle.Observer {
+            if(it.code.equals("200")){
+                Snackbar.make(activity_news, "이미지 전송 성공", Snackbar.LENGTH_SHORT).show()
+            }else{
+                Snackbar.make(activity_news, "이미지 전송 실패", Snackbar.LENGTH_SHORT).show()
+            }
+        })
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        if(requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK){
-            currentImageURL = intent?.data
-            val ins: InputStream? = currentImageURL?.let {
-                applicationContext.contentResolver.openInputStream(it)
-            }
-            val img:Bitmap = BitmapFactory.decodeStream(ins)
-            ins?.close()
-            val resized = Bitmap.createScaledBitmap(img,256,256,true)
-            val byteArrayOutputStream = ByteArrayOutputStream()
-            resized.compress(Bitmap.CompressFormat.JPEG,60,byteArrayOutputStream)
-            val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
-            profileImageBase64 = Base64.encodeToString(byteArray,NO_WRAP)
-
-            upload_img.setImageURI(currentImageURL)
-            try{
-
-            }catch (e:Exception){
-                e.printStackTrace()
-            }
-        }else{
-            Log.d("onActivityResult", "onActivityResult: ")
+        val selectedImageUri:Uri
+        if(requestCode == SELECT_IMAGE && resultCode == RESULT_OK && data != null && data.data != null){
+            selectedImageUri = data.data!!
+            uploadImage(selectedImageUri,applicationContext)
+            Glide.with(applicationContext)
+                .load(selectedImageUri)
+                .circleCrop()
+                .into(upload_img)
         }
+    }
+    private fun getRealPathFromURI(contentUri:Uri,context: Context): String {
+        val proj = arrayOf(MediaStore.Images.Media.DATA)
+        val loader = CursorLoader(context, contentUri, proj, null, null, null)
+        val cursor: Cursor = loader.loadInBackground()!!
+        val column_index: Int = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        cursor.moveToFirst()
+        val result: String = cursor.getString(column_index)
+        cursor.close()
+
+        return result
     }
 }

@@ -162,11 +162,8 @@ interface APIInterface {
         @Field("loginMethod") loginMethod: String
     ):String
 
-    @GET("/android/getRank")
-    suspend fun getRank()
-
     /*이미지 업로드*/
-    @FormUrlEncoded
-    @POST("/upload")
-    suspend fun upload(@Field("image") image:String) : String
+    @Multipart
+    @POST("/android/upload")
+    suspend fun uploadImage(@Part image:MultipartBody.Part) : Image
 }
