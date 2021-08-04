@@ -4,25 +4,28 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.activity.viewModels
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
 import androidx.loader.content.CursorLoader
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.MultiTransformation
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.itsapp.R
 import com.example.itsapp.viewmodel.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_news.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -41,6 +44,12 @@ class NewsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
 
+
+        Picasso.get()
+            .load("http://ec2-54-180-29-97.ap-northeast-2.compute.amazonaws.com:3000/home/ubuntu/app/nodejs/ItsApp/images/MacBook.jpeg")
+            .error(R.drawable.samsung)
+            .into(upload_img)
+//        getImage(this)
         btnEvent()
         //rvEvent()
         LiveData()
@@ -151,6 +160,7 @@ class NewsActivity : AppCompatActivity() {
         if(requestCode == SELECT_IMAGE && resultCode == RESULT_OK && data != null && data.data != null){
             selectedImageUri = data.data!!
             uploadImage(selectedImageUri,applicationContext)
+            Log.d("TAG", "onActivityResult: "+selectedImageUri)
             Glide.with(applicationContext)
                 .load(selectedImageUri)
                 .circleCrop()
@@ -167,5 +177,32 @@ class NewsActivity : AppCompatActivity() {
         cursor.close()
 
         return result
+    }
+    private fun getImage(context: Context){
+        val url = "http://ec2-54-180-29-97.ap-northeast-2.compute.amazonaws.com:3000/home/ubuntu/app/nodejs/ItsApp/images/MacBook.jpeg"
+
+        Glide.with(context).load(url)
+            .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+            .error(R.drawable.samsung)
+            .listener(object : RequestListener<Drawable?> {
+                override fun onLoadFailed(
+                    @Nullable e: GlideException?,
+                    model: Any,
+                    target: Target<Drawable?>,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable?>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
+            }).into(upload_img)
     }
 }
