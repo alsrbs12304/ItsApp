@@ -24,8 +24,6 @@ class DeviceFragment : Fragment() {
     val deviceList = arrayListOf<Device>()
     val deviceAdapter = DeviceAdapter(deviceList)
     private val viewModel: DeviceViewModel by viewModels()
-
-
     companion object{
         const val TAG : String = "로그"
 
@@ -34,26 +32,16 @@ class DeviceFragment : Fragment() {
         }
     }
 
-    // 메모리에 올라갔을때
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
-
     // 뷰가 생성됐을 때
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_device,container,false)
         return view
+        Log.d("수명주기","onCreateView")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
+        Log.d("수명주기","onViewCreated")
         rv_device.layoutManager = GridLayoutManager(activity,2)
         rv_device.adapter = deviceAdapter
 

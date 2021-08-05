@@ -6,15 +6,15 @@
     android:layout_marginRight="20dp"
     android:layout_height="wrap_content">
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
         <ImageView
             android:id="@+id/device_img"
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:layout_gravity="center"
-            android:src="@drawable/macbook"/>
+            android:src="@drawable/ic_baseline_laptop_24"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

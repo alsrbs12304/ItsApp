@@ -23,7 +23,7 @@ class DeviceAdapter(var deviceList:ArrayList<Device>) : RecyclerView.Adapter<Dev
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.deviceImg.setImageResource(R.drawable.macbook)
+        holder.deviceImg.setImageResource(R.drawable.ic_baseline_laptop_24)
         holder.deviceName.text = deviceList.get(position).deviceName
         holder.deviceBrand.text = deviceList.get(position).deviceBrand
         holder.reviewPoint.text = deviceList.get(position).reviewPoint.toString()
