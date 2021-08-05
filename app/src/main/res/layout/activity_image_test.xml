@@ -11,7 +11,7 @@
         android:layout_height="200dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/macbook"/>
+        android:src="@drawable/ic_baseline_laptop_24"/>
     <TextView
         android:id="@+id/device_name"
         android:layout_width="wrap_content"

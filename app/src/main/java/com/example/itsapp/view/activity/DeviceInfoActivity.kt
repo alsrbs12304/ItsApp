@@ -40,7 +40,6 @@ class DeviceInfoActivity : AppCompatActivity() {
         // deviceName에 저장한다.
         val intent = intent
         val deviceName = intent.getStringExtra("deviceName")
-        Log.i("getString", deviceName.toString())
 
         deviceViewModel.getDeviceInfo(deviceName!!)
         deviceViewModel.deviceInfoLiveData.observe(this, Observer { deviceInfo ->
@@ -98,11 +97,9 @@ class DeviceInfoActivity : AppCompatActivity() {
         reviewViewModel.getReviewThird(deviceName)
         reviewViewModel.reviewLiveData.observe(this, Observer { reviewInfo ->
             if(reviewInfo.code.equals("200")){
-                Log.i("getReview", reviewInfo.jsonArray.toString())
                 reviewAdapter.updateItem(reviewInfo.jsonArray)
             }
         })
-
         // 해당 디바이스에 대한 리뷰 점수 별 리뷰 개수를 불러온다.
         reviewViewModel.getReviewPointCount(deviceName)
         reviewViewModel.reviewPointCountLiveData.observe(this, Observer { deviceInfo ->
