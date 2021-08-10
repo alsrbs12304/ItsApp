@@ -25,7 +25,6 @@ import com.example.itsapp.R
 import com.example.itsapp.viewmodel.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_news.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -45,10 +44,6 @@ class NewsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_news)
 
 
-        Picasso.get()
-            .load("http://ec2-54-180-29-97.ap-northeast-2.compute.amazonaws.com:3000/home/ubuntu/app/nodejs/ItsApp/images/MacBook.jpeg")
-            .error(R.drawable.samsung)
-            .into(upload_img)
 //        getImage(this)
         btnEvent()
         //rvEvent()
