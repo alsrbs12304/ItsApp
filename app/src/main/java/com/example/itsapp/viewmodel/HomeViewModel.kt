@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.itsapp.model.vo.User
 import com.example.itsapp.model.vo.UserInfo
+import com.example.itsapp.model.vo.userDetailInfo
 import com.example.itsapp.retrofit.APIInterface
 import com.example.itsapp.retrofit.RetrofitClient
 import com.example.itsapp.util.SharedPreference
@@ -20,8 +21,9 @@ class HomeViewModel(application: Application): AndroidViewModel(application){
     val userIdLiveData = MutableLiveData<String>()
     val secondJoinLiveData = MutableLiveData<String>()
     val userLiveData = MutableLiveData<String>()
-    val participationLiveData = MutableLiveData<String>()
+    val participationLiveData = MutableLiveData<userDetailInfo>()
     val userInfoLiveData = MutableLiveData<UserInfo>()
+    val retireLiveData = MutableLiveData<String>()
 
     fun getLoginSession():String{
         var userSession = ""
@@ -67,7 +69,15 @@ class HomeViewModel(application: Application): AndroidViewModel(application){
     fun getLoginMethod(): String? {
         return prefs.loginMethod
     }
+    /*로그아웃시 sharedpreference에서 쿠키 삭제하여 자동 로그인 방지*/
     fun logoutPref(){
         prefs.removeCookies()
+    }
+    /*탈퇴하기 버튼*/
+    fun retireApp(loginMethod: String){
+        viewModelScope.launch {
+            val data = service.retireApp(loginMethod)
+            retireLiveData.value = data
+        }
     }
 }

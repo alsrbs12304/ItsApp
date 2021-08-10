@@ -3,16 +3,13 @@ package com.example.itsapp.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.itsapp.model.vo.Blog
-import com.example.itsapp.model.vo.BrandPart
-import com.example.itsapp.model.vo.DeviceInfo
-import com.example.itsapp.model.vo.News
+import com.example.itsapp.model.vo.*
 import com.example.itsapp.retrofit.APIInterface
 import com.example.itsapp.retrofit.NaverApi
 import com.example.itsapp.retrofit.RetrofitClient
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 
 class NewsViewModel(application: Application):AndroidViewModel(application) {
     val naverApi = NaverApi.create()
@@ -21,7 +18,8 @@ class NewsViewModel(application: Application):AndroidViewModel(application) {
         APIInterface::class.java)
     val newsLiveData = MutableLiveData<News>()
     val blogLiveData = MutableLiveData<Blog>()
-    val deviceLiveData = MutableLiveData<DeviceInfo>()
+    val participationLiveData = MutableLiveData<userDetailInfo>()
+    val imgLiveData = MutableLiveData<Image>()
 
     fun searchReadNews(query:String, start:Int,display:Int){
         /*viewModelScope.launch : viewmodel lifecycle안에 있을때 사용하겠다.*/
@@ -37,10 +35,16 @@ class NewsViewModel(application: Application):AndroidViewModel(application) {
             blogLiveData.value = data
         }
     }
-    fun getReviewCnt(){
+    fun surveyParticipation(){
         viewModelScope.launch {
-            val data  = service.getReviewCnt()
-            deviceLiveData.value = data
+            val data = service.surveyParticipation()
+            participationLiveData.value = data
+        }
+    }
+    fun uploadImage(image:MultipartBody.Part){
+        viewModelScope.launch {
+            val data = service.uploadImage(image)
+            imgLiveData.value = data
         }
     }
 }

@@ -3,11 +3,16 @@ package com.example.itsapp.view.activity
 import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
 import android.widget.CompoundButton
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import com.example.itsapp.R
 import com.example.itsapp.view.fragment.HomeFragment
@@ -138,11 +143,12 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         dialog.dialog_checkbox_designer.setOnCheckedChangeListener(listener)
         dialog.dialog_checkbox_office.setOnCheckedChangeListener(listener)
         dialog.dialog_checkbox_etc.setOnCheckedChangeListener(listener)
-
         dialog.dialog_ok_btn.setOnClickListener{
             age = dialog.dialog_age.text.toString()
-            viewModel.userJob(sex,age,job)
-            dialog.dismiss()
+            if(sex!=""&&age!=""&&job!=""){
+                viewModel.userJob(sex,age,job)
+                dialog.dismiss()
+            }
         }
     }
     fun liveData(){
@@ -154,10 +160,10 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
         })
         viewModel.participationLiveData.observe(this, Observer {
-            if(it.equals("200")){
+            if(it.code.equals("200")){
                 dialog()
             }else{
-                Snackbar.make(home_activity,"유저 정보 패스",Snackbar.LENGTH_SHORT).show()
+                Log.d("TAG", "liveData: 유저 정보 패스")
             }
         })
     }

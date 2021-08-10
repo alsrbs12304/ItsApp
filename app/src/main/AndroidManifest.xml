@@ -4,6 +4,10 @@
     <!-- 인터넷 사용 권한 -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- 이미지 사용 권한-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".util.GlobalApplication"
         android:allowBackup="true"
@@ -13,7 +17,9 @@
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
+        >
         <activity android:name=".view.activity.ReviewDetailActivity"></activity>
         <activity android:name=".view.activity.ReviewActivity" />
         <activity android:name=".view.activity.TipsActivity" />

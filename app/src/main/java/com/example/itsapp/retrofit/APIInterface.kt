@@ -1,10 +1,11 @@
 package com.example.itsapp.retrofit
 
 import com.example.itsapp.model.vo.*
-import com.example.itsapp.model.vo.BrandPart
 import com.example.itsapp.model.vo.DeviceInfo
 import com.example.itsapp.model.vo.UserInfo
-import retrofit2.Call
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.http.*
 
 interface APIInterface {
@@ -110,7 +111,7 @@ interface APIInterface {
 
     /*유저 정보 설문조사 참여 여부*/
     @GET("/android/surveyParticipation")
-    suspend fun surveyParticipation() :String
+    suspend fun surveyParticipation() :userDetailInfo
 
     /*유저 정보*/
     @GET("/android/userInfo")
@@ -154,4 +155,15 @@ interface APIInterface {
     suspend fun deleteComment(
         @Query("commentId") commentId : Int
     ) : CommentInfo
+
+    @FormUrlEncoded
+    @POST("/android/retireApp")
+    suspend fun retireApp(
+        @Field("loginMethod") loginMethod: String
+    ):String
+
+    /*이미지 업로드*/
+    @Multipart
+    @POST("/android/upload")
+    suspend fun uploadImage(@Part image:MultipartBody.Part) : Image
 }
