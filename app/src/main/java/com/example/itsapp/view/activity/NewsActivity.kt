@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.loader.content.CursorLoader
 import androidx.recyclerview.widget.RecyclerView
+import com.amazonaws.services.s3.AmazonS3Client
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -44,7 +45,6 @@ class NewsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_news)
 
 
-//        getImage(this)
         btnEvent()
         //rvEvent()
         LiveData()
@@ -138,11 +138,11 @@ class NewsActivity : AppCompatActivity() {
 
         val body:MultipartBody.Part = MultipartBody.Part.createFormData("image",image.name,requestBody)
 
-        viewModel.uploadImage(body)
+        viewModel.uploadImage(body,"zibro")
     }
     private fun LiveData(){
         viewModel.imgLiveData.observe(this, androidx.lifecycle.Observer {
-            if(it.code.equals("200")){
+            if(it.equals("200")){
                 Snackbar.make(activity_news, "이미지 전송 성공", Snackbar.LENGTH_SHORT).show()
             }else{
                 Snackbar.make(activity_news, "이미지 전송 실패", Snackbar.LENGTH_SHORT).show()
@@ -172,32 +172,5 @@ class NewsActivity : AppCompatActivity() {
         cursor.close()
 
         return result
-    }
-    private fun getImage(context: Context){
-        val url = "http://ec2-54-180-29-97.ap-northeast-2.compute.amazonaws.com:3000/home/ubuntu/app/nodejs/ItsApp/images/MacBook.jpeg"
-
-        Glide.with(context).load(url)
-            .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-            .error(R.drawable.samsung)
-            .listener(object : RequestListener<Drawable?> {
-                override fun onLoadFailed(
-                    @Nullable e: GlideException?,
-                    model: Any,
-                    target: Target<Drawable?>,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    return false
-                }
-
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable?>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    return false
-                }
-            }).into(upload_img)
     }
 }
