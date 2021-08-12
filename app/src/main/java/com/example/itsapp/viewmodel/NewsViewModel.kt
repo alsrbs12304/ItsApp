@@ -19,8 +19,7 @@ class NewsViewModel(application: Application):AndroidViewModel(application) {
     val newsLiveData = MutableLiveData<News>()
     val blogLiveData = MutableLiveData<Blog>()
     val participationLiveData = MutableLiveData<userDetailInfo>()
-    val imgLiveData = MutableLiveData<String>()
-    val brandImgLiveData = MutableLiveData<BrandImage>()
+//    val imgLiveData = MutableLiveData<String>()
 
     fun searchReadNews(query:String, start:Int,display:Int){
         /*viewModelScope.launch : viewmodel lifecycle안에 있을때 사용하겠다.*/
@@ -42,16 +41,10 @@ class NewsViewModel(application: Application):AndroidViewModel(application) {
             participationLiveData.value = data
         }
     }
-    fun uploadImage(image:MultipartBody.Part,userId:String){
+    /*fun uploadImage(image:MultipartBody.Part,userId:String){
         viewModelScope.launch {
             val data = service.uploadImage(image)
             imgLiveData.value = data
         }
-    }
-    fun brandImg(){
-        viewModelScope.launch {
-            val data = service.brandImg()
-            brandImgLiveData.value = data
-        }
-    }
+    }*/
 }

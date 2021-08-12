@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.itsapp.model.vo.BrandImage
 import com.example.itsapp.model.vo.User
 import com.example.itsapp.model.vo.UserInfo
 import com.example.itsapp.model.vo.userDetailInfo
@@ -24,6 +25,7 @@ class HomeViewModel(application: Application): AndroidViewModel(application){
     val participationLiveData = MutableLiveData<userDetailInfo>()
     val userInfoLiveData = MutableLiveData<UserInfo>()
     val retireLiveData = MutableLiveData<String>()
+    val brandImgLiveData = MutableLiveData<BrandImage>()
 
     fun getLoginSession():String{
         var userSession = ""
@@ -78,6 +80,13 @@ class HomeViewModel(application: Application): AndroidViewModel(application){
         viewModelScope.launch {
             val data = service.retireApp(loginMethod)
             retireLiveData.value = data
+        }
+    }
+    /*브랜드 이미지 가져오기*/
+    fun brandImg(){
+        viewModelScope.launch {
+            val data = service.brandImg()
+            brandImgLiveData.value = data
         }
     }
 }
