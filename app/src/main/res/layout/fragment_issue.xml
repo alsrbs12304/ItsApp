@@ -31,54 +31,48 @@
         </androidx.appcompat.widget.Toolbar>
     </LinearLayout>
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/today_story_tabs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:tabTextColor="@color/black">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/today_story_tabs"
+            <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                app:tabTextColor="@color/black">
+                android:text="rank" />
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="rank" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="news" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="marquee"
-                    android:singleLine="true"
-                    android:text="blog"
-                    />
-            </com.google.android.material.tabs.TabLayout>
-
-            <View
-                android:id="@+id/division"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/today_story_tabs"
-                android:background="@color/gray500" />
-
-            <FrameLayout
-                android:id="@+id/today_container"
-                android:layout_width="match_parent"
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/division"
+                android:text="news" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:text="blog"
                 />
-        </RelativeLayout>
-    </ScrollView>
+        </com.google.android.material.tabs.TabLayout>
+
+        <View
+            android:id="@+id/division"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/today_story_tabs"
+            android:background="@color/gray500" />
+
+        <FrameLayout
+            android:id="@+id/today_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/division"
+            />
+    </RelativeLayout>
 </LinearLayout>

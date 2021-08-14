@@ -1,12 +1,10 @@
 package com.example.itsapp.view.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,15 +13,12 @@ import com.bumptech.glide.Glide
 import com.example.itsapp.*
 import com.example.itsapp.viewmodel.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class HomeFragment : Fragment() {
 
     private var deviceFragment = DeviceFragment()
     private val viewModel:HomeViewModel by viewModels()
-    private val brand = Array(6){""}
 
     companion object{
         const val TAG : String = "로그"
@@ -35,27 +30,39 @@ class HomeFragment : Fragment() {
     // 뷰가 생성됐을 때
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home,container,false)
+
         cardviewTranscation(view)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        cardviewSetImage()
-        liveData()
-    }
-    private fun cardviewSetImage() {
         viewModel.brandImg()
+        liveData()
     }
     fun liveData(){
         viewModel.brandImgLiveData.observe(viewLifecycleOwner, Observer {
             if(it.code == "200"){
-                it.brand.forEach{
-                    Glide.with(home_fragment)
-                        .load(it.imgUrl)
-                        .into(apple_logo)
-                }
+                Glide.with(this)
+                    .load(it.brand[0].imgUrl)
+                    .into(apple_logo)
+                Glide.with(this)
+                    .load(it.brand[1].imgUrl)
+                    .into(asus_logo)
+                Glide.with(this)
+                    .load(it.brand[2].imgUrl)
+                    .into(dell_logo)
+                Glide.with(this)
+                    .load(it.brand[3].imgUrl)
+                    .into(lenovo_logo)
+                Glide.with(this)
+                    .load(it.brand[4].imgUrl)
+                    .into(lg_logo)
+                Glide.with(this)
+                    .load(it.brand[5].imgUrl)
+                    .into(samsung_logo)
             }else{
+                Snackbar.make(home_fragment,"이미지 로드 오류",Snackbar.LENGTH_SHORT).show()
             }
         })
     }
