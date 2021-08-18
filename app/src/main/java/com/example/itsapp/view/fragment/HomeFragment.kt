@@ -68,13 +68,8 @@ class HomeFragment : Fragment() {
         return view
     }
 
-    // 이미지 테스트
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        test_btn.setOnClickListener {
-            val intent = Intent(context, ImageTestActivity::class.java)
-            startActivity(intent)
-        }
     }
 }

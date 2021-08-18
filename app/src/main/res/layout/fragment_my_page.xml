@@ -119,6 +119,7 @@
         </LinearLayout>
     </RelativeLayout>
     <Button
+        android:id="@+id/go_to_favorites"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="   내 즐겨찾기"

@@ -152,4 +152,22 @@ interface APIInterface {
     suspend fun deleteComment(
         @Query("commentId") commentId : Int
     ) : String
+
+    @GET("/android/getSpec")
+    suspend fun getSpec(
+        @Query("deviceName") deviceName: String
+    ) : SpecInfo
+
+    @FormUrlEncoded
+    @POST("/android/addFavorites")
+    suspend fun addFavorites(
+         @Field("deviceName") deviceName : String,
+         @Field("userId") userId: String
+    ) : FavoritesInfo
+
+    @GET("/android/checkFavorites")
+    suspend fun checkFavorites(
+        @Query("deviceName") deviceName: String,
+        @Query("userId") userId: String
+    ) : FavoritesInfo
 }
