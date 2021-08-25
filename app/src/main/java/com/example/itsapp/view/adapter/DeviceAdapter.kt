@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itsapp.R
-import com.example.itsapp.model.vo.Device
+import com.example.itsapp.model.vo.device.Device
 
 class DeviceAdapter(var deviceList:ArrayList<Device>) : RecyclerView.Adapter<DeviceAdapter.ViewHolder>(){
 

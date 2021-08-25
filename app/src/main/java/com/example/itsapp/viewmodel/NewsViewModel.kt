@@ -3,11 +3,9 @@ package com.example.itsapp.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.itsapp.model.vo.Blog
-import com.example.itsapp.model.vo.BrandPart
-import com.example.itsapp.model.vo.DeviceInfo
+import com.example.itsapp.model.vo.device.DeviceInfo
 import com.example.itsapp.model.vo.News
 import com.example.itsapp.retrofit.APIInterface
 import com.example.itsapp.retrofit.NaverApi

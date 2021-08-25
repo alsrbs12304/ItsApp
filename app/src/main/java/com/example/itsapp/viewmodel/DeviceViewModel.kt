@@ -1,13 +1,12 @@
 package com.example.itsapp.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.itsapp.model.vo.DeviceInfo
-import com.example.itsapp.model.vo.FavoritesInfo
-import com.example.itsapp.model.vo.SpecInfo
+import com.example.itsapp.model.vo.device.DeviceInfo
+import com.example.itsapp.model.vo.favorites.FavoritesInfo
+import com.example.itsapp.model.vo.spec.SpecInfo
 import com.example.itsapp.retrofit.APIInterface
 import com.example.itsapp.retrofit.RetrofitClient
 import com.example.itsapp.util.SharedPreference
@@ -27,7 +26,7 @@ class DeviceViewModel(application: Application): AndroidViewModel(application) {
 
     fun getDevice(deviceBrand : String){
         viewModelScope.launch {
-            val data:DeviceInfo = service.getDevice(deviceBrand)
+            val data: DeviceInfo = service.getDevice(deviceBrand)
             deviceLiveData.value = data
 
         }
@@ -35,29 +34,22 @@ class DeviceViewModel(application: Application): AndroidViewModel(application) {
 
     fun getDeviceInfo(deviceName : String){
         viewModelScope.launch {
-            val data:DeviceInfo = service.getDeviceInfo(deviceName)
+            val data: DeviceInfo = service.getDeviceInfo(deviceName)
             deviceInfoLiveData.value = data
         }
     }
 
     fun getSpec(deviceName: String){
         viewModelScope.launch {
-            val data:SpecInfo = service.getSpec(deviceName)
+            val data: SpecInfo = service.getSpec(deviceName)
             deviceSpecLiveData.value = data
         }
     }
 
     fun addFavorites(deviceName: String, userId:String){
         viewModelScope.launch {
-            val data:FavoritesInfo = service.addFavorites(deviceName,userId)
+            val data: FavoritesInfo = service.addFavorites(deviceName,userId)
             deviceFavoritesLiveData.value = data
-        }
-    }
-
-    fun checkFavorites(deviceName: String, userId: String){
-        viewModelScope.launch {
-            val data:FavoritesInfo = service.checkFavorites(deviceName, userId)
-            checkFavoritesLiveData.value = data
         }
     }
 }

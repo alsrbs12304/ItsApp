@@ -6,21 +6,18 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.view.menu.MenuView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.itsapp.viewmodel.CommentViewModel
 import com.example.itsapp.R
-import com.example.itsapp.model.vo.Comment
+import com.example.itsapp.model.vo.comment.Comment
 import com.example.itsapp.view.adapter.CommentAdapter
 import com.example.itsapp.viewmodel.HomeViewModel
 import com.example.itsapp.viewmodel.ReviewViewModel
@@ -30,8 +27,6 @@ import kotlinx.android.synthetic.main.activity_review_detail.back_btn
 import kotlinx.android.synthetic.main.activity_review_detail.device_brand
 import kotlinx.android.synthetic.main.activity_review_detail.device_name
 import kotlinx.android.synthetic.main.activity_review_detail.review_point
-import kotlinx.android.synthetic.main.activity_review_write.*
-import kotlinx.android.synthetic.main.comment_item.*
 
 class ReviewDetailActivity : AppCompatActivity() {
 

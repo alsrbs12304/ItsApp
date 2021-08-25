@@ -1,16 +1,13 @@
 package com.example.itsapp.view.adapter
 
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itsapp.R
-import com.example.itsapp.model.vo.Review
+import com.example.itsapp.model.vo.review.Review
 
 class ReviewAdapter(var reviewList:ArrayList<Review>) : RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
 

@@ -1,4 +1,4 @@
-package com.example.itsapp.model.vo
+package com.example.itsapp.model.vo.user
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

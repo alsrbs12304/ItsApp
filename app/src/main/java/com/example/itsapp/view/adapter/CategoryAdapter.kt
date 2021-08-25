@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itsapp.R
-import com.example.itsapp.model.vo.Device
+import com.example.itsapp.model.vo.device.Device
 
 class CategoryAdapter(private val items:List<Device>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>(),View.OnClickListener{
     class ViewHolder(view:View) :RecyclerView.ViewHolder(view) {
@@ -14,7 +14,7 @@ class CategoryAdapter(private val items:List<Device>) : RecyclerView.Adapter<Cat
         init {
             brand = view.findViewById(R.id.brand_tv)
         }
-        fun setText(items:Device){
+        fun setText(items: Device){
             brand.text = items.deviceBrand
         }
 
@@ -25,7 +25,7 @@ class CategoryAdapter(private val items:List<Device>) : RecyclerView.Adapter<Cat
     }
     override fun getItemCount() = items.size
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var items:Device = items.get(position)
+        var items: Device = items.get(position)
         holder.setText(items)
     }
 

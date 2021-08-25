@@ -4,16 +4,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
-import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.itsapp.R
-import com.example.itsapp.model.vo.Review
+import com.example.itsapp.model.vo.review.Review
 import com.example.itsapp.view.adapter.ReviewAdapter
 import com.example.itsapp.viewmodel.DeviceViewModel
 import com.example.itsapp.viewmodel.HomeViewModel
@@ -137,7 +135,7 @@ class DeviceInfoActivity : AppCompatActivity() {
             if(favoritesInfo.code.equals("200")){
                 Toast.makeText(this,"즐겨찾기 담기 성공",Toast.LENGTH_SHORT).show()
             }else{
-                Toast.makeText(this,"즐겨찾기 담기 실패",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"이미 담은 기기입니다.",Toast.LENGTH_SHORT).show()
             }
         })
     }

@@ -1,6 +1,5 @@
 package com.example.itsapp.view.fragment
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,7 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.itsapp.view.adapter.DeviceAdapter
 import com.example.itsapp.R
 import com.example.itsapp.view.activity.DeviceInfoActivity
-import com.example.itsapp.model.vo.Device
+import com.example.itsapp.model.vo.device.Device
 import com.example.itsapp.viewmodel.DeviceViewModel
 import kotlinx.android.synthetic.main.fragment_device.*
 

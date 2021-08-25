@@ -7,7 +7,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itsapp.R
-import com.example.itsapp.model.vo.Comment
+import com.example.itsapp.model.vo.comment.Comment
 
 
 class CommentAdapter(var commentList:ArrayList<Comment>) : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {

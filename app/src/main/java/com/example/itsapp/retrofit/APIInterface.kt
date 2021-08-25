@@ -1,8 +1,12 @@
 package com.example.itsapp.retrofit
 
 import com.example.itsapp.model.vo.*
-import com.example.itsapp.model.vo.DeviceInfo
-import com.example.itsapp.model.vo.UserInfo
+import com.example.itsapp.model.vo.device.DeviceInfo
+import com.example.itsapp.model.vo.user.UserInfo
+import com.example.itsapp.model.vo.comment.CommentInfo
+import com.example.itsapp.model.vo.favorites.FavoritesInfo
+import com.example.itsapp.model.vo.review.ReviewInfo
+import com.example.itsapp.model.vo.spec.SpecInfo
 import retrofit2.http.*
 
 interface APIInterface {
@@ -28,7 +32,7 @@ interface APIInterface {
 
     /*로그인*/
     @GET("/android/login")
-    suspend fun login(@Query("userId") userId: String):UserInfo
+    suspend fun login(@Query("userId") userId: String): UserInfo
 
     /*Kakao 로그인*/
     @FormUrlEncoded
@@ -114,7 +118,7 @@ interface APIInterface {
     @GET("/android/userInfo")
     suspend fun userInfo(
         @Query("loginMethod") loginMethod: String
-    ):UserInfo
+    ): UserInfo
 
     @GET("/android/getChoiceReview")
     suspend fun getChoiceReview(
@@ -158,16 +162,11 @@ interface APIInterface {
         @Query("deviceName") deviceName: String
     ) : SpecInfo
 
+    // 즐겨찾기 담기
     @FormUrlEncoded
     @POST("/android/addFavorites")
     suspend fun addFavorites(
          @Field("deviceName") deviceName : String,
          @Field("userId") userId: String
-    ) : FavoritesInfo
-
-    @GET("/android/checkFavorites")
-    suspend fun checkFavorites(
-        @Query("deviceName") deviceName: String,
-        @Query("userId") userId: String
     ) : FavoritesInfo
 }
