@@ -35,12 +35,10 @@ class DeviceFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_device,container,false)
         return view
-        Log.d("수명주기","onCreateView")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("수명주기","onViewCreated")
         rv_device.layoutManager = GridLayoutManager(activity,2)
         rv_device.adapter = deviceAdapter
 

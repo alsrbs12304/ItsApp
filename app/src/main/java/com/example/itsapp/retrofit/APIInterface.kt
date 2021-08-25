@@ -169,4 +169,9 @@ interface APIInterface {
          @Field("deviceName") deviceName : String,
          @Field("userId") userId: String
     ) : FavoritesInfo
+
+    @GET("/android/getFavorites")
+    suspend fun getFavorites(
+        @Query("userId") userId : String
+    ) : DeviceInfo
 }

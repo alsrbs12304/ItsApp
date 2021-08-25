@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/device_brand"
                 android:layout_width="wrap_content"
@@ -71,9 +72,21 @@
                 android:textColor="@color/gray600"
                 android:text="50"/>
         </LinearLayout>
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="즐겨찾기 삭제"/>
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/favorites_delete_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="삭제하기"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="비교하기"/>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

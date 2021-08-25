@@ -21,8 +21,8 @@ class DeviceViewModel(application: Application): AndroidViewModel(application) {
     val deviceLiveData = MutableLiveData<DeviceInfo>()
     val deviceInfoLiveData = MutableLiveData<DeviceInfo>()
     val deviceSpecLiveData = MutableLiveData<SpecInfo>()
-    val deviceFavoritesLiveData = MutableLiveData<FavoritesInfo>()
-    val checkFavoritesLiveData = MutableLiveData<FavoritesInfo>()
+    val deviceAddFavoritesLiveData = MutableLiveData<FavoritesInfo>()
+    val deviceFavoritesLiveData = MutableLiveData<DeviceInfo>()
 
     fun getDevice(deviceBrand : String){
         viewModelScope.launch {
@@ -49,6 +49,12 @@ class DeviceViewModel(application: Application): AndroidViewModel(application) {
     fun addFavorites(deviceName: String, userId:String){
         viewModelScope.launch {
             val data: FavoritesInfo = service.addFavorites(deviceName,userId)
+            deviceAddFavoritesLiveData.value = data
+        }
+    }
+    fun getFavorites(userId : String){
+        viewModelScope.launch {
+            val data:DeviceInfo = service.getFavorites(userId)
             deviceFavoritesLiveData.value = data
         }
     }

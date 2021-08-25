@@ -131,7 +131,7 @@ class DeviceInfoActivity : AppCompatActivity() {
         favorites_btn.setOnClickListener {
             deviceViewModel.addFavorites(deviceName,userId)
         }
-        deviceViewModel.deviceFavoritesLiveData.observe(this, Observer { favoritesInfo ->
+        deviceViewModel.deviceAddFavoritesLiveData.observe(this, Observer { favoritesInfo ->
             if(favoritesInfo.code.equals("200")){
                 Toast.makeText(this,"즐겨찾기 담기 성공",Toast.LENGTH_SHORT).show()
             }else{
