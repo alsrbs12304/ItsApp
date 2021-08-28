@@ -2,9 +2,9 @@ package com.example.itsapp.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.itsapp.R
@@ -12,7 +12,6 @@ import com.example.itsapp.model.vo.device.Device
 import com.example.itsapp.view.adapter.FavoritesDeviceAdapter
 import com.example.itsapp.viewmodel.DeviceViewModel
 import com.example.itsapp.viewmodel.HomeViewModel
-import kotlinx.android.synthetic.main.favorites_device_item.*
 import kotlinx.android.synthetic.main.fragment_device.*
 
 class FavoritesActivity : AppCompatActivity() {
@@ -37,8 +36,16 @@ class FavoritesActivity : AppCompatActivity() {
                 deviceAdapter.updateItem(deviceInfo.jsonArray)
             }
         })
-//        favorites_delete_btn.setOnClickListener {
-//            Toast.makeText(this,"삭제하기 버튼 클릭",Toast.LENGTH_SHORT).show()
-//        }
+
+        deviceAdapter.setItemClickListenerDelete(object : FavoritesDeviceAdapter.OnItemClickListenerDelete{
+            override fun onClick(v: View, position: Int) {
+                Toast.makeText(applicationContext,"삭제버튼 클릭",Toast.LENGTH_SHORT).show()
+            }
+        })
+        deviceAdapter.setItemClickListenerCompare(object : FavoritesDeviceAdapter.OnItemClickListenerCompare{
+            override fun onClick(v: View, position: Int) {
+                Toast.makeText(applicationContext,"비교하기 클릭",Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
