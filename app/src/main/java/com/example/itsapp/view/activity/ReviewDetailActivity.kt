@@ -139,9 +139,7 @@ class ReviewDetailActivity : AppCompatActivity() {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("리뷰 삭제")
             builder.setMessage("리뷰를 삭제하시겠습니까?")
-            builder.setPositiveButton(
-                "삭제"
-            ) { dialog: DialogInterface?, which: Int ->
+            builder.setPositiveButton("삭제") { dialog: DialogInterface?, which: Int ->
                 val loginId = homeViewModel.getLoginSession()
                 reviewViewModel.getLoginUserId(loginId)
                 reviewViewModel.loginUserIdLiveData.observe(this, Observer { userInfo ->

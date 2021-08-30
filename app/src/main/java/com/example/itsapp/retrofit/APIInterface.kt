@@ -174,4 +174,10 @@ interface APIInterface {
     suspend fun getFavorites(
         @Query("userId") userId : String
     ) : DeviceInfo
+
+    @GET("/android/deleteFavorites")
+    suspend fun deleteFavorites(
+        @Query("userId") userId: String,
+        @Query("deviceName") deviceName: String
+    ) : String
 }

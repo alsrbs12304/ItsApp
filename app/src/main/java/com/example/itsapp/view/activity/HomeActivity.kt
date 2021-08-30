@@ -3,9 +3,11 @@ package com.example.itsapp.view.activity
 import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.CompoundButton
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -26,6 +28,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private lateinit var myPageFragment: MyPageFragment
     private lateinit var issueFragment: IssueFragment
     private val viewModel: HomeViewModel by viewModels()
+    private var backPressedTime : Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -160,5 +163,19 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 Snackbar.make(home_activity,"유저 정보 패스",Snackbar.LENGTH_SHORT).show()
             }
         })
+    }
+
+    // 뒤로가기 버튼 2번 클릭 시 앱 종료
+    override fun onBackPressed() {
+        Log.d("TAG", "뒤로가기")
+
+        // 2초내 다시 클릭하면 앱 종료
+        if (System.currentTimeMillis() - backPressedTime < 2000) {
+            finish()
+            return
+        }
+        // 처음 클릭 메시지
+        Toast.makeText(this, "'뒤로' 버튼을 한번 더 누르시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show()
+        backPressedTime = System.currentTimeMillis()
     }
 }
