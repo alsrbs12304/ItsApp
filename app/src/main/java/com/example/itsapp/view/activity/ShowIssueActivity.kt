@@ -1,7 +1,6 @@
 package com.example.itsapp.view.activity
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.graphics.Bitmap
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -9,15 +8,12 @@ import android.os.Bundle
 import android.os.Message
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
-import androidx.activity.viewModels
 import com.example.itsapp.R
-import com.example.itsapp.viewmodel.LoginViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_show_news.*
 

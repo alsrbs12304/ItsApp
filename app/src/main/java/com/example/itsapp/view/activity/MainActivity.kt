@@ -46,8 +46,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        /*일반 자동 로그인*/
-        AutoLogin()
         val flag = intent.getStringExtra("탈퇴")
         if(flag == "탈퇴"){
             Snackbar.make(main_activity,"탈퇴하기 완료.",Snackbar.LENGTH_SHORT).show()
@@ -58,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         kakao_signin_btn.setOnClickListener {
             kakaoLogin()
         }
+        /*로그인 버튼*/
         login_btn.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
@@ -66,20 +65,6 @@ class MainActivity : AppCompatActivity() {
         join_btn.setOnClickListener{
             startActivity(Intent(this, JoinActivity::class.java))
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
-        }
-    }
-    /*카카오 자동 로그인*/
-    fun kakaoAutoLogin(){
-        UserApiClient.instance.me { user, error ->
-            if(error !=null){
-                Log.e("TAG", "사용자 요청 실패",error )
-            }else if(user !=null){
-                if(user.kakaoAccount?.email != null){
-                    startActivity(Intent(this, LoadingActivity::class.java))
-                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                    finish()
-                }
-            }
         }
     }
     fun kakaoLogin(){
@@ -120,21 +105,6 @@ class MainActivity : AppCompatActivity() {
                 Snackbar.make(main_activity,"에러", Snackbar.LENGTH_SHORT).show()
             }
         })
-    }
-    fun AutoLogin(){
-        if(!viewModel.getLoginMethod().equals("일반")){
-            /*카카오 자동 로그인*/
-            kakaoAutoLogin()
-        }
-        else if(viewModel.getLoginMethod().equals("일반")) {
-            val userId = viewModel.getLoginSession()
-            if(userId != ""){
-                viewModel.setLoginMethod("일반")
-                startActivity(Intent(this, LoadingActivity::class.java))
-                overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                finish()
-            }
-        }
     }
     fun viewSlide(){
         for (image in images){

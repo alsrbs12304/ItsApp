@@ -21,14 +21,14 @@ class LoadingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading)
 
-        loadingEffect()
+//        loadingEffect()
         viewmodel.getLoginSession()
         liveData()
     }
-    private fun loadingEffect(){
+    /*private fun loadingEffect(){
         val animation = AnimationUtils.loadAnimation(this,R.anim.loading)
         loading_tv.animation=animation
-    }
+    }*/
     private fun liveData(){
         viewmodel.userIdLiveData.observe(this, Observer { userId ->
             Log.d("TAG", "onCreate: $userId")

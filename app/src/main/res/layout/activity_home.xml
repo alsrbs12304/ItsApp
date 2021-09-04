@@ -23,15 +23,15 @@
             android:layout_height="1dp"
             android:layout_above="@+id/bottom_navigation_view"
             android:background="@color/gray300" />
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             app:itemBackground="@color/white"
-            app:itemIconTint="@color/black"
-            app:itemTextColor="@color/black"
-            app:menu="@menu/tab_menu"
-            />
+            app:itemIconTint="@color/purple"
+            app:itemTextColor="@color/purple"
+            app:menu="@menu/tab_menu" />
     </RelativeLayout>
 </LinearLayout>
