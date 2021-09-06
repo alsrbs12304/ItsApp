@@ -1,16 +1,13 @@
 package com.example.itsapp.view.activity
 
-import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.itsapp.R
 import com.example.itsapp.viewmodel.HomeViewModel
-import kotlinx.android.synthetic.main.activity_loading.*
 
 class LoadingActivity : AppCompatActivity() {
     private val viewmodel:HomeViewModel by viewModels()
@@ -21,14 +18,9 @@ class LoadingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading)
 
-//        loadingEffect()
         viewmodel.getLoginSession()
         liveData()
     }
-    /*private fun loadingEffect(){
-        val animation = AnimationUtils.loadAnimation(this,R.anim.loading)
-        loading_tv.animation=animation
-    }*/
     private fun liveData(){
         viewmodel.userIdLiveData.observe(this, Observer { userId ->
             Log.d("TAG", "onCreate: $userId")

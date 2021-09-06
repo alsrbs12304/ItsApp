@@ -31,8 +31,12 @@ class SplashActivity : AppCompatActivity() {
         UserApiClient.instance.me { user, error ->
             if(error !=null){
                 Log.e("TAG", "사용자 요청 실패",error )
+                startActivity(Intent(this, MainActivity::class.java))
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                finish()
             }else if(user !=null){
                 if(user.kakaoAccount?.email != null){
+                    viewModel.setLoginMethod("카카오")
                     startActivity(Intent(this, HomeActivity::class.java))
                     overridePendingTransition(R.anim.right_in, R.anim.left_out);
                     finish()
@@ -41,18 +45,21 @@ class SplashActivity : AppCompatActivity() {
         }
     }
     fun AutoLogin(){
-        if(!viewModel.getLoginMethod().equals("일반")){
+        if(viewModel.getLoginMethod().equals("카카오")) {
             /*카카오 자동 로그인*/
             kakaoAutoLogin()
-        }
-        else if(viewModel.getLoginMethod().equals("일반")) {
+        } else if (viewModel.getLoginMethod().equals("일반")) {
             val userId = viewModel.getLoginSession()
-            if(userId != ""){
+            if (userId != "") {
                 viewModel.setLoginMethod("일반")
                 startActivity(Intent(this, LoadingActivity::class.java))
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 finish()
             }
+        }else{
+            startActivity(Intent(this, MainActivity::class.java))
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            finish()
         }
     }
 
