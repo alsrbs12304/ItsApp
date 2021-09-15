@@ -8,13 +8,14 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.itsapp.R
 import com.example.itsapp.model.vo.device.Device
 import com.example.itsapp.view.adapter.FavoritesDeviceAdapter
 import com.example.itsapp.viewmodel.DeviceViewModel
 import com.example.itsapp.viewmodel.HomeViewModel
-import kotlinx.android.synthetic.main.fragment_device.*
+import kotlinx.android.synthetic.main.activity_favorites.*
+
 
 class FavoritesActivity : AppCompatActivity() {
 
@@ -28,8 +29,10 @@ class FavoritesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_favorites)
 
 
-        rv_device.layoutManager = GridLayoutManager(this,2)
-        rv_device.adapter = deviceAdapter
+//        rv_device.layoutManager = GridLayoutManager(this,2)
+        rv_favorites_device.layoutManager = LinearLayoutManager(this)
+        rv_favorites_device.addItemDecoration(deviceAdapter.VerticalItemDecorator(10))
+        rv_favorites_device.adapter = deviceAdapter
 
         val userId = homeViewModel.getLoginSession()
         viewModel.getFavorites(userId)
@@ -55,13 +58,13 @@ class FavoritesActivity : AppCompatActivity() {
             }
         })
 
-        // 즐겨찾기 비교 버튼 클릭 시
-        deviceAdapter.setItemClickListenerCompare(object : FavoritesDeviceAdapter.OnItemClickListenerCompare{
-            override fun onClick(v: View, position: Int) {
-                var deviceName = deviceAdapter.deviceList[position].deviceName
-                Toast.makeText(v.context,deviceName,Toast.LENGTH_SHORT).show()
-            }
-        })
+//        // 즐겨찾기 비교 버튼 클릭 시
+//        deviceAdapter.setItemClickListenerCompare(object : FavoritesDeviceAdapter.OnItemClickListenerCompare{
+//            override fun onClick(v: View, position: Int) {
+//                var deviceName = deviceAdapter.deviceList[position].deviceName
+//                Toast.makeText(v.context,deviceName,Toast.LENGTH_SHORT).show()
+//            }
+//        })
     }
 
 }
