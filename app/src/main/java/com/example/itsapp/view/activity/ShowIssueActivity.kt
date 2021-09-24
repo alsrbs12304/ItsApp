@@ -104,7 +104,7 @@ class ShowIssueActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (web_view.canGoBack()) {
             web_view.goBack()
-            Snackbar.make(show_issue_activity,"뒤로 가기를 한번 더 누르시면 Issue 목록으로 이동합니다.",Snackbar.LENGTH_SHORT).show()
+            //Snackbar.make(show_issue_activity,"뒤로 가기를 한번 더 누르시면 Issue 목록으로 이동합니다.",Snackbar.LENGTH_SHORT).show()
         } else {
             finish()
         }

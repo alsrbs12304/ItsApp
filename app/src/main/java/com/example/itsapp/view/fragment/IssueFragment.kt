@@ -59,10 +59,6 @@ class IssueFragment : Fragment() {
                         newsFragment = NewsFragment.newInstance()
                         activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.today_container,newsFragment)?.commit()
                     }
-                    2->{
-                        blogFragment = BlogFragment.newInstance()
-                        activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.today_container, blogFragment)?.commit()
-                    }
                 }
             }
 

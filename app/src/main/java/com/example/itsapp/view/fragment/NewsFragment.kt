@@ -15,7 +15,10 @@ import com.example.itsapp.view.activity.NewsActivity
 import com.example.itsapp.view.adapter.BlogAdapter
 import com.example.itsapp.view.adapter.NewsAdapter
 import com.example.itsapp.viewmodel.NewsViewModel
+import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.fragment_blog.*
 import kotlinx.android.synthetic.main.fragment_news.*
+import kotlinx.android.synthetic.main.fragment_news.tips_tab
 
 class NewsFragment : Fragment() {
 
@@ -29,9 +32,6 @@ class NewsFragment : Fragment() {
         fun newInstance() : NewsFragment {
             return NewsFragment()
         }
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
@@ -77,23 +77,35 @@ class NewsFragment : Fragment() {
         newsRecyclerView = view.findViewById(R.id.news_rv)
         var NewsLayoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL,false)
         newsRecyclerView.layoutManager = NewsLayoutManager
-        viewModel.searchReadNews("노트북 이슈",1,3)
-
-        /*blogRecyclerView = view.findViewById(R.id.blog_rv)
-        var BlogLayoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL,false)
-        blogRecyclerView.layoutManager = BlogLayoutManager
-        viewModel.searchReadBlog("노트북",1,3)*/
+        viewModel.searchReadNews("맥북",1,100)
     }
     fun btnEvent(view: View){
-        recent_news_tv.setOnClickListener{
-            val intent = Intent(view.context,
-                NewsActivity::class.java)
-            startActivity(intent)
-        }
-        /*tips_tv.setOnClickListener{
-            val intent = Intent(view.context,
-                TipsActivity::class.java)
-            startActivity(intent)
-        }*/
+        tips_tab.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(p0: TabLayout.Tab?) {}
+            override fun onTabUnselected(p0: TabLayout.Tab?) {}
+            override fun onTabSelected(p0: TabLayout.Tab?) {
+                val position = p0?.position
+                when(position){
+                    0 -> {
+                        viewModel.searchReadNews("맥북",1,100)
+                    }
+                    1 -> {
+                        viewModel.searchReadNews("삼성 노트북",1,100)
+                    }
+                    2 -> {
+                        viewModel.searchReadNews("LG 노트북",1,100)
+                    }
+                    3 -> {
+                        viewModel.searchReadNews("ASUS 노트북",1,100)
+                    }
+                    4 -> {
+                        viewModel.searchReadNews("DELL 노트북",1,100)
+                    }
+                    5 -> {
+                        viewModel.searchReadNews("LENOVO 노트북",1,100)
+                    }
+                }
+            }
+        })
     }
 }
