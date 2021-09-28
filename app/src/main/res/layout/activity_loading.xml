@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashActivity"
+    tools:context=".view.activity.SplashActivity"
     android:background="@color/purple"
     android:orientation="vertical"
     >
@@ -15,21 +15,22 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/nanum_barunpen_r"
         android:gravity="center"
-        android:text="ITs"
+        android:text="잇츠"
         android:textColor="@color/white"
         android:textSize="50dp"
         android:layout_centerInParent="true"
         android:textStyle="bold" />
+
     <TextView
         android:id="@+id/app_topic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/app_name"
         android:fontFamily="@font/nanum_barunpen_r"
         android:gravity="center"
         android:text="현명한 소비를 위한\n현명한 비교"
         android:textColor="@color/white"
         android:textSize="20dp"
-        android:layout_above="@+id/app_name"
         android:textStyle="bold" />
 
     <TextView

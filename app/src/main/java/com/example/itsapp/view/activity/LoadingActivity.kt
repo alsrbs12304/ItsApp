@@ -25,7 +25,7 @@ class LoadingActivity : AppCompatActivity() {
         viewmodel.userIdLiveData.observe(this, Observer { userId ->
             Log.d("TAG", "onCreate: $userId")
             id = userId
-            if(userId!=""){
+            if(userId.isNotBlank()){
                 viewmodel.seceondJoin(userId)
             }else {
                 viewmodel.getLoginSession()

@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         val flag = intent.getStringExtra("탈퇴")
         if(flag == "탈퇴"){
-            Snackbar.make(main_activity,"탈퇴하기 완료.",Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(main_activity,"탈퇴하기 완료.",Snackbar.LENGTH_SHORT).show()
         }
     }
     private fun eventBtn(){

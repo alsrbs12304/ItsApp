@@ -1,4 +1,4 @@
-package com.example.itsapp
+package com.example.itsapp.view.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,14 +7,16 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.activity.viewModels
-import com.example.itsapp.view.activity.HomeActivity
-import com.example.itsapp.view.activity.LoadingActivity
-import com.example.itsapp.view.activity.MainActivity
+import androidx.lifecycle.Observer
+import com.example.itsapp.R
 import com.example.itsapp.viewmodel.JoinViewModel
 import com.kakao.sdk.user.UserApiClient
 
 class SplashActivity : AppCompatActivity() {
     private val viewModel: JoinViewModel by viewModels()
+    companion object{
+        lateinit var id:String
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -61,6 +63,18 @@ class SplashActivity : AppCompatActivity() {
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
             finish()
         }
+    }
+
+    fun checkPrefs(){
+        viewModel.getLoginSession()
+        viewModel.userIdLiveData.observe(this, Observer {
+            Log.d("TAG", "checkPrefs: $it")
+            id = it
+            if(id.isNotBlank())
+                //viewModel.checkIdLiveData
+            else
+                viewModel.getLoginSession()
+        })
     }
 
 }
