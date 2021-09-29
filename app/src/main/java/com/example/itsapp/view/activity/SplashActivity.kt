@@ -10,10 +10,11 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.itsapp.R
 import com.example.itsapp.viewmodel.JoinViewModel
+import com.example.itsapp.viewmodel.SplashViewModel
 import com.kakao.sdk.user.UserApiClient
 
 class SplashActivity : AppCompatActivity() {
-    private val viewModel: JoinViewModel by viewModels()
+    private val viewModel: SplashViewModel by viewModels()
     companion object{
         lateinit var id:String
     }
@@ -54,9 +55,7 @@ class SplashActivity : AppCompatActivity() {
             val userId = viewModel.getLoginSession()
             if (userId != "") {
                 viewModel.setLoginMethod("일반")
-                startActivity(Intent(this, LoadingActivity::class.java))
-                overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                finish()
+                checkPrefs()
             }
         }else{
             startActivity(Intent(this, MainActivity::class.java))
@@ -65,15 +64,28 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    fun checkPrefs(){
+    fun checkPrefs(){ //looadingActivity 대체
         viewModel.getLoginSession()
         viewModel.userIdLiveData.observe(this, Observer {
             Log.d("TAG", "checkPrefs: $it")
             id = it
             if(id.isNotBlank())
-                //viewModel.checkIdLiveData
+                viewModel.secondJoin(id)
             else
                 viewModel.getLoginSession()
+        })
+        viewModel.secondJoinLiveData.observe(this, Observer {code ->
+            if(code.equals("200")){
+                startActivity(Intent(this, HomeActivity::class.java))
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                finish()
+            }else if (code.equals("204")) {
+                val intent = Intent(this, AddUserInfoActivity::class.java)
+                intent.putExtra("userId", SplashActivity.id)
+                startActivity(intent)
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                finish()
+            }
         })
     }
 

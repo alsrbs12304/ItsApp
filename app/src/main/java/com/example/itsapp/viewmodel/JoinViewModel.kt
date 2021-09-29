@@ -58,6 +58,7 @@ class JoinViewModel(application: Application):AndroidViewModel(application) {
             kakaoUserInfoLD.value =data
         }
     }
+    //o
     fun getLoginSession():String{
         var userSession = ""
         val iterator = prefs.getCookies()?.iterator()
@@ -74,9 +75,11 @@ class JoinViewModel(application: Application):AndroidViewModel(application) {
         userIdLiveData.postValue(userSession)
         return userSession
     }
+    //ㅇ
     fun setLoginMethod(value:String){
         prefs.loginMethod = value
     }
+    //o
     fun getLoginMethod(): String? {
         return prefs.loginMethod
     }
