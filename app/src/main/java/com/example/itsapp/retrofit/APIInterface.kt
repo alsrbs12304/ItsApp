@@ -160,7 +160,7 @@ interface APIInterface {
     @GET("/android/getSpec")
     suspend fun getSpec(
         @Query("deviceName") deviceName: String
-    ) : SpecInfo
+    ) : DeviceInfo
 
     // 즐겨찾기 담기
     @FormUrlEncoded

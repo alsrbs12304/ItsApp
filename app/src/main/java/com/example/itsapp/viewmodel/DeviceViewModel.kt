@@ -16,11 +16,10 @@ import kotlinx.coroutines.launch
 class DeviceViewModel(application: Application): AndroidViewModel(application) {
     val context = getApplication<Application>().applicationContext
     val service: APIInterface = RetrofitClient.getInstance(context).create(APIInterface::class.java)
-    val prefs = SharedPreference(application)
 
     val deviceLiveData = MutableLiveData<DeviceInfo>()
     val deviceInfoLiveData = MutableLiveData<DeviceInfo>()
-    val deviceSpecLiveData = MutableLiveData<SpecInfo>()
+    val deviceSpecLiveData = MutableLiveData<DeviceInfo>()
     val deviceAddFavoritesLiveData = MutableLiveData<FavoritesInfo>()
     val deviceFavoritesLiveData = MutableLiveData<DeviceInfo>()
     val deviceDeleteFavoritesLiveData = MutableLiveData<String>()
@@ -42,7 +41,7 @@ class DeviceViewModel(application: Application): AndroidViewModel(application) {
 
     fun getSpec(deviceName: String){
         viewModelScope.launch {
-            val data: SpecInfo = service.getSpec(deviceName)
+            val data: DeviceInfo = service.getSpec(deviceName)
             deviceSpecLiveData.value = data
         }
     }

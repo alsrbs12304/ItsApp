@@ -60,6 +60,7 @@ class DeviceInfoActivity : AppCompatActivity() {
         deviceViewModel.getSpec(deviceName)
         deviceViewModel.deviceSpecLiveData.observe(this, Observer { specInfo ->
             if(specInfo.code.equals("200")){
+                specs_txt.text = specInfo.jsonArray[0].deviceSpecs
                 device_os.text = specInfo.jsonArray[0].deviceOs
                 device_cpu.text = specInfo.jsonArray[0].deviceCpu
                 device_memory.text = specInfo.jsonArray[0].deviceMemory

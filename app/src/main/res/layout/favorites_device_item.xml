@@ -21,7 +21,7 @@
             android:id="@+id/device_brand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Apple"/>
+            android:text="브랜드"/>
         <TextView
             android:id="@+id/device_name"
             android:layout_width="wrap_content"
@@ -51,6 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
+            android:layout_gravity="center"
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -65,7 +66,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="1,600,000"/>
+                    android:layout_centerInParent="true"
+                    android:inputType="textMultiLine"
+                    android:gravity="right"
+                    android:textSize="10sp"
+                    android:text="가격"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -80,7 +85,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="Mac OS"/>
+                    android:layout_centerInParent="true"
+                    android:inputType="textMultiLine"
+                    android:gravity="right"
+                    android:textSize="10sp"
+                    android:text="OS"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -90,12 +99,18 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:text="CPU"/>
+
                 <TextView
                     android:id="@+id/device_cpu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="Apple M1 칩"/>
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="right"
+                    android:inputType="textMultiLine"
+                    android:text="CPU"
+                    android:textSize="10sp" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -110,7 +125,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="8GB"/>
+                    android:layout_centerInParent="true"
+                    android:inputType="textMultiLine"
+                    android:gravity="right"
+                    android:textSize="10sp"
+                    android:text="RAM"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -120,12 +139,17 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:text="SSD"/>
+
                 <TextView
                     android:id="@+id/device_ssd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="256GB"/>
+                    android:layout_centerInParent="true"
+                    android:inputType="textMultiLine"
+                    android:gravity="right"
+                    android:textSize="10sp"
+                    android:text="용량" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

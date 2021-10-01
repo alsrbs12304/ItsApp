@@ -151,7 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="20dp"
-                    android:text="33.78cm(13.3인치) / 애플(ARM) / 실리콘 M1 / 파이어스톰 / APL1102 / 옥타코어 / 운영체제(OS): macOS Big Sur / 2560x1600(WQXGA) / DCI-P3: 지원 / 400nit / IPS(Retina) / 트루톤 / 8GB / SSD / 256GB / 내장그래픽 / M1 7 core / 802.11ax(Wi-Fi 6) / 웹캠(HD) / 썬더볼트3: 2개 / USB 3.1 Type-C / 지문 인식 / Apple T2 / USB-PD / ㅗ형 방향키 / 배터리: 49.9Wh / 충전단자: 타입C / 두께: 16.1mm / 무게: 1.29kg / 일반유통상품 / 용도: 사무/인강용, 휴대용" />
+                    android:text="스펙"/>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -10,8 +10,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itsapp.R
 import com.example.itsapp.model.vo.device.Device
+import com.example.itsapp.model.vo.spec.Spec
+import java.text.DecimalFormat
 
-class FavoritesDeviceAdapter(var deviceList:ArrayList<Device>) : RecyclerView.Adapter<FavoritesDeviceAdapter.ViewHolder>() {
+class FavoritesDeviceAdapter(var deviceList:ArrayList<Device>, var spec:ArrayList<Spec>) : RecyclerView.Adapter<FavoritesDeviceAdapter.ViewHolder>() {
 
     private lateinit var itemClickListenerDelete : OnItemClickListenerDelete
 
@@ -28,13 +30,15 @@ class FavoritesDeviceAdapter(var deviceList:ArrayList<Device>) : RecyclerView.Ad
         holder.deviceImg.setImageResource(R.drawable.ic_baseline_laptop_24)
         holder.deviceName.text = deviceList.get(position).deviceName
         holder.deviceBrand.text = deviceList.get(position).deviceBrand
+        holder.devicePrice.text = deviceList.get(position).devicePrice
+        holder.deviceOs.text = deviceList.get(position).deviceOs
+        holder.deviceCpu.text = deviceList.get(position).deviceCpu
+        holder.deviceMemory.text = deviceList.get(position).deviceMemory
+        holder.deviceSsd.text = deviceList.get(position).deviceSsd
 
         holder.deleteBtn.setOnClickListener(View.OnClickListener {
             itemClickListenerDelete.onClick(it,position)
         })
-
-
-
     }
 
     fun updateItem(item: List<Device>){

@@ -8,9 +8,11 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.itsapp.R
 import com.example.itsapp.model.vo.device.Device
+import com.example.itsapp.model.vo.spec.Spec
 import com.example.itsapp.view.adapter.FavoritesDeviceAdapter
 import com.example.itsapp.viewmodel.DeviceViewModel
 import com.example.itsapp.viewmodel.HomeViewModel
@@ -20,7 +22,8 @@ import kotlinx.android.synthetic.main.activity_favorites.*
 class FavoritesActivity : AppCompatActivity() {
 
     val deviceList = arrayListOf<Device>()
-    val deviceAdapter = FavoritesDeviceAdapter(deviceList)
+    val specList = arrayListOf<Spec>()
+    val deviceAdapter = FavoritesDeviceAdapter(deviceList,specList)
     private val viewModel: DeviceViewModel by viewModels()
     private val homeViewModel : HomeViewModel by viewModels()
 
@@ -28,8 +31,6 @@ class FavoritesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
 
-
-//        rv_device.layoutManager = GridLayoutManager(this,2)
         rv_favorites_device.layoutManager = LinearLayoutManager(this)
         rv_favorites_device.addItemDecoration(deviceAdapter.VerticalItemDecorator(10))
         rv_favorites_device.adapter = deviceAdapter
@@ -52,19 +53,11 @@ class FavoritesActivity : AppCompatActivity() {
                     var deviceName = deviceAdapter.deviceList[position].deviceName
                     viewModel.deleteFavorites(userId,deviceName)
                     Toast.makeText(v.context,"삭제되었습니다.",Toast.LENGTH_SHORT).show()
+                    viewModel.getFavorites(userId)
                 }
                 builder.setNegativeButton("취소",null)
                 builder.show()
             }
         })
-
-//        // 즐겨찾기 비교 버튼 클릭 시
-//        deviceAdapter.setItemClickListenerCompare(object : FavoritesDeviceAdapter.OnItemClickListenerCompare{
-//            override fun onClick(v: View, position: Int) {
-//                var deviceName = deviceAdapter.deviceList[position].deviceName
-//                Toast.makeText(v.context,deviceName,Toast.LENGTH_SHORT).show()
-//            }
-//        })
     }
-
 }
