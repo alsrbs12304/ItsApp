@@ -27,4 +27,8 @@ class SharedPreference(context: Context) {
     var loginMethod :String?
     get() = prefs.getString("loginMethod","")
     set(value) = prefs.edit().putString("loginMethod",value).apply()
+
+    fun removeloginMethod(){
+        prefs.edit().remove("loginMethod").apply()
+    }
 }

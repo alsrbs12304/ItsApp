@@ -22,12 +22,19 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        //Handler()가 Deprecated 되어 작업이 자동으로 손실,충돌,경쟁조건이 발생하는 버그 발생 가능
-        //때문에 Looper를 넣어서 사용
-        Handler(Looper.getMainLooper()).postDelayed({
-            /*일반 자동 로그인*/
-            AutoLogin()
-        },1000)
+        val intent = Intent();
+        val flag = intent.getStringExtra("from");
+
+        if(flag.isNullOrEmpty()){
+            //Handler()가 Deprecated 되어 작업이 자동으로 손실,충돌,경쟁조건이 발생하는 버그 발생 가능
+            //때문에 Looper를 넣어서 사용
+            Log.d("today", "onCreate: flag null")
+            Handler(Looper.getMainLooper()).postDelayed({
+                /*일반 자동 로그인*/
+                AutoLogin()
+            },1000)
+        }else
+            checkPrefs()
     }
     /*카카오 자동 로그인*/
     fun kakaoAutoLogin(){
@@ -48,16 +55,21 @@ class SplashActivity : AppCompatActivity() {
         }
     }
     fun AutoLogin(){
+        Log.d("today", "onCreate: flag null kakao login")
         if(viewModel.getLoginMethod().equals("카카오")) {
+            Log.d("today", "onCreate: flag null kakao auto login")
             /*카카오 자동 로그인*/
             kakaoAutoLogin()
         } else if (viewModel.getLoginMethod().equals("일반")) {
+            Log.d("today", "onCreate: flag null general login")
             val userId = viewModel.getLoginSession()
-            if (userId != "") {
+            if (userId.isNotBlank()) {
+                Log.d("today", "onCreate: flag null userid is null")
                 viewModel.setLoginMethod("일반")
                 checkPrefs()
             }
         }else{
+            Log.d("today", "onCreate: flag null go to main")
             startActivity(Intent(this, MainActivity::class.java))
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
             finish()
@@ -65,6 +77,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     fun checkPrefs(){ //looadingActivity 대체
+        Log.d("today", "onCreate: checkPrefs")
         viewModel.getLoginSession()
         viewModel.userIdLiveData.observe(this, Observer {
             Log.d("TAG", "checkPrefs: $it")
@@ -81,7 +94,7 @@ class SplashActivity : AppCompatActivity() {
                 finish()
             }else if (code.equals("204")) {
                 val intent = Intent(this, AddUserInfoActivity::class.java)
-                intent.putExtra("userId", SplashActivity.id)
+                intent.putExtra("userId", id)
                 startActivity(intent)
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 finish()

@@ -74,9 +74,11 @@ class HomeViewModel(application: Application): AndroidViewModel(application){
     /*로그아웃시 sharedpreference에서 쿠키 삭제하여 자동 로그인 방지*/
     fun logoutPref(){
         prefs.removeCookies()
+        prefs.removeloginMethod()
     }
     /*탈퇴하기 버튼*/
     fun retireApp(loginMethod: String){
+        logoutPref()
         viewModelScope.launch {
             val data = service.retireApp(loginMethod)
             retireLiveData.value = data

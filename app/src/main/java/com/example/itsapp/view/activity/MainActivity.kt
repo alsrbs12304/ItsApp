@@ -96,7 +96,9 @@ class MainActivity : AppCompatActivity() {
             if(code.equals("200")){
                 Snackbar.make(main_activity,"로그인 성공",Snackbar.LENGTH_SHORT).show()
                 viewModel.setLoginMethod("카카오")
-                startActivity(Intent(this, LoadingActivity::class.java))
+                val intent = Intent(this, SplashActivity::class.java)
+                intent.putExtra("from","kakaoLogin")
+                startActivity(intent)
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 finish()
             }else if(code.equals("204")){

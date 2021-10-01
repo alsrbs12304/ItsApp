@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import com.example.itsapp.R
 import com.example.itsapp.view.activity.HomeActivity
 import com.example.itsapp.view.activity.MainActivity
+import com.example.itsapp.view.activity.SplashActivity
 import com.example.itsapp.viewmodel.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.kakao.sdk.common.util.KakaoCustomTabsClient
@@ -86,7 +87,7 @@ class MyPageFragment : Fragment() {
         /*로그아웃 버튼*/
         mypage_logout.setOnClickListener{
             disconnect()
-            startActivity(Intent(activity,MainActivity::class.java))
+            startActivity(Intent(activity,SplashActivity::class.java))
             activity?.overridePendingTransition(R.anim.right_in, R.anim.left_out);
         }
     }
@@ -100,7 +101,7 @@ class MyPageFragment : Fragment() {
         viewModel.retireLiveData.observe(this, Observer {
             if(it=="200"){
                 disconnect()
-                val intent = Intent(activity,MainActivity::class.java)
+                val intent = Intent(activity,SplashActivity::class.java)
                 intent.putExtra("탈퇴","탈퇴")
                 startActivity(intent)
                 activity?.overridePendingTransition(R.anim.right_in, R.anim.left_out)
