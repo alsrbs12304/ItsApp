@@ -3,114 +3,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/news_fragment"
     android:orientation="vertical"
-    android:background="@color/gray300"
+    android:background="@color/white"
     tools:context=".view.fragment.IssueFragment">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:background="@color/white"
         >
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TODAY'S STORY"
-                android:textSize="30dp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/nanum_barun_gothic"
-                android:textStyle="bold"
-                android:layout_gravity="left"/>
-        </androidx.appcompat.widget.Toolbar>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_above="@+id/bottom_navigation_view"
-            android:background="@color/gray500" />
-    </LinearLayout>
-    <ScrollView
+            android:text="Today's Story"
+            android:textSize="30dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/nanum_barun_gothic"
+            android:textStyle="bold"
+            android:layout_gravity="left"/>
+    </androidx.appcompat.widget.Toolbar>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray500" />
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tips_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="horizontal"
+        >
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Apple"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Samsung"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LG"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ASUS"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DELL"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LENOVO"
+            />
+    </com.google.android.material.tabs.TabLayout>
+    <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-            <TextView
-                android:id="@+id/recent_news_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="#Recent News"
-                android:textColor="@color/black"
-                android:textSize="20dp"
-                android:gravity="left"
-                android:textStyle="bold"
-                android:drawableRight="@drawable/arrow_right_foreground"
-                android:background="@color/white"
-                />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/news_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray300" />
-            <TextView
-                android:id="@+id/tips_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="#Tips!"
-                android:textColor="@color/black"
-                android:textSize="20dp"
-                android:gravity="left"
-                android:textStyle="bold"
-                android:background="@color/white"
-                android:layout_marginTop="6dp"
-                android:drawableRight="@drawable/arrow_right_foreground"
-                />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/blog_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray300" />
-            <TextView
-                android:id="@+id/graph_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="#Review Trand"
-                android:textColor="@color/black"
-                android:textSize="20dp"
-                android:gravity="left"
-                android:textStyle="bold"
-                android:background="@color/white"
-                android:layout_marginTop="6dp"
-                />
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/trand_chart"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:background="@color/white"
-                />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray300" />
-        </LinearLayout>
-    </ScrollView>
+        android:background="@color/gray300" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/news_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        />
 </LinearLayout>

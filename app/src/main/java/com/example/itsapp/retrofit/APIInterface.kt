@@ -3,6 +3,9 @@ package com.example.itsapp.retrofit
 import com.example.itsapp.model.vo.*
 import com.example.itsapp.model.vo.device.DeviceInfo
 import com.example.itsapp.model.vo.user.UserInfo
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import com.example.itsapp.model.vo.comment.CommentInfo
 import com.example.itsapp.model.vo.favorites.FavoritesInfo
 import com.example.itsapp.model.vo.review.ReviewInfo
@@ -32,7 +35,7 @@ interface APIInterface {
 
     /*로그인*/
     @GET("/android/login")
-    suspend fun login(@Query("userId") userId: String): UserInfo
+    suspend fun login(@Query("userId") userId: String):UserInfo
 
     /*Kakao 로그인*/
     @FormUrlEncoded
@@ -118,7 +121,7 @@ interface APIInterface {
     @GET("/android/userInfo")
     suspend fun userInfo(
         @Query("loginMethod") loginMethod: String
-    ): UserInfo
+    ):UserInfo
 
     @GET("/android/getChoiceReview")
     suspend fun getChoiceReview(
@@ -157,6 +160,20 @@ interface APIInterface {
         @Query("commentId") commentId : Int
     ) : String
 
+    @FormUrlEncoded
+    @POST("/android/retireApp")
+    suspend fun retireApp(
+        @Field("loginMethod") loginMethod: String
+    ):String
+
+    /*이미지 업로드*/
+    @Multipart
+    @POST("/android/upload")
+    suspend fun uploadImage(@Part image:MultipartBody.Part) : String
+
+    @GET("/android/brandImg")
+    suspend fun brandImg():BrandImage
+
     @GET("/android/getSpec")
     suspend fun getSpec(
         @Query("deviceName") deviceName: String
@@ -166,8 +183,8 @@ interface APIInterface {
     @FormUrlEncoded
     @POST("/android/addFavorites")
     suspend fun addFavorites(
-         @Field("deviceName") deviceName : String,
-         @Field("userId") userId: String
+        @Field("deviceName") deviceName : String,
+        @Field("userId") userId: String
     ) : FavoritesInfo
 
     @GET("/android/getFavorites")

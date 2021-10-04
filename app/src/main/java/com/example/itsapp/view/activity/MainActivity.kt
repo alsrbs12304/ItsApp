@@ -36,16 +36,27 @@ class MainActivity : AppCompatActivity() {
         /*이미지 자동 슬라이드*/
         viewSlide()
         /*버튼 이벤트*/
-        eventBtn()
-        /*일반 자동 로그인*/
-        generalAutoLogin()
         liveData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        eventBtn()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val flag = intent.getStringExtra("탈퇴")
+        if(flag == "탈퇴"){
+                Snackbar.make(main_activity,"탈퇴하기 완료.",Snackbar.LENGTH_SHORT).show()
+        }
     }
     private fun eventBtn(){
         /*카카오톡 로그인 버튼*/
         kakao_signin_btn.setOnClickListener {
             kakaoLogin()
         }
+        /*로그인 버튼*/
         login_btn.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
@@ -54,20 +65,6 @@ class MainActivity : AppCompatActivity() {
         join_btn.setOnClickListener{
             startActivity(Intent(this, JoinActivity::class.java))
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
-        }
-    }
-    /*카카오 자동 로그인*/
-    fun kakaoAutoLogin(){
-        UserApiClient.instance.me { user, error ->
-            if(error !=null){
-                Log.e("TAG", "사용자 요청 실패",error )
-            }else if(user !=null){
-                if(user.kakaoAccount?.email != null){
-                    startActivity(Intent(this, LoadingActivity::class.java))
-                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                    finish()
-                }
-            }
         }
     }
     fun kakaoLogin(){
@@ -99,7 +96,9 @@ class MainActivity : AppCompatActivity() {
             if(code.equals("200")){
                 Snackbar.make(main_activity,"로그인 성공",Snackbar.LENGTH_SHORT).show()
                 viewModel.setLoginMethod("카카오")
-                startActivity(Intent(this, LoadingActivity::class.java))
+                val intent = Intent(this, SplashActivity::class.java)
+                intent.putExtra("from","kakaoLogin")
+                startActivity(intent)
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 finish()
             }else if(code.equals("204")){
@@ -108,21 +107,6 @@ class MainActivity : AppCompatActivity() {
                 Snackbar.make(main_activity,"에러", Snackbar.LENGTH_SHORT).show()
             }
         })
-    }
-    fun generalAutoLogin(){
-        if(!viewModel.getLoginMethod().equals("일반")){
-            /*카카오 자동 로그인*/
-            kakaoAutoLogin()
-        }
-        else if(viewModel.getLoginMethod().equals("일반")) {
-            val userId = viewModel.getLoginSession()
-            if(userId != " "){
-                viewModel.setLoginMethod("일반")
-                startActivity(Intent(this, LoadingActivity::class.java))
-                overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                finish()
-            }
-        }
     }
     fun viewSlide(){
         for (image in images){

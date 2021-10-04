@@ -80,4 +80,13 @@ dependencies {
 
     /*chart*/
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.10.0' 
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+
+    //s3
+    implementation 'com.amazonaws:aws-android-sdk-mobile-client:2.13.5'
+    implementation 'com.amazonaws:aws-android-sdk-cognito:2.13.5'
+    implementation 'com.amazonaws:aws-android-sdk-s3:2.13.5'
 }

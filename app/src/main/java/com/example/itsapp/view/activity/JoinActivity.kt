@@ -90,6 +90,7 @@ class JoinActivity : AppCompatActivity() {
                 Snackbar.make(join_activity,"닉네임을 입력해 주세요.",Snackbar.LENGTH_SHORT).show()
             }
         }
+        /*인증코드 확인 버튼*/
         email_check_btn.setOnClickListener{
             val code = email_code_et.text?.trim().toString()
             if(code.equals(emailCode) && !code.equals("") && !checkEmail){
@@ -99,7 +100,9 @@ class JoinActivity : AppCompatActivity() {
                 Snackbar.make(join_activity,"이메일 인증 완료되었습니다.",Snackbar.LENGTH_SHORT).show()
             }else if(checkEmail){
                 Snackbar.make(join_activity,"이미 인증 완료했습니다.",Snackbar.LENGTH_SHORT).show()
-            }else {
+            }else if(!checkId){
+                Snackbar.make(join_activity,"인증코드 전송 다시 눌러주세요.",Snackbar.LENGTH_SHORT).show()
+            } else {
                 Snackbar.make(join_activity,"인증번호가 틀렸습니다.",Snackbar.LENGTH_SHORT).show()
                 time_text.text = ""
             }

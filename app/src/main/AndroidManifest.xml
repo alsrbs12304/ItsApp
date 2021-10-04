@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.itsapp">
     <!-- 인터넷 사용 권한 -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 네트워크 상태 접근 권한 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 외장 메모리 사용 권한 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".util.GlobalApplication"
@@ -10,22 +12,30 @@
         android:icon="@mipmap/ic_main"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".view.activity.SplashActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.activity.ReviewDetailActivity" />
         <activity android:name=".view.activity.FavoritesActivity"></activity>
-        <activity android:name=".ImageTestActivity" />
         <activity android:name=".view.activity.ReviewDetailActivity" />
         <activity android:name=".view.activity.ReviewActivity" />
-        <activity android:name=".view.activity.TipsActivity" />
         <activity android:name=".view.activity.NewsActivity" />
         <activity android:name=".view.activity.ShowIssueActivity" />
         <activity
             android:name=".view.activity.FindPasswordActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".view.activity.ReviewWriteActivity" />
-        <activity android:name=".view.activity.LoadingActivity" />
         <activity android:name=".view.activity.DeviceInfoActivity" />
         <activity
             android:name=".view.activity.AddUserInfoActivity"
@@ -38,11 +48,6 @@
             android:name=".view.activity.JoinActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".view.activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity> <!-- 카카오톡 로그인 -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -59,7 +64,10 @@
                     android:host="oauth"
                     android:scheme="kakaocdc72611d8426465074f8f4a37d48a59" />
             </intent-filter>
-        </activity>
+        </activity> <!-- 전송작업을 background로 처리하기 위한 service -->
+        <service
+            android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
+            android:enabled="true" />
     </application>
 
 </manifest>
