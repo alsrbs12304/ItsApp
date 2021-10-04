@@ -3,18 +3,20 @@ package com.example.itsapp.view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itsapp.R
 import com.example.itsapp.model.vo.device.Device
 
-class DeviceAdapter(var deviceList:ArrayList<Device>) : RecyclerView.Adapter<DeviceAdapter.ViewHolder>(){
+class FavoritesDeviceAdapter2(var deviceList:ArrayList<Device>) : RecyclerView.Adapter<FavoritesDeviceAdapter2.ViewHolder>() {
 
-    private lateinit var itemClickListener : OnItemClickListener
+    private lateinit var itemClickListenerDelete : OnItemClickListenerDelete
+    private lateinit var itemClickListenerCompare : OnItemClickListenerCompare
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.device_item,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.favorites_device_item2,parent,false)
         return ViewHolder(view)
     }
 
@@ -29,8 +31,11 @@ class DeviceAdapter(var deviceList:ArrayList<Device>) : RecyclerView.Adapter<Dev
         holder.reviewPoint.text = deviceList.get(position).reviewPoint.toString()
         holder.reviewCount.text = deviceList.get(position).reviewCount.toString()
 
-        holder.itemView.setOnClickListener{
-            itemClickListener.onClick(it, position)
+        holder.deleteBtn.setOnClickListener(View.OnClickListener {
+            itemClickListenerDelete.onClick(it,position)
+        })
+        holder.compareBtn.setOnClickListener{
+            itemClickListenerCompare.onClick(it,position)
         }
     }
 
@@ -45,11 +50,21 @@ class DeviceAdapter(var deviceList:ArrayList<Device>) : RecyclerView.Adapter<Dev
         val deviceBrand = itemView.findViewById<TextView>(R.id.device_brand)
         val reviewPoint = itemView.findViewById<TextView>(R.id.review_point)
         val reviewCount = itemView.findViewById<TextView>(R.id.review_count)
+
+        val deleteBtn = itemView.findViewById<Button>(R.id.favorites_delete_btn)
+        val compareBtn = itemView.findViewById<Button>(R.id.favorites_compare_btn)
     }
-    interface OnItemClickListener{
+
+    interface OnItemClickListenerDelete{
         fun onClick(v: View, position: Int)
     }
-    fun setItemClickListener(onItemClickListener: OnItemClickListener){
-        this.itemClickListener = onItemClickListener
+    fun setItemClickListenerDelete(onItemClickListenerDelete: OnItemClickListenerDelete){
+        this.itemClickListenerDelete = onItemClickListenerDelete
+    }
+    interface OnItemClickListenerCompare{
+        fun onClick(v: View, position: Int)
+    }
+    fun setItemClickListenerCompare(onItemClickListenerCompare: OnItemClickListenerCompare){
+        this.itemClickListenerCompare = onItemClickListenerCompare
     }
 }

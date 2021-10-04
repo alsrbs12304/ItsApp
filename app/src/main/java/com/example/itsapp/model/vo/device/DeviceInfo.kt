@@ -1,5 +1,6 @@
-package com.example.itsapp.model.vo
+package com.example.itsapp.model.vo.device
 
+import com.example.itsapp.model.vo.device.Device
 import com.google.gson.annotations.SerializedName
 
 data class DeviceInfo(

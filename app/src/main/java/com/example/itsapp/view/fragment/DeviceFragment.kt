@@ -1,12 +1,12 @@
 package com.example.itsapp.view.fragment
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.itsapp.view.adapter.DeviceAdapter
 import com.example.itsapp.R
 import com.example.itsapp.view.activity.DeviceInfoActivity
-import com.example.itsapp.model.vo.Device
+import com.example.itsapp.model.vo.device.Device
 import com.example.itsapp.viewmodel.DeviceViewModel
 import kotlinx.android.synthetic.main.fragment_device.*
 
@@ -24,23 +24,12 @@ class DeviceFragment : Fragment() {
     val deviceList = arrayListOf<Device>()
     val deviceAdapter = DeviceAdapter(deviceList)
     private val viewModel: DeviceViewModel by viewModels()
-
-
     companion object{
         const val TAG : String = "로그"
 
         fun newInstance() : DeviceFragment {
             return DeviceFragment()
         }
-    }
-
-    // 메모리에 올라갔을때
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
     }
 
     // 뷰가 생성됐을 때
@@ -51,9 +40,6 @@ class DeviceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
         rv_device.layoutManager = GridLayoutManager(activity,2)
         rv_device.adapter = deviceAdapter
 
@@ -84,4 +70,5 @@ class DeviceFragment : Fragment() {
             }
         })
     }
+
 }

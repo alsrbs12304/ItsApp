@@ -30,16 +30,6 @@
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:layout_gravity="center"/>
-
-            <ImageButton
-                android:id="@+id/favorites"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_star_border_24"
-                android:layout_gravity="right"
-                android:background="@color/transparent"/>
-
-
         </FrameLayout>
     </androidx.appcompat.widget.Toolbar>
 
@@ -148,18 +138,106 @@
             </LinearLayout>
 
             <!-- 2번째 레이아웃 (제품 설명이나 제품 사양 등을 입력하는 부분) -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:background="@color/white"
-                android:layout_marginTop="7dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="제품 설명이나 제품 사양 입력 할 부분"/>
-            </LinearLayout>
 
             <!-- 3번째 레이아웃 (리뷰 부분)-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:orientation="vertical"
+                android:background="@color/white">
+                <TextView
+                    android:id="@+id/specs_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:text="스펙"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="17sp"
+                        android:text="OS"/>
+                    <TextView
+                        android:id="@+id/device_os"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="OS"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="17sp"
+                        android:text="CPU"/>
+                    <TextView
+                        android:id="@+id/device_cpu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="CPU"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="17sp"
+                        android:text="메인메모리"/>
+                    <TextView
+                        android:id="@+id/device_memory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="메인메모리"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="17sp"
+                        android:text="저장용량"/>
+                    <TextView
+                        android:id="@+id/device_ssd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="저장용량"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="17sp"
+                        android:text="DISPALY"/>
+                    <TextView
+                        android:id="@+id/device_dispaly"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="DISPALY"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="17sp"
+                        android:text="기타"/>
+                    <TextView
+                        android:id="@+id/device_etc_spec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="기타"/>
+                </LinearLayout>
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -374,17 +452,29 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/favorites_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:background="@color/gray500"
+            android:textColor="@color/white"
+            android:text="즐겨찾기 담기"/>
         <Button
             android:id="@+id/go_to_review_write_activity"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textColor="@color/white"
-            android:background="@color/transparent"
+            android:background="@color/colorPrimary"
             android:textSize="20dp"
             android:text="리뷰 작성"/>
     </LinearLayout>
+
 </LinearLayout>

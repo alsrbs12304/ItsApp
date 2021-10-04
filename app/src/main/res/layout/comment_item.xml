@@ -67,12 +67,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray600"
                 android:text="2021.06.06"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="댓글 달기"
-                android:textColor="@color/gray600"
-                android:background="@color/transparent"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

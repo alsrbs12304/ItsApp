@@ -5,14 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.itsapp.R
-import com.example.itsapp.model.vo.Review
+import com.example.itsapp.model.vo.review.Review
 import com.example.itsapp.view.adapter.ReviewAdapter
 import com.example.itsapp.viewmodel.DeviceViewModel
 import com.example.itsapp.viewmodel.ReviewViewModel

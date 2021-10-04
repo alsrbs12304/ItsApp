@@ -6,6 +6,10 @@ import com.example.itsapp.model.vo.UserInfo
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import com.example.itsapp.model.vo.comment.CommentInfo
+import com.example.itsapp.model.vo.favorites.FavoritesInfo
+import com.example.itsapp.model.vo.review.ReviewInfo
+import com.example.itsapp.model.vo.spec.SpecInfo
 import retrofit2.http.*
 
 interface APIInterface {
@@ -154,7 +158,7 @@ interface APIInterface {
     @GET("/android/deleteComment")
     suspend fun deleteComment(
         @Query("commentId") commentId : Int
-    ) : CommentInfo
+    ) : String
 
     @FormUrlEncoded
     @POST("/android/retireApp")
@@ -168,5 +172,29 @@ interface APIInterface {
     suspend fun uploadImage(@Part image:MultipartBody.Part) : String
 
     @GET("/android/brandImg")
-    suspend fun brandImg():BrandImage
+    suspend fun brandImg():BrandImag
+
+    @GET("/android/getSpec")
+    suspend fun getSpec(
+        @Query("deviceName") deviceName: String
+    ) : DeviceInfo
+
+    // 즐겨찾기 담기
+    @FormUrlEncoded
+    @POST("/android/addFavorites")
+    suspend fun addFavorites(
+        @Field("deviceName") deviceName : String,
+        @Field("userId") userId: String
+    ) : FavoritesInfo
+
+    @GET("/android/getFavorites")
+    suspend fun getFavorites(
+        @Query("userId") userId : String
+    ) : DeviceInfo
+
+    @GET("/android/deleteFavorites")
+    suspend fun deleteFavorites(
+        @Query("userId") userId: String,
+        @Query("deviceName") deviceName: String
+    ) : String
 }

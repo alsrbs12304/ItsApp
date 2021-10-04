@@ -6,8 +6,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.PopupMenu
@@ -19,7 +17,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.itsapp.viewmodel.CommentViewModel
 import com.example.itsapp.R
-import com.example.itsapp.model.vo.Comment
+import com.example.itsapp.model.vo.comment.Comment
 import com.example.itsapp.view.adapter.CommentAdapter
 import com.example.itsapp.viewmodel.HomeViewModel
 import com.example.itsapp.viewmodel.ReviewViewModel
@@ -29,8 +27,6 @@ import kotlinx.android.synthetic.main.activity_review_detail.back_btn
 import kotlinx.android.synthetic.main.activity_review_detail.device_brand
 import kotlinx.android.synthetic.main.activity_review_detail.device_name
 import kotlinx.android.synthetic.main.activity_review_detail.review_point
-import kotlinx.android.synthetic.main.activity_review_write.*
-import kotlinx.android.synthetic.main.comment_item.*
 
 class ReviewDetailActivity : AppCompatActivity() {
 
@@ -86,9 +82,9 @@ class ReviewDetailActivity : AppCompatActivity() {
                 Snackbar.make(review_detail_layout,"댓글을 입력해주세요.", Snackbar.LENGTH_SHORT).show()
             }else{
                 commentViewModel.writeComment(deviceName,reviewWriter,writer,commentContent)
-
             }
         }
+
         commentViewModel.writeCommentLiveData.observe(this, Observer {
             if(it.code.equals("200")){
                 hidekeyboard()
@@ -97,31 +93,53 @@ class ReviewDetailActivity : AppCompatActivity() {
                 commentAdapter.updateItem(commentList)
             }
         })
-        commentAdapter.setItemClickListener(object : CommentAdapter.OnItemClickListener{
-            override fun onClick(v: View, position: Int) {
-                var popup = PopupMenu(application, v)
-                menuInflater.inflate(R.menu.more_menu,popup.menu)
-                popup.setOnMenuItemClickListener { item ->
-                    when (item.itemId){
-                        R.id.action_delete -> {
-                            Toast.makeText(application, "댓글 삭제", Toast.LENGTH_SHORT).show()
+
+        commentViewModel.commentLiveData.observe(this, Observer { commentInfo ->
+            if(commentInfo.code.equals("200")){
+                commentAdapter.setItemClickListener(object : CommentAdapter.OnItemClickListener{
+                    override fun onClick(v: View, position: Int) {
+                        var popup = PopupMenu(application, v)
+                        menuInflater.inflate(R.menu.more_menu,popup.menu)
+                        popup.setOnMenuItemClickListener { item ->
+                            when (item.itemId){
+                                R.id.action_delete -> {
+                                    Toast.makeText(application, "댓글 삭제", Toast.LENGTH_SHORT).show()
+                                    Log.i("getCommentId",commentInfo.jsonArray[position].commnetId.toString())
+                                    commentViewModel.deleteComment(commentInfo.jsonArray[position].commnetId)
+                                }
+                                R.id.action_report ->
+                                    Toast.makeText(application,"신고 하기",Toast.LENGTH_SHORT).show()
+                            }
+                            false
                         }
-                        R.id.action_report ->
-                            Toast.makeText(application,"신고 하기",Toast.LENGTH_SHORT).show()
+                        popup.show()
                     }
-                    false
-                }
-                popup.show()
+                })
             }
         })
+//        commentAdapter.setItemClickListener(object : CommentAdapter.OnItemClickListener{
+//            override fun onClick(v: View, position: Int) {
+//                var popup = PopupMenu(application, v)
+//                menuInflater.inflate(R.menu.more_menu,popup.menu)
+//                popup.setOnMenuItemClickListener { item ->
+//                    when (item.itemId){
+//                        R.id.action_delete -> {
+//                            Toast.makeText(application, "댓글 삭제", Toast.LENGTH_SHORT).show()
+//                        }
+//                        R.id.action_report ->
+//                            Toast.makeText(application,"신고 하기",Toast.LENGTH_SHORT).show()
+//                    }
+//                    false
+//                }
+//                popup.show()
+//            }
+//        })
 
         delete_btn.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("리뷰 삭제")
             builder.setMessage("리뷰를 삭제하시겠습니까?")
-            builder.setPositiveButton(
-                "삭제"
-            ) { dialog: DialogInterface?, which: Int ->
+            builder.setPositiveButton("삭제") { dialog: DialogInterface?, which: Int ->
                 val loginId = homeViewModel.getLoginSession()
                 reviewViewModel.getLoginUserId(loginId)
                 reviewViewModel.loginUserIdLiveData.observe(this, Observer { userInfo ->

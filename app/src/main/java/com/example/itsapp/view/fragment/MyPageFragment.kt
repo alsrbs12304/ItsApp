@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.itsapp.R
+import com.example.itsapp.view.activity.FavoritesActivity
 import com.example.itsapp.view.activity.HomeActivity
 import com.example.itsapp.view.activity.MainActivity
 import com.example.itsapp.view.activity.SplashActivity
@@ -89,6 +90,11 @@ class MyPageFragment : Fragment() {
             disconnect()
             startActivity(Intent(activity,SplashActivity::class.java))
             activity?.overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        }
+
+        // 즐겨찾기 (민균)
+        go_to_favorites.setOnClickListener {
+            startActivity(Intent(activity,FavoritesActivity::class.java))
         }
     }
     /*라이브데이터*/
