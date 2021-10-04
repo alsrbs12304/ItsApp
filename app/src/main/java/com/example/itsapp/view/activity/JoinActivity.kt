@@ -22,6 +22,9 @@ import java.util.regex.Pattern
 
 class JoinActivity : AppCompatActivity() {
 
+    //TODO : 프로필 사진 넣기
+    //TODO : 중복 확인 버튼 클릭시 내려 앉는 위치 수정
+    //TODO : 이미 존재하는 이메일에 인증코드 전송시 무한 progressbar
     private var userId:String = ""
     private var emailCode:String = ""
     private var checkId = false
