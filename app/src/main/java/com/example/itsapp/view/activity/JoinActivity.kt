@@ -2,6 +2,7 @@ package com.example.itsapp.view.activity
 
 import android.app.ActivityOptions
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.StrictMode
@@ -13,6 +14,8 @@ import android.widget.ProgressBar
 import com.example.itsapp.R
 import com.example.itsapp.viewmodel.JoinViewModel
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.example.itsapp.util.MailSender
 import com.google.android.material.snackbar.Snackbar
@@ -22,9 +25,6 @@ import java.util.regex.Pattern
 
 class JoinActivity : AppCompatActivity() {
 
-    //TODO : 프로필 사진 넣기
-    //TODO : 중복 확인 버튼 클릭시 내려 앉는 위치 수정
-    //TODO : 이미 존재하는 이메일에 인증코드 전송시 무한 progressbar
     private var userId:String = ""
     private var emailCode:String = ""
     private var checkId = false
@@ -44,6 +44,14 @@ class JoinActivity : AppCompatActivity() {
         textWarcher()
     }
     private fun btnEvent(){
+        /*프로필 사진 버튼*/
+        //TODO : 프로필 사진 넣기
+        profile_btn.setOnClickListener{
+            //TODO : 권한 체크 후 권한 허용 받았으면 갤러리에서 이미지 갖고옴
+            //TODO : 권한 거부된 상태면 한번더 권한 요청
+            //TODO : 권한 거부시 이미지 못가져온다고 Snackbar
+            checkPermission()
+        }
         /*회원가입 버튼*/
         join_btn.setOnClickListener {
             userId = join_id_edt.text.toString().trim()
@@ -90,7 +98,7 @@ class JoinActivity : AppCompatActivity() {
             if(!userNickName.equals("")){
                 viewModel.checkNick(userNickName)
             }else{
-                Snackbar.make(join_activity,"닉네임을 입력해 주세요.",Snackbar.LENGTH_SHORT).show()
+                nickname_input_layout.error = "닉네임을 입력해주세요."
             }
         }
         /*인증코드 확인 버튼*/
@@ -204,6 +212,7 @@ class JoinActivity : AppCompatActivity() {
                     Snackbar.make(join_activity,"이메일을 이미 전송했습니다.",Snackbar.LENGTH_SHORT).show()
                 }
             }else if(code.equals("204")){
+                loading_bar.visibility = ProgressBar.GONE
                 id_input_layout.error="이미 사용중인 아이디입니다."
                 checkId = false
             }else{
@@ -232,7 +241,7 @@ class JoinActivity : AppCompatActivity() {
                 nickname_input_layout.error = "이미 사용중인 닉네임입니다."
                 false
             }else{
-                Snackbar.make(join_activity,"에러",Snackbar.LENGTH_SHORT).show()
+                nickname_input_layout.error = "에러. 고객센터에 문의 바랍니다."
                 false
             }
         })
@@ -254,11 +263,48 @@ class JoinActivity : AppCompatActivity() {
             }
         })
     }
+    /*스톱와치용 스레드*/
     private fun thread(){
         StrictMode.setThreadPolicy(
             StrictMode.ThreadPolicy.Builder()
             .permitDiskReads()
             .permitDiskWrites()
             .permitNetwork().build());
+    }
+    fun showContextPopupPermission(){
+        AlertDialog.Builder(this).setTitle("권한이 필요합니다")
+            .setMessage("사진을 불러오기 위해 권한이 필요합니다")
+            .setPositiveButton("동의하기") { _, _ ->
+                requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1000)
+            }
+            .setNegativeButton("취소하기") { _, _ ->}
+            .create()
+            .show()
+
+    }
+    /*퍼미션 체크*/
+    private fun checkPermission(){
+        when{
+            ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            )== PackageManager.PERMISSION_GRANTED -> {
+                //TODO: 권한이 잘 부여 되었을 때 갤러리에서 사진을 선택하는 기능
+                //openAlbum()
+            }
+            ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            )== PackageManager.PERMISSION_DENIED -> {
+                //TODO:권한을 거부했을때
+            }
+            shouldShowRequestPermissionRationale(android.Manifest.permission.READ_EXTERNAL_STORAGE)->{
+                // 교육용 팝 확인 후 권한 팝업 띄우는 기능
+                showContextPopupPermission()
+            }
+            else ->{
+                requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1000)
+            }
+        }
     }
 }
