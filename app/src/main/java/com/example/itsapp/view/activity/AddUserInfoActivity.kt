@@ -38,7 +38,7 @@ class AddUserInfoActivity : AppCompatActivity() {
                 Log.d("TAG", "eventBtn: "+nickname)
                 viewModel.kakaoUserInfo(id,nickname)
             }else {
-                Snackbar.make(add_user_info_activity,"에러",Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(add_user_info_activity,"닉네임 체크 해주세요.",Snackbar.LENGTH_SHORT).show()
             }
         }
     }

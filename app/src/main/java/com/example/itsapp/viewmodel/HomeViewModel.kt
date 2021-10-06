@@ -52,7 +52,6 @@ class HomeViewModel(application: Application): AndroidViewModel(application){
     }
     /*탈퇴하기 버튼*/
     fun retireApp(loginMethod: String){
-        logoutPref()
         viewModelScope.launch {
             val data = service.retireApp(loginMethod)
             retireLiveData.value = data
