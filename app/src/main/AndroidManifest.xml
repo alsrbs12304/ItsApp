@@ -28,7 +28,6 @@
         </activity>
         <activity android:name=".view.activity.ReviewDetailActivity" />
         <activity android:name=".view.activity.FavoritesActivity"></activity>
-        <activity android:name=".view.activity.ReviewDetailActivity" />
         <activity android:name=".view.activity.ReviewActivity" />
         <activity android:name=".view.activity.NewsActivity" />
         <activity android:name=".view.activity.ShowIssueActivity" />
@@ -69,5 +68,4 @@
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
     </application>
-
 </manifest>

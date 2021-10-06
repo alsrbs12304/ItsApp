@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingRight="15dp"
@@ -72,25 +72,23 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:layout_gravity="center_vertical"
                     android:orientation="vertical">
                     <TextView
                         android:id="@+id/device_brand"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/gray600"
-                        android:text="브랜드 명"/>
+                        android:text="Apple"/>
                     <TextView
                         android:id="@+id/device_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="기기 명"
+                        android:text="MacBook Air M1 칩 256GB 저장 용량"
                         android:textColor="@color/black"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentRight="true">
                     <ImageView
                         android:layout_width="70dp"
@@ -103,7 +101,7 @@
                         android:background="@color/transparent"
                         android:layout_gravity="center_vertical"/>
                 </LinearLayout>
-            </LinearLayout>
+            </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
