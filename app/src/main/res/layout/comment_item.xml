@@ -37,10 +37,10 @@
             android:layout_alignParentRight="true">
 
             <ImageButton
-                android:id="@+id/more_btn"
+                android:id="@+id/delete_comment_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_more_vert_24"
+                android:src="@drawable/ic_baseline_clear_24"
                 android:background="@color/transparent"/>
         </LinearLayout>
     </RelativeLayout>

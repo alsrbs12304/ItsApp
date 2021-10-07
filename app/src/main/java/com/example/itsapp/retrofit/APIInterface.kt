@@ -157,7 +157,8 @@ interface APIInterface {
 
     @GET("/android/deleteComment")
     suspend fun deleteComment(
-        @Query("commentId") commentId : Int
+        @Query("commentId") commentId : Int,
+        @Query("writer") writer: String
     ) : String
 
     @FormUrlEncoded
@@ -197,4 +198,9 @@ interface APIInterface {
         @Query("userId") userId: String,
         @Query("deviceName") deviceName: String
     ) : String
+
+    @GET("/android/getUserNickName")
+    suspend fun getUserNickName(
+        @Query("userId") userId: String
+    ) :String
 }

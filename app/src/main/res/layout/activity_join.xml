@@ -60,6 +60,17 @@
                     android:layout_marginRight="20dp"
                     android:orientation="vertical">
 
+                    <ImageButton
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:id="@+id/profile_btn"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/profile_img"
+                        android:background="@drawable/profile_button_round"
+                        android:adjustViewBounds="true"
+                        android:layout_gravity="center"
+                        />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -237,7 +248,6 @@
                             android:textColor="@color/black"
                             android:background="@color/transparent"
                             android:fontFamily="@font/nanum_barun_gothic"
-                            android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             />
                     </RelativeLayout>

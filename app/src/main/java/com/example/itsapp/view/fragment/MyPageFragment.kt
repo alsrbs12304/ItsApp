@@ -108,7 +108,6 @@ class MyPageFragment : Fragment() {
             if(it=="200"){
                 disconnect()
                 val intent = Intent(activity,SplashActivity::class.java)
-                intent.putExtra("탈퇴","탈퇴")
                 startActivity(intent)
                 activity?.overridePendingTransition(R.anim.right_in, R.anim.left_out)
                 activity?.finish()

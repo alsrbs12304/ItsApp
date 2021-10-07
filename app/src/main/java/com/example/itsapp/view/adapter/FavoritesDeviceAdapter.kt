@@ -13,7 +13,7 @@ import com.example.itsapp.model.vo.device.Device
 import com.example.itsapp.model.vo.spec.Spec
 import java.text.DecimalFormat
 
-class FavoritesDeviceAdapter(var deviceList:ArrayList<Device>, var spec:ArrayList<Spec>) : RecyclerView.Adapter<FavoritesDeviceAdapter.ViewHolder>() {
+class FavoritesDeviceAdapter(var deviceList:ArrayList<Device>) : RecyclerView.Adapter<FavoritesDeviceAdapter.ViewHolder>() {
 
     private lateinit var itemClickListenerDelete : OnItemClickListenerDelete
 
@@ -39,6 +39,12 @@ class FavoritesDeviceAdapter(var deviceList:ArrayList<Device>, var spec:ArrayLis
         holder.deleteBtn.setOnClickListener(View.OnClickListener {
             itemClickListenerDelete.onClick(it,position)
         })
+    }
+
+    fun updateItem2(position: Int){
+        deviceList.removeAt(position)
+        notifyItemRemoved(position)
+        notifyDataSetChanged()
     }
 
     fun updateItem(item: List<Device>){

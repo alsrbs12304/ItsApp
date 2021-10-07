@@ -1,32 +1,24 @@
 package com.example.itsapp.viewmodel
-
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.itsapp.model.vo.BrandImage
-import com.example.itsapp.model.vo.user.User
 import com.example.itsapp.model.vo.user.UserInfo
-import com.example.itsapp.model.vo.userDetailInfo
 import com.example.itsapp.retrofit.APIInterface
 import com.example.itsapp.retrofit.RetrofitClient
 import com.example.itsapp.util.SharedPreference
 import kotlinx.coroutines.launch
-
 class HomeViewModel(application: Application): AndroidViewModel(application){
     val context = getApplication<Application>().applicationContext
     val prefs:SharedPreference = SharedPreference(context)
     val service: APIInterface = RetrofitClient.getInstance(context).create(
         APIInterface::class.java)
     val userIdLiveData = MutableLiveData<String>()
-    val secondJoinLiveData = MutableLiveData<String>()
-    val userLiveData = MutableLiveData<String>()
-    val participationLiveData = MutableLiveData<userDetailInfo>()
     val userInfoLiveData = MutableLiveData<UserInfo>()
     val retireLiveData = MutableLiveData<String>()
     val brandImgLiveData = MutableLiveData<BrandImage>()
-
     fun getLoginSession():String{
         var userSession = ""
         val iterator = prefs.getCookies()?.iterator()
@@ -39,27 +31,6 @@ class HomeViewModel(application: Application): AndroidViewModel(application){
         }
         userIdLiveData.postValue(userSession)
         return userSession
-    }
-
-    fun seceondJoin(userId:String){
-        viewModelScope.launch {
-            val data = service.seceondJoin(userId)
-            secondJoinLiveData.value = data
-        }
-    }
-
-    fun userJob(userSex:String,userAge:String,userJob:String){
-        viewModelScope.launch {
-            val data = service.userJob(userSex,userAge,userJob)
-            userLiveData.value = data
-        }
-    }
-
-    fun surveyParticipation(){
-        viewModelScope.launch {
-            val data = service.surveyParticipation()
-            participationLiveData.value = data
-        }
     }
     /*유저 정보*/
     fun userInfo(loginMethod:String){

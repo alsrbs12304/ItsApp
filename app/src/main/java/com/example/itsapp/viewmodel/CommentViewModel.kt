@@ -16,6 +16,7 @@ class CommentViewModel(application: Application): AndroidViewModel(application) 
     val commentLiveData = MutableLiveData<CommentInfo>()
     val writeCommentLiveData = MutableLiveData<CommentInfo>()
     val deleteCommentLiveData = MutableLiveData<String>()
+    val userNickNameLiveData = MutableLiveData<String>()
 
     fun getComment(deviceName : String, reviewWriter : String){
         viewModelScope.launch {
@@ -30,10 +31,16 @@ class CommentViewModel(application: Application): AndroidViewModel(application) 
             writeCommentLiveData.value = data
         }
     }
-    fun deleteComment(commentId : Int){
+    fun deleteComment(commentId : Int, writer: String){
         viewModelScope.launch {
-            val data:String = service.deleteComment(commentId)
+            val data:String = service.deleteComment(commentId,writer)
             deleteCommentLiveData.value = data
+        }
+    }
+    fun getUserNickName(userId:String){
+        viewModelScope.launch {
+            val data : String = service.getUserNickName(userId)
+            userNickNameLiveData.value = data
         }
     }
 }
