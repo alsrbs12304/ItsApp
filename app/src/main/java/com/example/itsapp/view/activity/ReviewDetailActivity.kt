@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.itsapp.viewmodel.CommentViewModel
 import com.example.itsapp.R
 import com.example.itsapp.model.vo.comment.Comment
+import com.example.itsapp.model.vo.userDetailInfo
 import com.example.itsapp.view.adapter.CommentAdapter
 import com.example.itsapp.viewmodel.HomeViewModel
 import com.example.itsapp.viewmodel.ReviewViewModel
@@ -48,11 +49,10 @@ class ReviewDetailActivity : AppCompatActivity() {
         }
         val intent = intent
         val deviceName = intent.getStringExtra("deviceName")
-        val writer = intent.getStringExtra("writer")
-        Log.i("deviceName1",deviceName.toString())
-        Log.i("writer1",writer.toString())
+        val reviewWriter = intent.getStringExtra("writer") // 리뷰 작성자 닉네임
 
-        reviewViewModel.getChoiceReview(deviceName!!, writer!!)
+
+        reviewViewModel.getChoiceReview(deviceName!!, reviewWriter!!)
         reviewViewModel.reviewLiveData.observe(this, Observer { reviewInfo ->
             if(reviewInfo.code.equals("200")){
                 device_brand.text = reviewInfo.jsonArray[0].deviceBrand
@@ -68,7 +68,7 @@ class ReviewDetailActivity : AppCompatActivity() {
         rv_comment.adapter = commentAdapter
         rv_comment.addItemDecoration(DividerItemDecoration(this, 1));
 
-        commentViewModel.getComment(deviceName, writer)
+        commentViewModel.getComment(deviceName, reviewWriter)
         commentViewModel.commentLiveData.observe(this, Observer { commentInfo ->
             if(commentInfo.code.equals("200")){
                 commentList = commentInfo.jsonArray as ArrayList<Comment>
@@ -77,15 +77,17 @@ class ReviewDetailActivity : AppCompatActivity() {
         })
 
         comment_write_btn.setOnClickListener {
-            val deviceName = deviceName
-            val reviewWriter = writer // 리뷰 작성자의 아이디
-            val writer = homeViewModel.getLoginSession() // 댓글 작성자 즉, 로그인된 사람의 아이디
             val commentContent = comment_edt.text.toString()
             if(commentContent.isEmpty()){
                 Snackbar.make(review_detail_layout,"댓글을 입력해주세요.", Snackbar.LENGTH_SHORT).show()
             }else{
-                commentViewModel.getUserNickName(writer)
-                commentViewModel.writeComment(deviceName,reviewWriter,writer,commentContent)
+                commentViewModel.getUserNickName(userId)
+                commentViewModel.userNickNameLiveData.observe(this, Observer { userInfo ->
+                    if(userInfo.code.equals("200")){
+                        val writer = userInfo.jsonArray.userNickname
+                        commentViewModel.writeComment(deviceName, reviewWriter, writer, commentContent)
+                    }
+                })
             }
         }
 
@@ -94,66 +96,36 @@ class ReviewDetailActivity : AppCompatActivity() {
                 hidekeyboard()
                 comment_edt.setText(null)
                 commentList.add(it.jsonArray[0])
-                Log.i("comment",it.jsonArray[0].toString())
                 commentAdapter.updateItem(commentList)
             }
         })
 
-        commentAdapter.setItemClickListener(object : CommentAdapter.OnItemClickListener {
+
+        commentAdapter.setItemClickListener(object : CommentAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 val builder = AlertDialog.Builder(v.context)
                 builder.setTitle("댓글 삭제")
                 builder.setMessage("댓글을 삭제하시겠습니까?")
                 builder.setPositiveButton("삭제") { dialog: DialogInterface?, which: Int ->
-                    commentViewModel.commentLiveData.observe(this@ReviewDetailActivity, Observer { commentInfo ->
-                        if (commentInfo.code.equals("200")) {
-                            Snackbar.make(review_detail_layout, "댓글이 삭제되었습니다.", Snackbar.LENGTH_SHORT).show()
-                            Log.i("getCommentId",commentInfo.jsonArray[position].commnetId.toString())
-                            commentViewModel.deleteComment(commentInfo.jsonArray[position].commnetId, userId)
-                        }else{
-                            Snackbar.make(review_detail_layout, "너 아니", Snackbar.LENGTH_SHORT).show()
+                    commentViewModel.getUserNickName(userId)
+                    commentViewModel.userNickNameLiveData.observe(this@ReviewDetailActivity, Observer { userInfo ->
+                        if(userInfo.code.equals("200")){
+                            Log.i("loginNick",userInfo.jsonArray.userNickname)
+                            if(commentList.get(position).writer.equals(userInfo.jsonArray.userNickname)){
+                                commentViewModel.deleteComment(commentList.get(position).commnetId, userId)
+                                Snackbar.make(review_detail_layout, "댓글이 삭제되었습니다.", Snackbar.LENGTH_SHORT).show()
+                                commentAdapter.updateItem2(position)
+                            }else{
+                                Snackbar.make(review_detail_layout, "댓글 작성자만 해당 댓글을 삭제할 수 있습니다.", Snackbar.LENGTH_SHORT).show()
+                            }
                         }
                     })
-                    commentAdapter.updateItem2(position)
                 }
                 builder.setNegativeButton("취소", null)
                 builder.show()
             }
         })
 
-
-//        commentViewModel.deleteCommentLiveData.observe(this, Observer { commentInfo ->
-//            if(commentInfo.code.equals("200")){
-//                Snackbar.make(review_detail_layout, "댓글이 삭제되었습니다.", Snackbar.LENGTH_SHORT).show()
-//                commentViewModel.deleteComment(commentInfo.jsonArray[position].commnetId, userId)
-//            }else{
-//                Snackbar.make(review_detail_layout, "너 아니", Snackbar.LENGTH_SHORT).show()
-//            }
-//        })
-
-//        commentViewModel.commentLiveData.observe(this, Observer { commentInfo ->
-//            if(commentInfo.code.equals("200")){
-//                commentAdapter.setItemClickListener(object : CommentAdapter.OnItemClickListener{
-//                    override fun onClick(v: View, position: Int) {
-//                        var popup = PopupMenu(application, v)
-//                        menuInflater.inflate(R.menu.more_menu,popup.menu)
-//                        popup.setOnMenuItemClickListener { item ->
-//                            when (item.itemId){
-//                                R.id.action_delete -> {
-//                                    Toast.makeText(application, "댓글 삭제", Toast.LENGTH_SHORT).show()
-//                                    Log.i("getCommentId",commentInfo.jsonArray[position].commnetId.toString())
-//                                    commentViewModel.deleteComment(commentInfo.jsonArray[position].commnetId)
-//                                }
-//                                R.id.action_report ->
-//                                    Toast.makeText(application,"신고 하기",Toast.LENGTH_SHORT).show()
-//                            }
-//                            false
-//                        }
-//                        popup.show()
-//                    }
-//                })
-//            }
-//        })
 
         delete_btn.setOnClickListener {
             val builder = AlertDialog.Builder(this)
@@ -165,8 +137,8 @@ class ReviewDetailActivity : AppCompatActivity() {
                 reviewViewModel.loginUserIdLiveData.observe(this, Observer { userInfo ->
                     if(userInfo.code.equals("200")) {
                         Log.i("userNickName", userInfo.jsonArray.userNickname)
-                        if(writer.equals(userInfo.jsonArray.userNickname)){
-                            reviewViewModel.deleteReview(deviceName,writer)
+                        if(reviewWriter.equals(userInfo.jsonArray.userNickname)){
+                            reviewViewModel.deleteReview(deviceName,reviewWriter)
                         }else{
                             Toast.makeText(this,"리뷰 작성자만 해당 리뷰를 삭제할 수 있습니다.",Toast.LENGTH_SHORT).show()
                         }

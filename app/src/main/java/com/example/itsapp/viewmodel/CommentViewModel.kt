@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.itsapp.model.vo.comment.CommentInfo
+import com.example.itsapp.model.vo.user.UserInfo
 import com.example.itsapp.retrofit.APIInterface
 import com.example.itsapp.retrofit.RetrofitClient
 import kotlinx.coroutines.launch
@@ -16,7 +17,7 @@ class CommentViewModel(application: Application): AndroidViewModel(application) 
     val commentLiveData = MutableLiveData<CommentInfo>()
     val writeCommentLiveData = MutableLiveData<CommentInfo>()
     val deleteCommentLiveData = MutableLiveData<String>()
-    val userNickNameLiveData = MutableLiveData<String>()
+    val userNickNameLiveData = MutableLiveData<UserInfo>()
 
     fun getComment(deviceName : String, reviewWriter : String){
         viewModelScope.launch {
@@ -39,7 +40,7 @@ class CommentViewModel(application: Application): AndroidViewModel(application) 
     }
     fun getUserNickName(userId:String){
         viewModelScope.launch {
-            val data : String = service.getUserNickName(userId)
+            val data : UserInfo = service.getUserNickName(userId)
             userNickNameLiveData.value = data
         }
     }

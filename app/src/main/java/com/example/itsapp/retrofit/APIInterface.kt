@@ -202,5 +202,5 @@ interface APIInterface {
     @GET("/android/getUserNickName")
     suspend fun getUserNickName(
         @Query("userId") userId: String
-    ) :String
+    ) :UserInfo
 }
