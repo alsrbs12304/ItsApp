@@ -39,10 +39,6 @@ import java.io.File
 class NewsActivity : AppCompatActivity() {
     private val viewModel: NewsViewModel by viewModels()
     private lateinit var newsRecyclerView: RecyclerView
-    private val REQUEST_CODE = 1
-    private var currentImageURL: Uri? =null
-    private var profileImageBase64:String = ""
-    private val SELECT_IMAGE = 100
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
@@ -99,17 +95,6 @@ class NewsActivity : AppCompatActivity() {
 //            checkPermission()
 //        }
     }
-//    fun showContextPopupPermission(){
-//        AlertDialog.Builder(this).setTitle("권한이 필요합니다")
-//            .setMessage("사진을 불러오기 위해 권한이 필요합니다")
-//            .setPositiveButton("동의하기") { _, _ ->
-//                requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1000)
-//            }
-//            .setNegativeButton("취소하기") { _, _ ->}
-//            .create()
-//            .show()
-//
-//    }
 //    private fun checkPermission(){
 //        when{
 //            ContextCompat.checkSelfPermission(

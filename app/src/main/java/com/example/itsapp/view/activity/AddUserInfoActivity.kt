@@ -35,7 +35,7 @@ class AddUserInfoActivity : AppCompatActivity() {
             val id = intent.getStringExtra("userId")
             val nickname = kakao_nick_et.text.toString().trim()
             if(id!=null&&checkNick){
-                Log.d("TAG", "eventBtn: "+nickname)
+                Log.d("TAG", "eventBtn: $nickname")
                 viewModel.kakaoUserInfo(id,nickname)
             }else {
                 Snackbar.make(add_user_info_activity,"닉네임 체크 해주세요.",Snackbar.LENGTH_SHORT).show()
