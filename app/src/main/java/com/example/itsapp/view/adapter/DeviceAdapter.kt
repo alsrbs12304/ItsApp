@@ -1,5 +1,6 @@
 package com.example.itsapp.view.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itsapp.R
+import com.bumptech.glide.Glide
 import com.example.itsapp.model.vo.device.Device
 
 class DeviceAdapter(var deviceList:ArrayList<Device>) : RecyclerView.Adapter<DeviceAdapter.ViewHolder>(){
@@ -23,7 +25,8 @@ class DeviceAdapter(var deviceList:ArrayList<Device>) : RecyclerView.Adapter<Dev
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.deviceImg.setImageResource(R.drawable.ic_baseline_laptop_24)
+//        holder.deviceImg.setImageResource(R.drawable.ic_baseline_laptop_24)
+        Glide.with(holder.itemView).load(deviceList.get(position)).into(holder.deviceImg)
         holder.deviceName.text = deviceList.get(position).deviceName
         holder.deviceBrand.text = deviceList.get(position).deviceBrand
         holder.reviewPoint.text = deviceList.get(position).reviewPoint.toString()

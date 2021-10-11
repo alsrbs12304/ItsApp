@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
 import com.example.itsapp.view.adapter.DeviceAdapter
 import com.example.itsapp.R
 import com.example.itsapp.view.activity.DeviceInfoActivity
@@ -40,6 +41,7 @@ class DeviceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.deviceImg()
         rv_device.layoutManager = GridLayoutManager(activity,2)
         rv_device.adapter = deviceAdapter
 
@@ -54,6 +56,13 @@ class DeviceFragment : Fragment() {
             if(deviceInfo.code.equals("200")){
                 Log.d("getDeviceInfo Code",deviceInfo.code)
                 deviceAdapter.updateItem(deviceInfo.jsonArray)
+            }
+        })
+
+        // 서버로부터 200을 받았을 때
+        viewModel.deviceImgLiveData.observe(viewLifecycleOwner, Observer {
+            if(it.equals("200")){
+
             }
         })
 

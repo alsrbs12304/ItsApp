@@ -3,6 +3,7 @@ package com.example.itsapp.view.activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -30,6 +32,7 @@ import kotlinx.android.synthetic.main.activity_review_detail.device_brand
 import kotlinx.android.synthetic.main.activity_review_detail.device_name
 import kotlinx.android.synthetic.main.activity_review_detail.review_point
 import kotlinx.android.synthetic.main.comment_item.*
+import java.time.LocalDate
 
 class ReviewDetailActivity : AppCompatActivity() {
 
@@ -38,6 +41,7 @@ class ReviewDetailActivity : AppCompatActivity() {
     private val homeViewModel : HomeViewModel by viewModels()
     var commentList = arrayListOf<Comment>()
     val commentAdapter = CommentAdapter(commentList)
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review_detail)
@@ -85,7 +89,8 @@ class ReviewDetailActivity : AppCompatActivity() {
                 commentViewModel.userNickNameLiveData.observe(this, Observer { userInfo ->
                     if(userInfo.code.equals("200")){
                         val writer = userInfo.jsonArray.userNickname
-                        commentViewModel.writeComment(deviceName, reviewWriter, writer, commentContent)
+                        val onlyDate : LocalDate = LocalDate.now()
+                        commentViewModel.writeComment(deviceName, reviewWriter, writer, commentContent, onlyDate.toString())
                     }
                 })
             }
@@ -96,7 +101,7 @@ class ReviewDetailActivity : AppCompatActivity() {
                 hidekeyboard()
                 comment_edt.setText(null)
                 commentList.add(it.jsonArray[0])
-                commentAdapter.updateItem(commentList)
+//                commentAdapter.updateItem(commentList)
             }
         })
 

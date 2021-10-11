@@ -13,8 +13,7 @@
             android:id="@+id/device_img"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_baseline_laptop_24"/>
+            android:layout_gravity="center" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

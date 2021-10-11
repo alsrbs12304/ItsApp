@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.itsapp.R
 import com.example.itsapp.model.vo.review.Review
 import com.example.itsapp.view.adapter.ReviewAdapter
@@ -43,6 +44,7 @@ class DeviceInfoActivity : AppCompatActivity() {
         val deviceName = intent.getStringExtra("deviceName")
 
         deviceViewModel.getDeviceInfo(deviceName!!)
+        deviceViewModel.choiceDeviceImg(deviceName!!)
         deviceViewModel.deviceInfoLiveData.observe(this, Observer { deviceInfo ->
             if(deviceInfo.code.equals("200")){
                 device_brand.text = deviceInfo.jsonArray[0].deviceBrand
@@ -53,6 +55,11 @@ class DeviceInfoActivity : AppCompatActivity() {
                 review_count.text = deviceInfo.jsonArray[0].reviewCount.toString()
                 rating_bar.rating = deviceInfo.jsonArray[0].reviewPoint.toFloat()
                 rating_bar2.rating = deviceInfo.jsonArray[0].reviewPoint.toFloat()
+            }
+        })
+        deviceViewModel.choiceDeviceImgLiveData.observe(this, Observer {
+            if(it.equals("200")){
+                Glide.with(this).load(it.jsonArray[0].imgUrl).into(device_img)
             }
         })
 

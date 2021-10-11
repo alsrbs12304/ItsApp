@@ -92,8 +92,7 @@
                     android:layout_alignParentRight="true">
                     <ImageView
                         android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:src="@drawable/macbook"/>
+                        android:layout_height="70dp"/>
                     <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

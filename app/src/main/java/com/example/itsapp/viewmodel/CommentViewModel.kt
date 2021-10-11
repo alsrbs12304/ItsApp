@@ -26,9 +26,9 @@ class CommentViewModel(application: Application): AndroidViewModel(application) 
         }
     }
 
-    fun writeComment(deviceName: String, reviewWriter: String, writer:String, commentContent:String){
+    fun writeComment(deviceName: String, reviewWriter: String, writer:String, commentContent:String,writeTime : String){
         viewModelScope.launch {
-            val data: CommentInfo = service.writeComment(deviceName, reviewWriter, writer, commentContent)
+            val data: CommentInfo = service.writeComment(deviceName, reviewWriter, writer, commentContent,writeTime)
             writeCommentLiveData.value = data
         }
     }

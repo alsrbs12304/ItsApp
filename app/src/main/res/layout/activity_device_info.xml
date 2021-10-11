@@ -61,9 +61,9 @@
                 android:background="@color/white">
 
                 <ImageView
+                    android:id="@+id/device_img"
                     android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:src="@drawable/macbook"/>
+                    android:layout_height="200dp"/>
 
                 <TextView
                     android:id="@+id/device_brand"

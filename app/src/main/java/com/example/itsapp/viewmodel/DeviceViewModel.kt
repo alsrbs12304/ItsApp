@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.itsapp.model.vo.BrandImage
+import com.example.itsapp.model.vo.DeviceImage
 import com.example.itsapp.model.vo.device.DeviceInfo
 import com.example.itsapp.model.vo.favorites.FavoritesInfo
 import com.example.itsapp.model.vo.spec.SpecInfo
@@ -23,6 +25,8 @@ class DeviceViewModel(application: Application): AndroidViewModel(application) {
     val deviceAddFavoritesLiveData = MutableLiveData<FavoritesInfo>()
     val deviceFavoritesLiveData = MutableLiveData<DeviceInfo>()
     val deviceDeleteFavoritesLiveData = MutableLiveData<String>()
+    val deviceImgLiveData = MutableLiveData<DeviceImage>()
+    val choiceDeviceImgLiveData = MutableLiveData<DeviceImage>()
 
     fun getDevice(deviceBrand : String){
         viewModelScope.launch {
@@ -62,6 +66,20 @@ class DeviceViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch {
             val data:String = service.deleteFavorites(userId, deviceName)
             deviceDeleteFavoritesLiveData.value = data
+        }
+    }
+
+    /*디바이 이미지 가져오기*/
+    fun deviceImg(){
+        viewModelScope.launch {
+            val data = service.deviceImg()
+            deviceImgLiveData.value = data
+        }
+    }
+    fun choiceDeviceImg(deviceName: String){
+        viewModelScope.launch {
+            val data = service.choiceDeviceImg(deviceName)
+            choiceDeviceImgLiveData.value = data
         }
     }
 }

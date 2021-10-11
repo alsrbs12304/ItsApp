@@ -141,7 +141,8 @@ interface APIInterface {
         @Field("deviceName") deviceName : String,
         @Field("reviewWriter") reviewWriter: String,
         @Field("writer") writer: String,
-        @Field("commentContent") commentContent : String
+        @Field("commentContent") commentContent : String,
+        @Field("writeTime") writeTime : String
     ) : CommentInfo
 
     @GET("/android/getLoginUserId")
@@ -174,6 +175,15 @@ interface APIInterface {
 
     @GET("/android/brandImg")
     suspend fun brandImg():BrandImage
+
+    @GET("/android/deviceImg")
+    suspend fun deviceImg():DeviceImage
+
+    //선택한 기기의 디바이스 for DeviceInfoActivity
+    @GET("/android/choiceDeviceImg")
+    suspend fun choiceDeviceImg(
+        @Query("deviceName") deviceName: String
+    ):DeviceImage
 
     @GET("/android/getSpec")
     suspend fun getSpec(
