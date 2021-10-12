@@ -49,7 +49,7 @@ class JoinActivity : AppCompatActivity() {
     private var checkEmail = false
     private var checkSend = false
     //TODO: lateinit 해결
-    private lateinit var selectedImageUri: Uri
+    private var selectedImageUri: Uri? = null
     private val viewModel: JoinViewModel by viewModels()
     private val getContent: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -96,7 +96,7 @@ class JoinActivity : AppCompatActivity() {
             } else if (!checkValidPw) {
                 Snackbar.make(join_activity, "비밀번호가 일치 하지 않습니다.", Snackbar.LENGTH_SHORT).show()
             } else {
-                uploadImage(selectedImageUri,applicationContext,userId)
+                selectedImageUri?.let { it1 -> uploadImage(it1,applicationContext,userId) }
                 viewModel.join(userId, encryptionPw, userName, userNickName, joinMethod)
                 Snackbar.make(join_activity, "회원가입 성공.", Snackbar.LENGTH_SHORT).show()
             }

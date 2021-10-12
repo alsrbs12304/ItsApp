@@ -68,6 +68,10 @@ class MyPageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        /*내정보 수정*/
+        update_user_info.setOnClickListener {
+            //TODO : 내정보 수정 페이지
+        }
         /*탈퇴하기 버튼*/
         mypage_retire.setOnClickListener{
             val builder = AlertDialog.Builder(activity)

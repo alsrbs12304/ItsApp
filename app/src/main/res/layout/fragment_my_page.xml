@@ -98,6 +98,7 @@
             android:layout_below="@+id/profile_btn"
             >
             <Button
+                android:id="@+id/update_user_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
