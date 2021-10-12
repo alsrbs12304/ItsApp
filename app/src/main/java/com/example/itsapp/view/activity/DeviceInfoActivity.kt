@@ -44,7 +44,9 @@ class DeviceInfoActivity : AppCompatActivity() {
         val deviceName = intent.getStringExtra("deviceName")
 
         deviceViewModel.getDeviceInfo(deviceName!!)
+
         deviceViewModel.choiceDeviceImg(deviceName!!)
+        loadimg()
         deviceViewModel.deviceInfoLiveData.observe(this, Observer { deviceInfo ->
             if(deviceInfo.code.equals("200")){
                 device_brand.text = deviceInfo.jsonArray[0].deviceBrand
@@ -57,12 +59,6 @@ class DeviceInfoActivity : AppCompatActivity() {
                 rating_bar2.rating = deviceInfo.jsonArray[0].reviewPoint.toFloat()
             }
         })
-        deviceViewModel.choiceDeviceImgLiveData.observe(this, Observer {
-            if(it.equals("200")){
-                Glide.with(this).load(it.jsonArray[0].imgUrl).into(device_img)
-            }
-        })
-
         // 해당 디바이스 상세 정보(스펙)
         deviceViewModel.getSpec(deviceName)
         deviceViewModel.deviceSpecLiveData.observe(this, Observer { specInfo ->
@@ -144,6 +140,14 @@ class DeviceInfoActivity : AppCompatActivity() {
                 Toast.makeText(this,"즐겨찾기 담기 성공",Toast.LENGTH_SHORT).show()
             }else{
                 Toast.makeText(this,"이미 담은 기기입니다.",Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    fun loadimg() {
+        deviceViewModel.choiceDeviceImgLiveData.observe(this, Observer {
+            if (it.equals("200")) {
+                Glide.with(this).load(it.jsonArray[0].imgUrl).into(device_img)
             }
         })
     }

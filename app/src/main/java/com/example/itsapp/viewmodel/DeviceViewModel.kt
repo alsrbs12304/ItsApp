@@ -69,7 +69,7 @@ class DeviceViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    /*디바이 이미지 가져오기*/
+    /*디바이스 이미지 가져오기*/
     fun deviceImg(){
         viewModelScope.launch {
             val data = service.deviceImg()
