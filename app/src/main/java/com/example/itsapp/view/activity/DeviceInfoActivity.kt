@@ -17,7 +17,9 @@ import com.example.itsapp.view.adapter.ReviewAdapter
 import com.example.itsapp.viewmodel.DeviceViewModel
 import com.example.itsapp.viewmodel.HomeViewModel
 import com.example.itsapp.viewmodel.ReviewViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_device_info.*
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class DeviceInfoActivity : AppCompatActivity() {
 
@@ -147,8 +149,10 @@ class DeviceInfoActivity : AppCompatActivity() {
     fun loadimg() {
         deviceViewModel.choiceDeviceImgLiveData.observe(this, Observer {
             if (it.equals("200")) {
-                Glide.with(this).load(it.jsonArray[0].imgUrl).into(device_img)
+                Log.i("IMG",it.jsonArray[0].imgUrl.toString())
+                //Glide.with(applicationContext).load(it.jsonArray[0].imgUrl).into(device_img)
             }
         })
+
     }
 }
