@@ -169,7 +169,7 @@ interface APIInterface {
     /*이미지 업로드*/
     @Multipart
     @POST("/android/upload")
-    suspend fun uploadImage(@Part image:MultipartBody.Part) : String
+    suspend fun uploadImage(@Part image:MultipartBody.Part,@Part("userId") userId: String) : String
 
     @GET("/android/brandImg")
     suspend fun brandImg():BrandImage

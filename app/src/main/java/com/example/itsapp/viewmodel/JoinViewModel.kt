@@ -85,9 +85,9 @@ class JoinViewModel(application: Application):AndroidViewModel(application) {
         }.start()
     }
     //이미지 업로드
-    fun uploadImage(image: MultipartBody.Part, userId:String){
+    fun uploadImage(image: MultipartBody.Part,userId:String ){
         viewModelScope.launch {
-            val data = service.uploadImage(image)
+            val data = service.uploadImage(image,userId)
             imgLiveData.value = data
         }
     }

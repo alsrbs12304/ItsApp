@@ -48,18 +48,20 @@ class JoinActivity : AppCompatActivity() {
     private var checkName = false
     private var checkEmail = false
     private var checkSend = false
+
     //TODO: lateinit 해결
-    private var selectedImageUri: Uri? = null
+    private lateinit var selectedImageUri: Uri
     private val viewModel: JoinViewModel by viewModels()
     private val getContent: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.data != null && it.data?.data != null) {
                 selectedImageUri = it.data?.data!!
-            Log.d("TAG", "onActivityResult: $selectedImageUri")
-            Glide.with(applicationContext)
-                .load(selectedImageUri)
-                .circleCrop()
-                .into(profile_btn)
+                uploadImage(selectedImageUri,applicationContext,userId)
+                Log.d("TAG", "onActivityResult: $selectedImageUri")
+                Glide.with(applicationContext)
+                    .load(selectedImageUri)
+                    .circleCrop()
+                    .into(profile_btn)
             }
         }
 
@@ -96,7 +98,6 @@ class JoinActivity : AppCompatActivity() {
             } else if (!checkValidPw) {
                 Snackbar.make(join_activity, "비밀번호가 일치 하지 않습니다.", Snackbar.LENGTH_SHORT).show()
             } else {
-                selectedImageUri?.let { it1 -> uploadImage(it1,applicationContext,userId) }
                 viewModel.join(userId, encryptionPw, userName, userNickName, joinMethod)
                 Snackbar.make(join_activity, "회원가입 성공.", Snackbar.LENGTH_SHORT).show()
             }
@@ -319,15 +320,18 @@ class JoinActivity : AppCompatActivity() {
         )
         getContent.launch(imageIntent)
     }
-    private fun uploadImage(imageUri:Uri, context: Context , user : String) {
-        val image: File = File(getRealPathFromURI(imageUri,context))
-        val requestBody:RequestBody = RequestBody.create(MediaType.parse("image/*"),image)
 
-        val body:MultipartBody.Part = MultipartBody.Part.createFormData("image",image.name,requestBody)
+    private fun uploadImage(imageUri: Uri, context: Context,userId:String) {
+        val image: File = File(getRealPathFromURI(imageUri, context))
+        val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), image)
 
-        viewModel.uploadImage(body,user);
+        val body: MultipartBody.Part =
+            MultipartBody.Part.createFormData("image", image.name, requestBody)
+
+        viewModel.uploadImage(body,userId)
     }
-    private fun getRealPathFromURI(contentUri:Uri,context: Context): String {
+
+    private fun getRealPathFromURI(contentUri: Uri, context: Context): String {
         val proj = arrayOf(MediaStore.Images.Media.DATA)
         val loader = CursorLoader(context, contentUri, proj, null, null, null)
         val cursor: Cursor = loader.loadInBackground()!!
