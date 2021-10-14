@@ -38,6 +38,7 @@ class DeviceInfoActivity : AppCompatActivity() {
             finish()
         }
 
+
         val userId = homeViewModel.getLoginSession()
 
         // 디바이스를 선택한 프래그먼트로 부터 deviceName을 넘겨 받아
@@ -46,9 +47,11 @@ class DeviceInfoActivity : AppCompatActivity() {
         val deviceName = intent.getStringExtra("deviceName")
 
         deviceViewModel.getDeviceInfo(deviceName!!)
+        deviceViewModel.choiceDeviceImg(deviceName)
+        liveData()
 
-        deviceViewModel.choiceDeviceImg(deviceName!!)
-        loadimg()
+//        deviceViewModel.choiceDeviceImg(deviceName)
+//        loadImg()
         deviceViewModel.deviceInfoLiveData.observe(this, Observer { deviceInfo ->
             if(deviceInfo.code.equals("200")){
                 device_brand.text = deviceInfo.jsonArray[0].deviceBrand
@@ -145,14 +148,15 @@ class DeviceInfoActivity : AppCompatActivity() {
             }
         })
     }
-
-    fun loadimg() {
+    fun liveData(){
         deviceViewModel.choiceDeviceImgLiveData.observe(this, Observer {
-            if (it.equals("200")) {
-                Log.i("IMG",it.jsonArray[0].imgUrl.toString())
-                //Glide.with(applicationContext).load(it.jsonArray[0].imgUrl).into(device_img)
+            if(it.code == "200"){
+                Glide.with(this)
+                    .load(it.jsonArray[0].imgUrl)
+                    .into(device_img)
+            }else{
+                Snackbar.make(home_fragment,"이미지 로드 오류",Snackbar.LENGTH_SHORT).show()
             }
         })
-
     }
 }

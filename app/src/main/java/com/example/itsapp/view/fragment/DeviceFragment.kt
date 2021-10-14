@@ -18,6 +18,7 @@ import com.example.itsapp.view.activity.DeviceInfoActivity
 import com.example.itsapp.model.vo.device.Device
 import com.example.itsapp.viewmodel.DeviceViewModel
 import kotlinx.android.synthetic.main.fragment_device.*
+import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class DeviceFragment : Fragment() {
@@ -54,15 +55,7 @@ class DeviceFragment : Fragment() {
         viewModel.getDevice(deviceBrand!!)
         viewModel.deviceLiveData.observe(viewLifecycleOwner, Observer { deviceInfo ->
             if(deviceInfo.code.equals("200")){
-                Log.d("getDeviceInfo Code",deviceInfo.code)
                 deviceAdapter.updateItem(deviceInfo.jsonArray)
-            }
-        })
-
-        // 서버로부터 200을 받았을 때
-        viewModel.deviceImgLiveData.observe(viewLifecycleOwner, Observer {
-            if(it.equals("200")){
-
             }
         })
 

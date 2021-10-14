@@ -176,9 +176,6 @@ interface APIInterface {
     @GET("/android/brandImg")
     suspend fun brandImg():BrandImage
 
-    @GET("/android/deviceImg")
-    suspend fun deviceImg():DeviceImage
-
     //선택한 기기의 디바이스 for DeviceInfoActivity
     @GET("/android/choiceDeviceImg")
     suspend fun choiceDeviceImg(

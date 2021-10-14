@@ -10,12 +10,20 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.itsapp.R
 import com.example.itsapp.viewmodel.DeviceViewModel
 import com.example.itsapp.viewmodel.HomeViewModel
 import com.example.itsapp.viewmodel.ReviewViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_device_info.*
 import kotlinx.android.synthetic.main.activity_review_write.*
+import kotlinx.android.synthetic.main.activity_review_write.back_btn
+import kotlinx.android.synthetic.main.activity_review_write.device_brand
+import kotlinx.android.synthetic.main.activity_review_write.device_img
+import kotlinx.android.synthetic.main.activity_review_write.device_name
+import kotlinx.android.synthetic.main.activity_review_write.rating_bar
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class ReviewWriteActivity : AppCompatActivity() {
     private val deviceViewModel: DeviceViewModel by viewModels()
@@ -39,6 +47,10 @@ class ReviewWriteActivity : AppCompatActivity() {
         Log.i("getString", deviceName.toString())
 
         deviceViewModel.getDeviceInfo(deviceName!!)
+
+        deviceViewModel.choiceDeviceImg(deviceName)
+        liveData()
+
         deviceViewModel.deviceInfoLiveData.observe(this, Observer { deviceInfo ->
             if(deviceInfo.code.equals("200")){
                 device_brand.text = deviceInfo.jsonArray[0].deviceBrand
@@ -114,6 +126,17 @@ class ReviewWriteActivity : AppCompatActivity() {
                 startActivity(intent)
             }else if(it.equals("204")){
                 Toast.makeText(this,"해당 제품에 대해 이미 리뷰를 작성했씁니다.",Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+    fun liveData(){
+        deviceViewModel.choiceDeviceImgLiveData.observe(this, Observer {
+            if(it.code == "200"){
+                Glide.with(this)
+                    .load(it.jsonArray[0].imgUrl)
+                    .into(device_img)
+            }else{
+                Snackbar.make(home_fragment,"이미지 로드 오류",Snackbar.LENGTH_SHORT).show()
             }
         })
     }

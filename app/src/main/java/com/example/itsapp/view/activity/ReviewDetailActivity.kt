@@ -17,21 +17,26 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.itsapp.viewmodel.CommentViewModel
 import com.example.itsapp.R
 import com.example.itsapp.model.vo.comment.Comment
 import com.example.itsapp.model.vo.userDetailInfo
 import com.example.itsapp.view.adapter.CommentAdapter
+import com.example.itsapp.viewmodel.DeviceViewModel
 import com.example.itsapp.viewmodel.HomeViewModel
 import com.example.itsapp.viewmodel.ReviewViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_device_info.*
 import kotlinx.android.synthetic.main.activity_favorites.*
 import kotlinx.android.synthetic.main.activity_review_detail.*
 import kotlinx.android.synthetic.main.activity_review_detail.back_btn
 import kotlinx.android.synthetic.main.activity_review_detail.device_brand
+import kotlinx.android.synthetic.main.activity_review_detail.device_img
 import kotlinx.android.synthetic.main.activity_review_detail.device_name
 import kotlinx.android.synthetic.main.activity_review_detail.review_point
 import kotlinx.android.synthetic.main.comment_item.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import java.time.LocalDate
 
 class ReviewDetailActivity : AppCompatActivity() {
@@ -39,6 +44,7 @@ class ReviewDetailActivity : AppCompatActivity() {
     private val commentViewModel : CommentViewModel by viewModels()
     private val reviewViewModel: ReviewViewModel by viewModels()
     private val homeViewModel : HomeViewModel by viewModels()
+    private val deviceViewModel: DeviceViewModel by viewModels()
     var commentList = arrayListOf<Comment>()
     val commentAdapter = CommentAdapter(commentList)
     @RequiresApi(Build.VERSION_CODES.O)
@@ -51,12 +57,20 @@ class ReviewDetailActivity : AppCompatActivity() {
         back_btn.setOnClickListener {
             finish()
         }
+
         val intent = intent
         val deviceName = intent.getStringExtra("deviceName")
         val reviewWriter = intent.getStringExtra("writer") // 리뷰 작성자 닉네임
+        go_to_deviceInfo.setOnClickListener {
 
+            val intent = Intent(this, DeviceInfoActivity::class.java)
+            intent.putExtra("deviceName",deviceName)
+            startActivity(intent)
+        }
 
         reviewViewModel.getChoiceReview(deviceName!!, reviewWriter!!)
+        deviceViewModel.choiceDeviceImg(deviceName)
+        liveData()
         reviewViewModel.reviewLiveData.observe(this, Observer { reviewInfo ->
             if(reviewInfo.code.equals("200")){
                 device_brand.text = reviewInfo.jsonArray[0].deviceBrand
@@ -163,7 +177,17 @@ class ReviewDetailActivity : AppCompatActivity() {
             }
         })
     }
-
+    fun liveData(){
+        deviceViewModel.choiceDeviceImgLiveData.observe(this, Observer {
+            if(it.code == "200"){
+                Glide.with(this)
+                    .load(it.jsonArray[0].imgUrl)
+                    .into(device_img)
+            }else{
+                Snackbar.make(home_fragment,"이미지 로드 오류",Snackbar.LENGTH_SHORT).show()
+            }
+        })
+    }
     // 키보드 내리기
     fun hidekeyboard(){
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

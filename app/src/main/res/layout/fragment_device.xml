@@ -31,6 +31,10 @@
         android:layout_height="1dp"
         android:layout_above="@+id/bottom_navigation_view"
         android:background="@color/gray300" />
+    <ImageView
+        android:id="@+id/into"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

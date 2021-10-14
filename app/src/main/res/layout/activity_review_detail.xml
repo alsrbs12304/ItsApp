@@ -91,9 +91,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true">
                     <ImageView
+                        android:id="@+id/device_img"
                         android:layout_width="70dp"
                         android:layout_height="70dp"/>
                     <ImageButton
+                        android:id="@+id/go_to_deviceInfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_baseline_chevron_right_24"
