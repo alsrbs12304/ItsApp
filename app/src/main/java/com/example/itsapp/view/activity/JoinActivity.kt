@@ -49,14 +49,12 @@ class JoinActivity : AppCompatActivity() {
     private var checkEmail = false
     private var checkSend = false
 
-    //TODO: lateinit 해결
     private lateinit var selectedImageUri: Uri
     private val viewModel: JoinViewModel by viewModels()
     private val getContent: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.data != null && it.data?.data != null) {
                 selectedImageUri = it.data?.data!!
-                uploadImage(selectedImageUri,applicationContext,userId)
                 Log.d("TAG", "onActivityResult: $selectedImageUri")
                 Glide.with(applicationContext)
                     .load(selectedImageUri)
@@ -286,6 +284,7 @@ class JoinActivity : AppCompatActivity() {
         /*회원가입 LIVEDATA*/
         viewModel.joinLiveData.observe(this, Observer { code ->
             if (code.equals("200")) {
+                uploadImage(selectedImageUri,applicationContext,userId)
                 Snackbar.make(join_activity, "회원가입 성공", Snackbar.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
