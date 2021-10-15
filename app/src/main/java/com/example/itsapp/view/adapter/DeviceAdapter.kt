@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.itsapp.R
 import com.bumptech.glide.Glide
 import com.example.itsapp.model.vo.device.Device
+import kotlinx.android.synthetic.main.device_item.view.*
 
 class DeviceAdapter(var deviceList:ArrayList<Device>) : RecyclerView.Adapter<DeviceAdapter.ViewHolder>(){
 
@@ -26,11 +27,13 @@ class DeviceAdapter(var deviceList:ArrayList<Device>) : RecyclerView.Adapter<Dev
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 //        holder.deviceImg.setImageResource(R.drawable.ic_baseline_laptop_24)
-        Glide.with(holder.itemView).load(deviceList.get(position)).into(holder.deviceImg)
-        holder.deviceName.text = deviceList.get(position).deviceName
-        holder.deviceBrand.text = deviceList.get(position).deviceBrand
-        holder.reviewPoint.text = deviceList.get(position).reviewPoint.toString()
-        holder.reviewCount.text = deviceList.get(position).reviewCount.toString()
+//        holder.deviceName.text = deviceList.get(position).deviceName
+//        holder.deviceBrand.text = deviceList.get(position).deviceBrand
+//        holder.reviewPoint.text = deviceList.get(position).reviewPoint.toString()
+//        holder.reviewCount.text = deviceList.get(position).reviewCount.toString()
+
+        holder.bindItems(deviceList.get(position))
+        //holder.bindItems(deviceList[position])
 
         holder.itemView.setOnClickListener{
             itemClickListener.onClick(it, position)
@@ -43,11 +46,19 @@ class DeviceAdapter(var deviceList:ArrayList<Device>) : RecyclerView.Adapter<Dev
     }
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-        val deviceImg = itemView.findViewById<ImageView>(R.id.device_img)
-        val deviceName = itemView.findViewById<TextView>(R.id.device_name)
-        val deviceBrand = itemView.findViewById<TextView>(R.id.device_brand)
-        val reviewPoint = itemView.findViewById<TextView>(R.id.review_point)
-        val reviewCount = itemView.findViewById<TextView>(R.id.review_count)
+//        val deviceImg = itemView.findViewById<ImageView>(R.id.device_img)
+//        val deviceName = itemView.findViewById<TextView>(R.id.device_name)
+//        val deviceBrand = itemView.findViewById<TextView>(R.id.device_brand)
+//        val reviewPoint = itemView.findViewById<TextView>(R.id.review_point)
+//        val reviewCount = itemView.findViewById<TextView>(R.id.review_count)
+
+        fun bindItems(data : Device){
+            itemView.device_name.text = data.deviceName
+            itemView.device_brand.text = data.deviceBrand
+            itemView.review_point.text = data.reviewPoint.toString()
+            itemView.review_count.text = data.reviewCount.toString()
+            Glide.with(itemView.context).load(data.imgurl).into(itemView.device_img)
+        }
     }
     interface OnItemClickListener{
         fun onClick(v: View, position: Int)

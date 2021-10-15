@@ -7,6 +7,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import com.example.itsapp.model.vo.comment.CommentInfo
+import com.example.itsapp.model.vo.device.Device
 import com.example.itsapp.model.vo.favorites.FavoritesInfo
 import com.example.itsapp.model.vo.review.ReviewInfo
 import com.example.itsapp.model.vo.spec.SpecInfo
@@ -175,6 +176,9 @@ interface APIInterface {
 
     @GET("/android/brandImg")
     suspend fun brandImg():BrandImage
+
+    @GET("/android/deviceImg")
+    suspend fun deviceImg():DeviceImage
 
     //선택한 기기의 디바이스 for DeviceInfoActivity
     @GET("/android/choiceDeviceImg")

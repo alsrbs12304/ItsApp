@@ -17,7 +17,10 @@ import com.example.itsapp.R
 import com.example.itsapp.view.activity.DeviceInfoActivity
 import com.example.itsapp.model.vo.device.Device
 import com.example.itsapp.viewmodel.DeviceViewModel
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_device_info.*
 import kotlinx.android.synthetic.main.fragment_device.*
+import kotlinx.android.synthetic.main.fragment_device.device_brand
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -53,6 +56,10 @@ class DeviceFragment : Fragment() {
         val deviceBrand = arguments?.getString("deviceBrand")
         device_brand.text = deviceBrand
         viewModel.getDevice(deviceBrand!!)
+
+        viewModel.deviceImg()
+        liveData()
+
         viewModel.deviceLiveData.observe(viewLifecycleOwner, Observer { deviceInfo ->
             if(deviceInfo.code.equals("200")){
                 deviceAdapter.updateItem(deviceInfo.jsonArray)
@@ -69,6 +76,15 @@ class DeviceFragment : Fragment() {
                 val intent = Intent(activity, DeviceInfoActivity::class.java)
                 intent.putExtra("deviceName",deviceName)
                 startActivity(intent)
+            }
+        })
+    }
+    fun liveData(){
+        viewModel.deviceImgLiveData.observe(viewLifecycleOwner, Observer {
+            if(it.code == "200"){
+
+            }else{
+                Snackbar.make(home_fragment,"이미지 로드 오류", Snackbar.LENGTH_SHORT).show()
             }
         })
     }

@@ -24,6 +24,7 @@ class DeviceViewModel(application: Application): AndroidViewModel(application) {
     val deviceSpecLiveData = MutableLiveData<DeviceInfo>()
     val deviceAddFavoritesLiveData = MutableLiveData<FavoritesInfo>()
     val deviceFavoritesLiveData = MutableLiveData<DeviceInfo>()
+    val deviceImgLiveData = MutableLiveData<DeviceImage>()
     val deviceDeleteFavoritesLiveData = MutableLiveData<String>()
 
     val choiceDeviceImgLiveData = MutableLiveData<DeviceImage>()
@@ -66,6 +67,12 @@ class DeviceViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch {
             val data:String = service.deleteFavorites(userId, deviceName)
             deviceDeleteFavoritesLiveData.value = data
+        }
+    }
+    fun deviceImg(){
+        viewModelScope.launch {
+            val data = service.deviceImg()
+            deviceImgLiveData.value = data
         }
     }
     fun choiceDeviceImg(deviceName: String){
