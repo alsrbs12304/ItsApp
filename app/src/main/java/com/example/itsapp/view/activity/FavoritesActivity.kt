@@ -40,6 +40,7 @@ class FavoritesActivity : AppCompatActivity() {
 
         val userId = homeViewModel.getLoginSession()
         viewModel.getFavorites(userId)
+        viewModel.deviceImg()
         viewModel.deviceFavoritesLiveData.observe(this, Observer { deviceInfo ->
             if(deviceInfo.code.equals("200")){
                 deviceAdapter.updateItem(deviceInfo.jsonArray)

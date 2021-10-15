@@ -58,7 +58,7 @@ class DeviceFragment : Fragment() {
         viewModel.getDevice(deviceBrand!!)
 
         viewModel.deviceImg()
-        liveData()
+//        liveData()
 
         viewModel.deviceLiveData.observe(viewLifecycleOwner, Observer { deviceInfo ->
             if(deviceInfo.code.equals("200")){
