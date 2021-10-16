@@ -51,7 +51,7 @@ class JoinActivity : AppCompatActivity() {
 
     private lateinit var selectedImageUri: Uri
     private val viewModel: JoinViewModel by viewModels()
-    private val getContent: ActivityResultLauncher<Intent> =
+    private val getContent: ActivityResultLauncher<Intent> = //
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.data != null && it.data?.data != null) {
                 selectedImageUri = it.data?.data!!
@@ -96,7 +96,12 @@ class JoinActivity : AppCompatActivity() {
             } else if (!checkValidPw) {
                 Snackbar.make(join_activity, "비밀번호가 일치 하지 않습니다.", Snackbar.LENGTH_SHORT).show()
             } else {
-                viewModel.join(userId, encryptionPw, userName, userNickName, joinMethod)
+                val image = File(getRealPathFromURI(selectedImageUri, applicationContext))
+                val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), image)
+
+                val body: MultipartBody.Part =
+                    MultipartBody.Part.createFormData("image", image.name, requestBody)
+                viewModel.join(userId, encryptionPw, userName, userNickName, joinMethod,body)
                 Snackbar.make(join_activity, "회원가입 성공.", Snackbar.LENGTH_SHORT).show()
             }
         }
@@ -284,7 +289,6 @@ class JoinActivity : AppCompatActivity() {
         /*회원가입 LIVEDATA*/
         viewModel.joinLiveData.observe(this, Observer { code ->
             if (code.equals("200")) {
-                uploadImage(selectedImageUri,applicationContext,userId)
                 Snackbar.make(join_activity, "회원가입 성공", Snackbar.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
@@ -297,6 +301,7 @@ class JoinActivity : AppCompatActivity() {
                 join_password_check_edt.text?.clear()
                 join_name_edt.text?.clear()
                 join_nick_name_edt.text?.clear()
+                email_code_et.text?.clear()
             }
         })
     }
@@ -311,6 +316,7 @@ class JoinActivity : AppCompatActivity() {
         );
     }
 
+    //앨범에서 이미지를 가져와 intent로 전송
     private fun openAlbum() {
         val imageIntent = Intent(Intent.ACTION_PICK)
         imageIntent.setDataAndType(
@@ -320,16 +326,7 @@ class JoinActivity : AppCompatActivity() {
         getContent.launch(imageIntent)
     }
 
-    private fun uploadImage(imageUri: Uri, context: Context,userId:String) {
-        val image: File = File(getRealPathFromURI(imageUri, context))
-        val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), image)
-
-        val body: MultipartBody.Part =
-            MultipartBody.Part.createFormData("image", image.name, requestBody)
-
-        viewModel.uploadImage(body,userId)
-    }
-
+    //URI를 실제 경로로 변환
     private fun getRealPathFromURI(contentUri: Uri, context: Context): String {
         val proj = arrayOf(MediaStore.Images.Media.DATA)
         val loader = CursorLoader(context, contentUri, proj, null, null, null)

@@ -11,6 +11,7 @@ import com.example.itsapp.retrofit.APIInterface
 import com.example.itsapp.retrofit.RetrofitClient
 import com.example.itsapp.util.SharedPreference
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 
 class HomeViewModel(application: Application): AndroidViewModel(application){
     val context = getApplication<Application>().applicationContext
@@ -21,6 +22,7 @@ class HomeViewModel(application: Application): AndroidViewModel(application){
     val userInfoLiveData = MutableLiveData<UserInfo>()
     val retireLiveData = MutableLiveData<String>()
     val brandImgLiveData = MutableLiveData<BrandImage>()
+    val imgLiveData = MutableLiveData<String>()
 
     fun getLoginSession():String{
         var userSession = ""
@@ -62,6 +64,13 @@ class HomeViewModel(application: Application): AndroidViewModel(application){
         viewModelScope.launch {
             val data = service.brandImg()
             brandImgLiveData.value = data
+        }
+    }
+    //이미지 업로드
+    fun updateImage(image: MultipartBody.Part,userId:String){
+        viewModelScope.launch {
+            val data = service.updateImage(image,userId)
+            imgLiveData.value = data
         }
     }
 }

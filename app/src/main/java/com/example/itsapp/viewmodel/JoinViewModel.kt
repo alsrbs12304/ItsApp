@@ -26,12 +26,11 @@ class JoinViewModel(application: Application):AndroidViewModel(application) {
     val kakaoLoginLiveData = MutableLiveData<String>()
     val kakaoUserInfoLD = MutableLiveData<String>()
     val count = MutableLiveData<String>()
-        val imgLiveData = MutableLiveData<String>()
     lateinit var countDownTimer:CountDownTimer
 
-    fun join(userId : String, userPw : String , userName : String, userNickname: String, loginMethod:String){
+    fun join(userId : String, userPw : String , userName : String, userNickname: String, loginMethod:String, image: MultipartBody.Part ){
         viewModelScope.launch {
-            val data = service.join(userId,userPw,userName,userNickname,loginMethod)
+            val data = service.join(userId,userPw,userName,userNickname,loginMethod,image)
             joinLiveData.value = data
         }
     }
@@ -83,12 +82,5 @@ class JoinViewModel(application: Application):AndroidViewModel(application) {
                 count.setValue("")
             }
         }.start()
-    }
-    //이미지 업로드
-    fun uploadImage(image: MultipartBody.Part,userId:String ){
-        viewModelScope.launch {
-            val data = service.uploadImage(image,userId)
-            imgLiveData.value = data
-        }
     }
 }

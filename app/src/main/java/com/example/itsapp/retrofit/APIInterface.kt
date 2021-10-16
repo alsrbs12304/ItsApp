@@ -15,14 +15,15 @@ import retrofit2.http.*
 interface APIInterface {
 
     /*회원가입*/
-    @FormUrlEncoded
+    @Multipart
     @POST("/android/join")
     suspend fun join(
-        @Field("userId") userId: String,
-        @Field("userPw") userPw: String,
-        @Field("userName") userName: String,
-        @Field("userNickName") userNickname : String,
-        @Field("loginMethod") loginMethod: String
+        @Query("userId") userId: String,
+        @Query("userPw") userPw: String,
+        @Query("userName") userName: String,
+        @Query("userNickName") userNickname : String,
+        @Query("loginMethod") loginMethod: String,
+        @Part image:MultipartBody.Part
     ):String
 
     /*아이디 중복 검사*/
@@ -168,8 +169,8 @@ interface APIInterface {
 
     /*이미지 업로드*/
     @Multipart
-    @POST("/android/upload")
-    suspend fun uploadImage(@Part image:MultipartBody.Part,@Part("userId") userId: String) : String
+    @POST("/android/updateImage")
+    suspend fun updateImage(@Part image:MultipartBody.Part,@Query("userId") userId:String) : String
 
     @GET("/android/brandImg")
     suspend fun brandImg():BrandImage
