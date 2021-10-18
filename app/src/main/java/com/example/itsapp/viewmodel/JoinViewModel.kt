@@ -52,9 +52,9 @@ class JoinViewModel(application: Application):AndroidViewModel(application) {
             kakaoLoginLiveData.value = data
         }
     }
-    fun kakaoUserInfo(userId:String, userNickname: String){
+    fun kakaoUserInfo(userId:String, userNickname: String, image: MultipartBody.Part){
         viewModelScope.launch {
-            val data = service.kakaoUserInfo(userId,userNickname)
+            val data = service.kakaoUserInfo(userId,userNickname,image)
             kakaoUserInfoLD.value =data
         }
     }

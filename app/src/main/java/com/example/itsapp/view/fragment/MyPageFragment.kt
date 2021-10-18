@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide
 import com.example.itsapp.R
 import com.example.itsapp.view.activity.FavoritesActivity
 import com.example.itsapp.view.activity.SplashActivity
+import com.example.itsapp.view.activity.UpdateUserInfoActivity
 import com.example.itsapp.viewmodel.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.kakao.sdk.common.util.KakaoCustomTabsClient
@@ -49,11 +50,7 @@ class MyPageFragment : Fragment() {
             if (it.data != null && it.data?.data != null) {
                 selectedImageUri = it.data?.data!!
                 uploadImage(selectedImageUri,requireContext(),userId)
-                Log.d("TAG", "onActivityResult: $selectedImageUri")
-                Glide.with(requireContext())
-                    .load(selectedImageUri)
-                    .circleCrop()
-                    .into(profile_btn)
+                viewModel.userInfo(loginMethod)
             }
         }
     companion object{
@@ -84,9 +81,13 @@ class MyPageFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         loginMethod = viewModel.getLoginMethod()!!
+        mypage_login_method.text = loginMethod
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewModel.userInfo(loginMethod)
         liveData()
-        mypage_login_method.text = loginMethod
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -97,7 +98,12 @@ class MyPageFragment : Fragment() {
         }
         /*내정보 수정*/
         update_user_info.setOnClickListener {
-            //TODO : 내정보 수정 페이지
+            startActivity(Intent(activity,UpdateUserInfoActivity::class.java))
+            activity?.overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        }
+        /*내 리뷰*/
+        my_review.setOnClickListener {
+            //TODO: 내 리뷰 페이지
         }
         /*탈퇴하기 버튼*/
         mypage_retire.setOnClickListener{
@@ -138,6 +144,7 @@ class MyPageFragment : Fragment() {
             mypage_nickname.text = userNickname
             Glide.with(requireContext())
                 .load(profileUrl)
+                .fallback(R.drawable.profile_img)
                 .circleCrop()
                 .into(profile_btn)
         })

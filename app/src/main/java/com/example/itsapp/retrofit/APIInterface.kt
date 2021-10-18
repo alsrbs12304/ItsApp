@@ -53,11 +53,12 @@ interface APIInterface {
     ):String
 
     /*카카오 닉네임 설정*/
-    @FormUrlEncoded
+    @Multipart
     @POST("/android/kakaoUserInfo")
     suspend fun kakaoUserInfo(
-        @Field("userId") userId:String,
-        @Field("userNickname") userNickname: String
+        @Query("userId") userId:String,
+        @Query("userNickname") userNickname: String,
+        @Part image:MultipartBody.Part
     ):String
 
     /*비밀번호 변경*/

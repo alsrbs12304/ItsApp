@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/add_user_info_activity"
-    tools:context=".view.activity.AddUserInfoActivity">
+    tools:context=".view.activity.UpdateUserInfoActivity">
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical">
-
+        >
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="50dp">
@@ -30,8 +29,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/nanum_barun_gothic"
-                android:text="카카오로 회원가입"
+                android:text="내 정보 수정"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 android:textSize="20dp" />
         </androidx.appcompat.widget.Toolbar>
 
@@ -46,6 +46,15 @@
             android:adjustViewBounds="true"
             android:layout_gravity="center"
             />
+        <TextView
+            android:id="@+id/id_et"
+            android:layout_width="match_parent"
+            android:layout_margin="16dp"
+            android:layout_height="wrap_content"
+            android:text="아이디"
+            android:fontFamily="@font/nanum_barun_gothic"
+            android:gravity="center"
+            />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -53,21 +62,21 @@
             android:layout_margin="16dp">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/kakao_nickname_input_layout"
+                android:id="@+id/nickname_input_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="닉네임">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/kakao_nick_et"
+                    android:id="@+id/nick_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nanum_barun_gothic" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/kakao_nick_check_btn"
+                android:id="@+id/nick_check_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -78,14 +87,14 @@
                 android:textColor="@color/black" />
         </RelativeLayout>
     </LinearLayout>
-
     <Button
-        android:id="@+id/kakaoId_update_btn"
+        android:id="@+id/update_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="가입하기"
-        android:fontFamily="@font/nanum_barun_gothic"
-        android:textColor="@color/white"
         android:background="@drawable/join_button_round"
+        android:text="수정하기"
+        android:textColor="@color/white"
+        android:fontFamily="@font/nanum_barun_gothic"
+        android:textSize="18dp"
         />
 </LinearLayout>

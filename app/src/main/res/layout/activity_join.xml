@@ -264,5 +264,5 @@
         android:textColor="@color/white"
         android:fontFamily="@font/nanum_barun_gothic"
         android:textSize="18dp"
-        android:layout_gravity="bottom"/>
+        />
 </LinearLayout>
