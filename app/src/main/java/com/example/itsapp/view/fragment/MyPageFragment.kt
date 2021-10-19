@@ -8,14 +8,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.example.itsapp.view.activity.MyReviewActivity
 import com.example.itsapp.R
 import com.example.itsapp.view.activity.FavoritesActivity
-import com.example.itsapp.view.activity.HomeActivity
-import com.example.itsapp.view.activity.MainActivity
 import com.example.itsapp.view.activity.SplashActivity
 import com.example.itsapp.viewmodel.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -23,10 +21,7 @@ import com.kakao.sdk.common.util.KakaoCustomTabsClient
 import com.kakao.sdk.talk.TalkApiClient
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_my_page.*
-import kotlinx.android.synthetic.main.fragment_my_page.view.*
-import kotlin.math.log
 
 class MyPageFragment : Fragment() {
 
@@ -95,6 +90,11 @@ class MyPageFragment : Fragment() {
         // 즐겨찾기 (민균)
         go_to_favorites.setOnClickListener {
             startActivity(Intent(activity,FavoritesActivity::class.java))
+        }
+
+        // 내 리뷰 (민균)
+        my_review_btn.setOnClickListener {
+            startActivity(Intent(activity, MyReviewActivity::class.java))
         }
     }
     /*라이브데이터*/

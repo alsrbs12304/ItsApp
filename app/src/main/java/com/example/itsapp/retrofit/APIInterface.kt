@@ -1,17 +1,15 @@
 package com.example.itsapp.retrofit
 
 import com.example.itsapp.model.vo.*
-import com.example.itsapp.model.vo.device.DeviceInfo
-import com.example.itsapp.model.vo.user.UserInfo
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.ResponseBody
 import com.example.itsapp.model.vo.comment.CommentInfo
-import com.example.itsapp.model.vo.device.Device
+import com.example.itsapp.model.vo.device.DeviceInfo
 import com.example.itsapp.model.vo.favorites.FavoritesInfo
 import com.example.itsapp.model.vo.review.ReviewInfo
-import com.example.itsapp.model.vo.spec.SpecInfo
+import com.example.itsapp.model.vo.user.UserInfo
+import okhttp3.MultipartBody
+import retrofit2.Call
 import retrofit2.http.*
+
 
 interface APIInterface {
 
@@ -22,13 +20,13 @@ interface APIInterface {
         @Field("userId") userId: String,
         @Field("userPw") userPw: String,
         @Field("userName") userName: String,
-        @Field("userNickName") userNickname : String,
+        @Field("userNickName") userNickname: String,
         @Field("loginMethod") loginMethod: String
     ):String
 
     /*아이디 중복 검사*/
     @GET("/android/checkId")
-    suspend fun checkId(@Query("userId") userId:String):String
+    suspend fun checkId(@Query("userId") userId: String):String
 
     /*닉네임 중복 검사*/
     @GET("/android/checkNick")
@@ -42,32 +40,32 @@ interface APIInterface {
     @FormUrlEncoded
     @POST("/android/kakaoLogin")
     suspend fun kakaoLogin(
-        @Field("userId") userId:String,
-        @Field("userName") userName:String
+        @Field("userId") userId: String,
+        @Field("userName") userName: String
     ):String
 
     /*유저 정보 검사*/
     @GET("/android/seceondJoin")
     suspend fun seceondJoin(
-        @Query("userId") userId:String
+        @Query("userId") userId: String
     ):String
 
     /*카카오 닉네임 설정*/
     @FormUrlEncoded
     @POST("/android/kakaoUserInfo")
     suspend fun kakaoUserInfo(
-        @Field("userId") userId:String,
+        @Field("userId") userId: String,
         @Field("userNickname") userNickname: String
     ):String
 
     /*비밀번호 변경*/
     @FormUrlEncoded
     @POST("/android/updatePw")
-    suspend fun updatePw(@Field("userId") userID:String,@Field("userPw") userPw:String):String
+    suspend fun updatePw(@Field("userId") userID: String, @Field("userPw") userPw: String):String
 
     @GET("/android/getDevice")
     suspend fun getDevice(
-        @Query("deviceBrand") deviceBrand : String
+        @Query("deviceBrand") deviceBrand: String
     ) : DeviceInfo
 
     @GET("/android/getReviewCnt")
@@ -75,7 +73,7 @@ interface APIInterface {
 
     @GET("/android/getDeviceInfo")
     suspend fun getDeviceInfo(
-        @Query("deviceName") deviceName : String
+        @Query("deviceName") deviceName: String
     ) : DeviceInfo
 
     @GET("/android/getReviewAll")
@@ -86,13 +84,13 @@ interface APIInterface {
     // 상위 3개 리뷰 갖고오는 함수
     @GET("/android/getReviewThird")
     suspend fun getReviewThird(
-        @Query("deviceName") deviceName : String
+        @Query("deviceName") deviceName: String
     ) : ReviewInfo
 
     // 해당 디바이스 리뷰 점수 별 리뷰 개수 갖고오는 함수
     @GET("/android/getReviewPointCount")
     suspend fun getReviewPointCount(
-        @Query("deviceName") deviceName : String
+        @Query("deviceName") deviceName: String
     ) : DeviceInfo
 
     @FormUrlEncoded
@@ -109,9 +107,9 @@ interface APIInterface {
     @FormUrlEncoded
     @POST("/android/userServey")
     suspend fun userJob(
-        @Field("userSex") userSex:String,
-        @Field("userAge") userAge:String,
-        @Field("userJob") userJob:String
+        @Field("userSex") userSex: String,
+        @Field("userAge") userAge: String,
+        @Field("userJob") userJob: String
     ) :String
 
     /*유저 정보 설문조사 참여 여부*/
@@ -126,24 +124,24 @@ interface APIInterface {
 
     @GET("/android/getChoiceReview")
     suspend fun getChoiceReview(
-        @Query("deviceName") deviceName : String,
-        @Query("writer") writer : String
+        @Query("deviceName") deviceName: String,
+        @Query("writer") writer: String
     ) : ReviewInfo
 
     @GET("/android/getComment")
     suspend fun getComment(
-        @Query("deviceName") deviceName : String,
-        @Query("reviewWriter") reviewWriter : String
+        @Query("deviceName") deviceName: String,
+        @Query("reviewWriter") reviewWriter: String
     ) : CommentInfo
 
     @FormUrlEncoded
     @POST("/android/writeComment")
     suspend fun writeComment(
-        @Field("deviceName") deviceName : String,
+        @Field("deviceName") deviceName: String,
         @Field("reviewWriter") reviewWriter: String,
         @Field("writer") writer: String,
-        @Field("commentContent") commentContent : String,
-        @Field("writeTime") writeTime : String
+        @Field("commentContent") commentContent: String,
+        @Field("writeTime") writeTime: String
     ) : CommentInfo
 
     @GET("/android/getLoginUserId")
@@ -159,7 +157,7 @@ interface APIInterface {
 
     @GET("/android/deleteComment")
     suspend fun deleteComment(
-        @Query("commentId") commentId : Int,
+        @Query("commentId") commentId: Int,
         @Query("writer") writer: String
     ) : String
 
@@ -172,7 +170,7 @@ interface APIInterface {
     /*이미지 업로드*/
     @Multipart
     @POST("/android/upload")
-    suspend fun uploadImage(@Part image:MultipartBody.Part) : String
+    suspend fun uploadImage(@Part image: MultipartBody.Part) : String
 
     @GET("/android/brandImg")
     suspend fun brandImg():BrandImage
@@ -195,13 +193,13 @@ interface APIInterface {
     @FormUrlEncoded
     @POST("/android/addFavorites")
     suspend fun addFavorites(
-        @Field("deviceName") deviceName : String,
+        @Field("deviceName") deviceName: String,
         @Field("userId") userId: String
     ) : FavoritesInfo
 
     @GET("/android/getFavorites")
     suspend fun getFavorites(
-        @Query("userId") userId : String
+        @Query("userId") userId: String
     ) : DeviceInfo
 
     @GET("/android/deleteFavorites")
@@ -214,4 +212,9 @@ interface APIInterface {
     suspend fun getUserNickName(
         @Query("userId") userId: String
     ) :UserInfo
+
+    @GET("/android/getMyReview")
+    suspend fun getMyReview(
+        @Query("userId") userId: String
+    ): ReviewInfo
 }

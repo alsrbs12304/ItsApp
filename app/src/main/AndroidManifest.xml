@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 네트워크 상태 접근 권한 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 외장 메모리 사용 권한 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".util.GlobalApplication"
@@ -17,9 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".view.activity.MyReviewActivity"></activity>
         <activity
             android:name=".view.activity.SplashActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.ReviewDetailActivity" />
-        <activity android:name=".view.activity.FavoritesActivity"></activity>
+        <activity android:name=".view.activity.FavoritesActivity" />
         <activity android:name=".view.activity.ReviewActivity" />
         <activity android:name=".view.activity.NewsActivity" />
         <activity android:name=".view.activity.ShowIssueActivity" />
@@ -46,8 +48,7 @@
         <activity
             android:name=".view.activity.JoinActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".view.activity.MainActivity">
-        </activity> <!-- 카카오톡 로그인 -->
+        <activity android:name=".view.activity.MainActivity"></activity> <!-- 카카오톡 로그인 -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
@@ -68,4 +69,5 @@
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
     </application>
+
 </manifest>

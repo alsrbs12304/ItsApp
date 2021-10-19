@@ -116,7 +116,7 @@ class DeviceInfoActivity : AppCompatActivity() {
         rv_review.addItemDecoration(DividerItemDecoration(this, 1));
 
         // DeviewInfoActivity에서 보여지는 3개의 리뷰는
-        // 리뷰의 좋아요 수가 제일 높은 상위 3개만 보여진다.
+        // 리뷰의 댓글 수가 제일 높은 상위 3개만 보여진다.
         reviewViewModel.getReviewThird(deviceName)
         reviewViewModel.reviewLiveData.observe(this, Observer { reviewInfo ->
             if(reviewInfo.code.equals("200")){

@@ -252,6 +252,48 @@
                     android:layout_width="match_parent"
                     android:layout_height="2px"
                     android:background="@color/gray300" />
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingTop="10dp"-->
+<!--                    android:paddingLeft="10dp"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:paddingBottom="10dp">-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="20dp"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:layout_gravity="center_vertical"-->
+<!--                        android:src="@drawable/ic_baseline_camera_alt_24"/>-->
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginLeft="10dp"-->
+<!--                        android:textSize="20dp"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:text="사진 등록"/>-->
+<!--                </LinearLayout>-->
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:paddingTop="10dp"-->
+<!--                    android:paddingBottom="10dp">-->
+<!--                    <ImageView-->
+<!--                        android:id="@+id/review_img_check"-->
+<!--                        android:layout_width="100dp"-->
+<!--                        android:layout_height="100dp"-->
+<!--                        android:layout_gravity="center"/>-->
+<!--                    <Button-->
+<!--                        android:id="@+id/img_upload_btn"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:background="@drawable/edit_text_round"-->
+<!--                        android:text="사진 첨부"/>-->
+<!--                </LinearLayout>-->
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
