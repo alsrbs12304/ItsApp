@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/update_user_info_activity"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -47,7 +48,7 @@
             android:layout_gravity="center"
             />
         <TextView
-            android:id="@+id/id_et"
+            android:id="@+id/id_tv"
             android:layout_width="match_parent"
             android:layout_margin="16dp"
             android:layout_height="wrap_content"
@@ -55,21 +56,27 @@
             android:fontFamily="@font/nanum_barun_gothic"
             android:gravity="center"
             />
-
+        <ProgressBar
+            android:id="@+id/update_loading_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center" />
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/nickname_input_layout"
+                android:id="@+id/update_nickname_input_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="닉네임">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/nick_et"
+                    android:id="@+id/update_nick_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nanum_barun_gothic" />

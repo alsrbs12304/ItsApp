@@ -17,12 +17,10 @@ import android.util.Patterns
 import android.view.View
 import android.widget.ProgressBar
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.itsapp.R
 import com.example.itsapp.viewmodel.JoinViewModel
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.loader.content.CursorLoader

@@ -23,6 +23,9 @@ class HomeViewModel(application: Application): AndroidViewModel(application){
     val retireLiveData = MutableLiveData<String>()
     val brandImgLiveData = MutableLiveData<BrandImage>()
     val imgLiveData = MutableLiveData<String>()
+    val checkNicknameLiveData = MutableLiveData<String>()
+    val updateUserProfileLiveData = MutableLiveData<String>()
+    val updateUserInfoLiveData = MutableLiveData<String>()
 
     fun getLoginSession():String{
         var userSession = ""
@@ -71,6 +74,27 @@ class HomeViewModel(application: Application): AndroidViewModel(application){
         viewModelScope.launch {
             val data = service.updateImage(image,userId)
             imgLiveData.value = data
+        }
+    }
+    /*닉네임 중복 검사*/
+    fun checkNick(userNickname: String){
+        viewModelScope.launch {
+            val data = service.checkNick(userNickname)
+            checkNicknameLiveData.value = data
+        }
+    }
+    /*회원 정보 수정 (프로필 o)*/
+    fun updateUserProfile(userId:String, userNickname: String, image: MultipartBody.Part){
+        viewModelScope.launch {
+            val data = service.updateUserProfile(userId,userNickname,image)
+            updateUserProfileLiveData.value = data
+        }
+    }
+    /*회원 정보 수정*/
+    fun updateUserInfo(userId:String, userNickname: String){
+        viewModelScope.launch {
+            val data = service.updateUserInfo(userId,userNickname)
+            updateUserInfoLiveData.value = data
         }
     }
 }

@@ -199,4 +199,19 @@ interface APIInterface {
         @Query("userId") userId: String,
         @Query("deviceName") deviceName: String
     ) : String
+
+    @Multipart
+    @POST("/android/updateUserProfile")
+    suspend fun updateUserProfile(
+        @Query("userId") userId:String,
+        @Query("userNickName") userNickName:String,
+        @Part image:MultipartBody.Part
+    ):String
+
+    @FormUrlEncoded
+    @POST("/android/updateUserInfo")
+    suspend fun updateUserInfo(
+        @Field("userId") userId:String,
+        @Field("userNickName") userNickName:String,
+    ):String
 }
