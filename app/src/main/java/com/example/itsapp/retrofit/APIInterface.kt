@@ -140,10 +140,11 @@ interface APIInterface {
     @FormUrlEncoded
     @POST("/android/writeComment")
     suspend fun writeComment(
-        @Field("deviceName") deviceName : String,
+        @Field("deviceName") deviceName: String,
         @Field("reviewWriter") reviewWriter: String,
         @Field("writer") writer: String,
-        @Field("commentContent") commentContent : String
+        @Field("commentContent") commentContent: String,
+        @Field("writeTime") writeTime: String
     ) : CommentInfo
 
     @GET("/android/getLoginUserId")

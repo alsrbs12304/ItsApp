@@ -73,13 +73,6 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun uploadImage(image: MultipartBody.Part){
-    viewModelScope.launch {
-        val data = service.uploadImage(image)
-        imgLiveData.value = data
-        }
-    }
-
     fun getMyReview(userId: String){
         viewModelScope.launch {
             val data : ReviewInfo = service.getMyReview(userId)
