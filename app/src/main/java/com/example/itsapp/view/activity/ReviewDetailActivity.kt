@@ -21,8 +21,10 @@ import com.bumptech.glide.Glide
 import com.example.itsapp.viewmodel.CommentViewModel
 import com.example.itsapp.R
 import com.example.itsapp.model.vo.comment.Comment
+import com.example.itsapp.model.vo.review.Review
 import com.example.itsapp.model.vo.userDetailInfo
 import com.example.itsapp.view.adapter.CommentAdapter
+import com.example.itsapp.view.adapter.ReviewAdapter
 import com.example.itsapp.viewmodel.DeviceViewModel
 import com.example.itsapp.viewmodel.HomeViewModel
 import com.example.itsapp.viewmodel.ReviewViewModel
@@ -47,6 +49,8 @@ class ReviewDetailActivity : AppCompatActivity() {
     private val deviceViewModel: DeviceViewModel by viewModels()
     var commentList = arrayListOf<Comment>()
     val commentAdapter = CommentAdapter(commentList)
+    val reviewList = arrayListOf<Review>()
+    val reviewAdapter = ReviewAdapter(reviewList)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

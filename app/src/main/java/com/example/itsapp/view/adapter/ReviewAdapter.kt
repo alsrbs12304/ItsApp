@@ -34,7 +34,11 @@ class ReviewAdapter(var reviewList:ArrayList<Review>) : RecyclerView.Adapter<Rev
     override fun getItemCount(): Int {
         return reviewList.size
     }
-
+    fun updateItem2(position: Int){
+        reviewList.removeAt(position)
+        notifyItemRemoved(position)
+        notifyDataSetChanged()
+    }
     fun updateItem(item: List<Review>){
         reviewList = item as ArrayList<Review>
         notifyDataSetChanged()
