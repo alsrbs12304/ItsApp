@@ -44,7 +44,7 @@ class ReviewActivity : AppCompatActivity() {
         reviewViewModel.getReviewAll(deviceName!!)
         reviewViewModel.reviewLiveData.observe(this, Observer { reviewInfo ->
             if(reviewInfo.code.equals("200")) {
-                Log.i("getReview", reviewInfo.jsonArray.toString())
+                Log.i("getReview1", reviewInfo.jsonArray.toString())
                 reviewAdapter.updateItem(reviewInfo.jsonArray)
             }
         })
