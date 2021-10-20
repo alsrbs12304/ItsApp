@@ -46,6 +46,7 @@ class JoinActivity : AppCompatActivity() {
     private var checkName = false
     private var checkEmail = false
     private var checkSend = false
+    private var checkProfile = false
 
     private lateinit var selectedImageUri: Uri
     private val viewModel: JoinViewModel by viewModels()
@@ -73,6 +74,7 @@ class JoinActivity : AppCompatActivity() {
     private fun btnEvent() {
         /*프로필 사진 버튼*/
         profile_btn.setOnClickListener {
+            checkProfile = true
             checkPermission()
         }
         /*회원가입 버튼*/
@@ -94,12 +96,16 @@ class JoinActivity : AppCompatActivity() {
             } else if (!checkValidPw) {
                 Snackbar.make(join_activity, "비밀번호가 일치 하지 않습니다.", Snackbar.LENGTH_SHORT).show()
             } else {
-                val image = File(getRealPathFromURI(selectedImageUri, applicationContext))
-                val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), image)
+                if(checkProfile){
+                    val image = File(getRealPathFromURI(selectedImageUri, applicationContext))
+                    val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), image)
 
-                val body: MultipartBody.Part =
-                    MultipartBody.Part.createFormData("image", image.name, requestBody)
-                viewModel.join(userId, encryptionPw, userName, userNickName, joinMethod,body)
+                    val body: MultipartBody.Part =
+                        MultipartBody.Part.createFormData("image", image.name, requestBody)
+                    viewModel.join(userId, encryptionPw, userName, userNickName, joinMethod,body)
+                }else {
+                    viewModel.joinWithoutProfile(userId, encryptionPw, userName, userNickName, joinMethod)
+                }
                 Snackbar.make(join_activity, "회원가입 성공.", Snackbar.LENGTH_SHORT).show()
             }
         }

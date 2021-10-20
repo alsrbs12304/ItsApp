@@ -30,6 +30,7 @@ import java.io.File
 class AddUserInfoActivity : AppCompatActivity() {
 
     private var checkNick = false
+    private var checkProfile = false
     private val viewModel:JoinViewModel by viewModels()
     private lateinit var selectedImageUri: Uri
     private val getContent: ActivityResultLauncher<Intent> = //
@@ -53,6 +54,7 @@ class AddUserInfoActivity : AppCompatActivity() {
     }
     private fun eventBtn(){
         profile_btn.setOnClickListener {
+            checkProfile = true
             checkPermission()
         }
         kakao_nick_check_btn.setOnClickListener {
@@ -64,12 +66,16 @@ class AddUserInfoActivity : AppCompatActivity() {
             val id = intent.getStringExtra("userId")
             val nickname = kakao_nick_et.text.toString().trim()
             if(id!=null&&checkNick){
-                val image = File(getRealPathFromURI(selectedImageUri, applicationContext))
-                val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), image)
+                if(checkProfile){
+                    val image = File(getRealPathFromURI(selectedImageUri, applicationContext))
+                    val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), image)
 
-                val body: MultipartBody.Part =
-                    MultipartBody.Part.createFormData("image", image.name, requestBody)
-                viewModel.kakaoUserInfo(id,nickname,body)
+                    val body: MultipartBody.Part =
+                        MultipartBody.Part.createFormData("image", image.name, requestBody)
+                    viewModel.kakaoUserInfo(id,nickname,body)
+                }else {
+                    viewModel.kakaoUserInfoWithOutProfile(id,nickname)
+                }
             }else {
                 Snackbar.make(add_user_info_activity,"닉네임 체크 해주세요.",Snackbar.LENGTH_SHORT).show()
             }
