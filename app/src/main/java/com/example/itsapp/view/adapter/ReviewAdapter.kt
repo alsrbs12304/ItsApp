@@ -24,7 +24,6 @@ class ReviewAdapter(var reviewList:ArrayList<Review>) : RecyclerView.Adapter<Rev
         holder.writeTime.text = reviewList.get(position).writeTime
         holder.contentPros.text = reviewList.get(position).contentPros
         holder.contentCons.text = reviewList.get(position).contentCons
-        holder.likeCount.text = reviewList.get(position).likeCount.toString()
         holder.commnetCount.text = reviewList.get(position).commentCount.toString()
 
         holder.itemView.setOnClickListener {
@@ -35,7 +34,11 @@ class ReviewAdapter(var reviewList:ArrayList<Review>) : RecyclerView.Adapter<Rev
     override fun getItemCount(): Int {
         return reviewList.size
     }
-
+    fun updateItem2(position: Int){
+        reviewList.removeAt(position)
+        notifyItemRemoved(position)
+        notifyDataSetChanged()
+    }
     fun updateItem(item: List<Review>){
         reviewList = item as ArrayList<Review>
         notifyDataSetChanged()
@@ -47,7 +50,6 @@ class ReviewAdapter(var reviewList:ArrayList<Review>) : RecyclerView.Adapter<Rev
         val writeTime = itemView.findViewById<TextView>(R.id.write_time)
         val contentPros = itemView.findViewById<TextView>(R.id.content_pros)
         val contentCons = itemView.findViewById<TextView>(R.id.content_cons)
-        val likeCount = itemView.findViewById<TextView>(R.id.like_count)
         val commnetCount = itemView.findViewById<TextView>(R.id.comment_count)
     }
 

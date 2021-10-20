@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.example.itsapp.view.activity.MyReviewActivity
 import com.example.itsapp.R
 import com.example.itsapp.view.activity.FavoritesActivity
 import com.example.itsapp.view.activity.SplashActivity
@@ -57,7 +58,6 @@ class MyPageFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_my_page,container,false)
         return view
-        Log.d(TAG, "onCreateView: 지금")
     }
 
     override fun onStart() {
@@ -70,15 +70,10 @@ class MyPageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "onViewCreated: 지금")
         /*내정보 수정*/
         update_user_info.setOnClickListener {
             startActivity(Intent(activity,UpdateUserInfoActivity::class.java))
             activity?.overridePendingTransition(R.anim.right_in, R.anim.left_out);
-        }
-        /*내 리뷰*/
-        my_review.setOnClickListener {
-            //TODO: 내 리뷰 페이지
         }
         /*탈퇴하기 버튼*/
         mypage_retire.setOnClickListener{
@@ -107,6 +102,11 @@ class MyPageFragment : Fragment() {
         // 즐겨찾기 (민균)
         go_to_favorites.setOnClickListener {
             startActivity(Intent(activity,FavoritesActivity::class.java))
+        }
+
+        // 내 리뷰 (민균)
+        my_review_btn.setOnClickListener {
+            startActivity(Intent(activity, MyReviewActivity::class.java))
         }
     }
     /*라이브데이터*/

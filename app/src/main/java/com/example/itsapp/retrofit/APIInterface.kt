@@ -159,7 +159,8 @@ interface APIInterface {
 
     @GET("/android/deleteComment")
     suspend fun deleteComment(
-        @Query("commentId") commentId : Int
+        @Query("commentId") commentId: Int,
+        @Query("writer") writer: String
     ) : String
 
     @FormUrlEncoded
@@ -175,6 +176,15 @@ interface APIInterface {
 
     @GET("/android/brandImg")
     suspend fun brandImg():BrandImage
+
+    @GET("/android/deviceImg")
+    suspend fun deviceImg():DeviceImage
+
+    //선택한 기기의 디바이스 for DeviceInfoActivity
+    @GET("/android/choiceDeviceImg")
+    suspend fun choiceDeviceImg(
+        @Query("deviceName") deviceName: String
+    ):DeviceImage
 
     @GET("/android/getSpec")
     suspend fun getSpec(
@@ -199,6 +209,16 @@ interface APIInterface {
         @Query("userId") userId: String,
         @Query("deviceName") deviceName: String
     ) : String
+
+    @GET("/android/getUserNickName")
+    suspend fun getUserNickName(
+        @Query("userId") userId: String
+    ) :UserInfo
+
+    @GET("/android/getMyReview")
+    suspend fun getMyReview(
+        @Query("userId") userId: String
+    ): ReviewInfo
 
     @Multipart
     @POST("/android/updateUserProfile")

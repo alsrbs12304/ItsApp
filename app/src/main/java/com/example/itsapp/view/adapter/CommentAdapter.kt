@@ -24,13 +24,18 @@ class CommentAdapter(var commentList:ArrayList<Comment>) : RecyclerView.Adapter<
         holder.comment.text = commentList.get(position).comment
         holder.writeTime.text = commentList.get(position).writeTime
 
-        holder.moreBtn.setOnClickListener{
+        holder.delete_comment_btn.setOnClickListener{
             itemClickListener.onClick(it, position)
         }
     }
 
     override fun getItemCount(): Int {
         return commentList.size
+    }
+    fun updateItem2(position: Int){
+        commentList.removeAt(position)
+        notifyItemRemoved(position)
+        notifyDataSetChanged()
     }
 
     fun updateItem(item: List<Comment>){
@@ -41,7 +46,7 @@ class CommentAdapter(var commentList:ArrayList<Comment>) : RecyclerView.Adapter<
         val writer = itemView.findViewById<TextView>(R.id.comment_writer)
         val comment = itemView.findViewById<TextView>(R.id.comment_content)
         val writeTime = itemView.findViewById<TextView>(R.id.comment_write_time)
-        val moreBtn = itemView.findViewById<ImageButton>(R.id.more_btn)
+        val delete_comment_btn = itemView.findViewById<ImageButton>(R.id.delete_comment_btn)
     }
     interface OnItemClickListener{
         fun onClick(v: View, position: Int)

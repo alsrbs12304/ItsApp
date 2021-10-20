@@ -47,18 +47,15 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         >
-
         <ImageButton
             android:id="@+id/profile_btn"
+            android:layout_margin="16dp"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:adjustViewBounds="true"
+            android:src="@drawable/profile_img"
             android:background="@drawable/profile_button_round"
-            android:src="@drawable/profile_img" />
+            android:adjustViewBounds="true"
+            />
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -112,7 +109,7 @@
                 android:fontFamily="@font/nanum_barun_gothic"
                 />
             <Button
-                android:id="@+id/my_review"
+                android:id="@+id/my_review_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

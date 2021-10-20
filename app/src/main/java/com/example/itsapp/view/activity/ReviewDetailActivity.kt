@@ -3,6 +3,7 @@ package com.example.itsapp.view.activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,45 +12,69 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.itsapp.viewmodel.CommentViewModel
 import com.example.itsapp.R
 import com.example.itsapp.model.vo.comment.Comment
+import com.example.itsapp.model.vo.review.Review
+import com.example.itsapp.model.vo.userDetailInfo
 import com.example.itsapp.view.adapter.CommentAdapter
+import com.example.itsapp.view.adapter.ReviewAdapter
+import com.example.itsapp.viewmodel.DeviceViewModel
 import com.example.itsapp.viewmodel.HomeViewModel
 import com.example.itsapp.viewmodel.ReviewViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_device_info.*
+import kotlinx.android.synthetic.main.activity_favorites.*
 import kotlinx.android.synthetic.main.activity_review_detail.*
 import kotlinx.android.synthetic.main.activity_review_detail.back_btn
 import kotlinx.android.synthetic.main.activity_review_detail.device_brand
+import kotlinx.android.synthetic.main.activity_review_detail.device_img
 import kotlinx.android.synthetic.main.activity_review_detail.device_name
 import kotlinx.android.synthetic.main.activity_review_detail.review_point
+import kotlinx.android.synthetic.main.comment_item.*
+import kotlinx.android.synthetic.main.fragment_home.*
+import java.time.LocalDate
 
 class ReviewDetailActivity : AppCompatActivity() {
 
     private val commentViewModel : CommentViewModel by viewModels()
     private val reviewViewModel: ReviewViewModel by viewModels()
     private val homeViewModel : HomeViewModel by viewModels()
+    private val deviceViewModel: DeviceViewModel by viewModels()
     var commentList = arrayListOf<Comment>()
     val commentAdapter = CommentAdapter(commentList)
-
+    val reviewList = arrayListOf<Review>()
+    val reviewAdapter = ReviewAdapter(reviewList)
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review_detail)
 
+        val userId = homeViewModel.getLoginSession()
+
         back_btn.setOnClickListener {
             finish()
         }
+
         val intent = intent
         val deviceName = intent.getStringExtra("deviceName")
-        val writer = intent.getStringExtra("writer")
-        Log.i("deviceName1",deviceName.toString())
-        Log.i("writer1",writer.toString())
+        val reviewWriter = intent.getStringExtra("writer") // 리뷰 작성자 닉네임
+        go_to_deviceInfo.setOnClickListener {
 
-        reviewViewModel.getChoiceReview(deviceName!!, writer!!)
+            val intent = Intent(this, DeviceInfoActivity::class.java)
+            intent.putExtra("deviceName",deviceName)
+            startActivity(intent)
+        }
+
+        reviewViewModel.getChoiceReview(deviceName!!, reviewWriter!!)
+        deviceViewModel.choiceDeviceImg(deviceName)
+        liveData()
         reviewViewModel.reviewLiveData.observe(this, Observer { reviewInfo ->
             if(reviewInfo.code.equals("200")){
                 device_brand.text = reviewInfo.jsonArray[0].deviceBrand
@@ -65,7 +90,7 @@ class ReviewDetailActivity : AppCompatActivity() {
         rv_comment.adapter = commentAdapter
         rv_comment.addItemDecoration(DividerItemDecoration(this, 1));
 
-        commentViewModel.getComment(deviceName, writer)
+        commentViewModel.getComment(deviceName, reviewWriter)
         commentViewModel.commentLiveData.observe(this, Observer { commentInfo ->
             if(commentInfo.code.equals("200")){
                 commentList = commentInfo.jsonArray as ArrayList<Comment>
@@ -74,14 +99,18 @@ class ReviewDetailActivity : AppCompatActivity() {
         })
 
         comment_write_btn.setOnClickListener {
-            val deviceName = deviceName
-            val reviewWriter = writer
-            val writer = homeViewModel.getLoginSession()
             val commentContent = comment_edt.text.toString()
             if(commentContent.isEmpty()){
                 Snackbar.make(review_detail_layout,"댓글을 입력해주세요.", Snackbar.LENGTH_SHORT).show()
             }else{
-                commentViewModel.writeComment(deviceName,reviewWriter,writer,commentContent)
+                commentViewModel.getUserNickName(userId)
+                commentViewModel.userNickNameLiveData.observe(this, Observer { userInfo ->
+                    if(userInfo.code.equals("200")){
+                        val writer = userInfo.jsonArray.userNickname
+                        val onlyDate : LocalDate = LocalDate.now()
+                        commentViewModel.writeComment(deviceName, reviewWriter, writer, commentContent, onlyDate.toString())
+                    }
+                })
             }
         }
 
@@ -90,50 +119,36 @@ class ReviewDetailActivity : AppCompatActivity() {
                 hidekeyboard()
                 comment_edt.setText(null)
                 commentList.add(it.jsonArray[0])
-                commentAdapter.updateItem(commentList)
+//                commentAdapter.updateItem(commentList)
             }
         })
 
-        commentViewModel.commentLiveData.observe(this, Observer { commentInfo ->
-            if(commentInfo.code.equals("200")){
-                commentAdapter.setItemClickListener(object : CommentAdapter.OnItemClickListener{
-                    override fun onClick(v: View, position: Int) {
-                        var popup = PopupMenu(application, v)
-                        menuInflater.inflate(R.menu.more_menu,popup.menu)
-                        popup.setOnMenuItemClickListener { item ->
-                            when (item.itemId){
-                                R.id.action_delete -> {
-                                    Toast.makeText(application, "댓글 삭제", Toast.LENGTH_SHORT).show()
-                                    Log.i("getCommentId",commentInfo.jsonArray[position].commnetId.toString())
-                                    commentViewModel.deleteComment(commentInfo.jsonArray[position].commnetId)
-                                }
-                                R.id.action_report ->
-                                    Toast.makeText(application,"신고 하기",Toast.LENGTH_SHORT).show()
+
+        commentAdapter.setItemClickListener(object : CommentAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                val builder = AlertDialog.Builder(v.context)
+                builder.setTitle("댓글 삭제")
+                builder.setMessage("댓글을 삭제하시겠습니까?")
+                builder.setPositiveButton("삭제") { dialog: DialogInterface?, which: Int ->
+                    commentViewModel.getUserNickName(userId)
+                    commentViewModel.userNickNameLiveData.observe(this@ReviewDetailActivity, Observer { userInfo ->
+                        if(userInfo.code.equals("200")){
+                            Log.i("loginNick",userInfo.jsonArray.userNickname)
+                            if(commentList.get(position).writer.equals(userInfo.jsonArray.userNickname)){
+                                commentViewModel.deleteComment(commentList.get(position).commnetId, userId)
+                                Snackbar.make(review_detail_layout, "댓글이 삭제되었습니다.", Snackbar.LENGTH_SHORT).show()
+                                commentAdapter.updateItem2(position)
+                            }else{
+                                Snackbar.make(review_detail_layout, "댓글 작성자만 해당 댓글을 삭제할 수 있습니다.", Snackbar.LENGTH_SHORT).show()
                             }
-                            false
                         }
-                        popup.show()
-                    }
-                })
+                    })
+                }
+                builder.setNegativeButton("취소", null)
+                builder.show()
             }
         })
-//        commentAdapter.setItemClickListener(object : CommentAdapter.OnItemClickListener{
-//            override fun onClick(v: View, position: Int) {
-//                var popup = PopupMenu(application, v)
-//                menuInflater.inflate(R.menu.more_menu,popup.menu)
-//                popup.setOnMenuItemClickListener { item ->
-//                    when (item.itemId){
-//                        R.id.action_delete -> {
-//                            Toast.makeText(application, "댓글 삭제", Toast.LENGTH_SHORT).show()
-//                        }
-//                        R.id.action_report ->
-//                            Toast.makeText(application,"신고 하기",Toast.LENGTH_SHORT).show()
-//                    }
-//                    false
-//                }
-//                popup.show()
-//            }
-//        })
+
 
         delete_btn.setOnClickListener {
             val builder = AlertDialog.Builder(this)
@@ -145,8 +160,8 @@ class ReviewDetailActivity : AppCompatActivity() {
                 reviewViewModel.loginUserIdLiveData.observe(this, Observer { userInfo ->
                     if(userInfo.code.equals("200")) {
                         Log.i("userNickName", userInfo.jsonArray.userNickname)
-                        if(writer.equals(userInfo.jsonArray.userNickname)){
-                            reviewViewModel.deleteReview(deviceName,writer)
+                        if(reviewWriter.equals(userInfo.jsonArray.userNickname)){
+                            reviewViewModel.deleteReview(deviceName,reviewWriter)
                         }else{
                             Toast.makeText(this,"리뷰 작성자만 해당 리뷰를 삭제할 수 있습니다.",Toast.LENGTH_SHORT).show()
                         }
@@ -166,7 +181,17 @@ class ReviewDetailActivity : AppCompatActivity() {
             }
         })
     }
-
+    fun liveData(){
+        deviceViewModel.choiceDeviceImgLiveData.observe(this, Observer {
+            if(it.code == "200"){
+                Glide.with(this)
+                    .load(it.jsonArray[0].imgUrl)
+                    .into(device_img)
+            }else{
+                Snackbar.make(home_fragment,"이미지 로드 오류",Snackbar.LENGTH_SHORT).show()
+            }
+        })
+    }
     // 키보드 내리기
     fun hidekeyboard(){
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
