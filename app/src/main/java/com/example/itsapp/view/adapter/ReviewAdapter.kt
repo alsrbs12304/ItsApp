@@ -6,8 +6,11 @@ import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.itsapp.R
 import com.example.itsapp.model.vo.review.Review
+import com.example.itsapp.model.vo.user.User
+import kotlinx.android.synthetic.main.review_item.view.*
 
 class ReviewAdapter(var reviewList:ArrayList<Review>) : RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
 
@@ -19,13 +22,15 @@ class ReviewAdapter(var reviewList:ArrayList<Review>) : RecyclerView.Adapter<Rev
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.writer.text = reviewList.get(position).writer
-        holder.riviewPoint.rating = reviewList.get(position).reviewPoint.toFloat()
-        holder.writeTime.text = reviewList.get(position).writeTime
-        holder.contentPros.text = reviewList.get(position).contentPros
-        holder.contentCons.text = reviewList.get(position).contentCons
-        holder.commnetCount.text = reviewList.get(position).commentCount.toString()
+//        holder.writer.text = reviewList.get(position).writer
+//        holder.riviewPoint.rating = reviewList.get(position).reviewPoint.toFloat()
+//        holder.writeTime.text = reviewList.get(position).writeTime
+//        holder.contentPros.text = reviewList.get(position).contentPros
+//        holder.contentCons.text = reviewList.get(position).contentCons
+//        holder.commnetCount.text = reviewList.get(position).commentCount.toString()
 
+
+        holder.bindItems(reviewList.get(position))
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
         }
@@ -45,12 +50,23 @@ class ReviewAdapter(var reviewList:ArrayList<Review>) : RecyclerView.Adapter<Rev
     }
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-        val writer = itemView.findViewById<TextView>(R.id.writer)
-        val riviewPoint = itemView.findViewById<RatingBar>(R.id.review_point)
-        val writeTime = itemView.findViewById<TextView>(R.id.write_time)
-        val contentPros = itemView.findViewById<TextView>(R.id.content_pros)
-        val contentCons = itemView.findViewById<TextView>(R.id.content_cons)
-        val commnetCount = itemView.findViewById<TextView>(R.id.comment_count)
+//        val writer = itemView.findViewById<TextView>(R.id.writer)
+//        val riviewPoint = itemView.findViewById<RatingBar>(R.id.review_point)
+//        val writeTime = itemView.findViewById<TextView>(R.id.write_time)
+//        val contentPros = itemView.findViewById<TextView>(R.id.content_pros)
+//        val contentCons = itemView.findViewById<TextView>(R.id.content_cons)
+//        val commnetCount = itemView.findViewById<TextView>(R.id.comment_count)
+
+        fun bindItems(data : Review){
+            itemView.writer.text = data.writer
+            itemView.review_point.rating = data.reviewPoint.toFloat()
+            itemView.write_time.text = data.writeTime
+            itemView.content_pros.text = data.contentPros
+            itemView.content_cons.text = data.contentCons
+            itemView.comment_count.text = data.commentCount.toString()
+            Glide.with(itemView.context).load(data.profileUrl).fallback(R.drawable.profile_img).circleCrop().into(itemView.profile_img)
+
+        }
     }
 
     interface OnItemClickListener{

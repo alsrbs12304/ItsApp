@@ -23,7 +23,7 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
     val writeReviewLiveData = MutableLiveData<String>()
     val deleteReviewLiveData = MutableLiveData<String>()
     val loginUserIdLiveData = MutableLiveData<UserInfo>()
-    val imgLiveData = MutableLiveData<String>()
+    val ProfileImgLiveData = MutableLiveData<String>()
 
     fun getReviewAll(deviceName : String){
         viewModelScope.launch {

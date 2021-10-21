@@ -10,7 +10,15 @@ import com.bumptech.glide.Glide
 import com.example.itsapp.R
 import com.example.itsapp.model.vo.review.Review
 import kotlinx.android.synthetic.main.my_review_item.view.*
+import kotlinx.android.synthetic.main.my_review_item.view.comment_count
+import kotlinx.android.synthetic.main.my_review_item.view.content_cons
+import kotlinx.android.synthetic.main.my_review_item.view.content_pros
 import kotlinx.android.synthetic.main.my_review_item.view.device_img
+import kotlinx.android.synthetic.main.my_review_item.view.profile_img
+import kotlinx.android.synthetic.main.my_review_item.view.review_point
+import kotlinx.android.synthetic.main.my_review_item.view.write_time
+import kotlinx.android.synthetic.main.my_review_item.view.writer
+import kotlinx.android.synthetic.main.review_item.view.*
 
 class MyReviewAdapter (var reviewList:ArrayList<Review>) : RecyclerView.Adapter<MyReviewAdapter.ViewHolder>(){
     private lateinit var itemClickListener : OnItemClickListener
@@ -65,6 +73,7 @@ class MyReviewAdapter (var reviewList:ArrayList<Review>) : RecyclerView.Adapter<
             itemView.device_brand.text = data.deviceBrand
             itemView.device_name.text = data.deviceName
             Glide.with(itemView.context).load(data.imgurl).into(itemView.device_img)
+            Glide.with(itemView.context).load(data.profileUrl).fallback(R.drawable.profile_img).circleCrop().into(itemView.profile_img)
         }
     }
 
