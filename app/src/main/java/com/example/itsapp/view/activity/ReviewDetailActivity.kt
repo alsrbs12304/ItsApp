@@ -191,6 +191,15 @@ class ReviewDetailActivity : AppCompatActivity() {
                 Snackbar.make(home_fragment,"이미지 로드 오류",Snackbar.LENGTH_SHORT).show()
             }
         })
+        reviewViewModel.reviewLiveData.observe(this, Observer { reviewInfo ->
+            if(reviewInfo.code.equals("200")){
+                Glide.with(this)
+                    .load(reviewInfo.jsonArray[0].profileUrl).fallback(R.drawable.profile_img).circleCrop()
+                    .into(profile_imgd)
+            }else{
+                Snackbar.make(home_fragment,"이미지 로드 오류",Snackbar.LENGTH_SHORT).show()
+            }
+        })
     }
     // 키보드 내리기
     fun hidekeyboard(){

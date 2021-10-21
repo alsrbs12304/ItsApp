@@ -6,6 +6,7 @@ data class Comment(
     @SerializedName("COMMENT_ID") var commnetId : Int,
     @SerializedName("DEVICE_NAME") var deviceName : String,
     @SerializedName("USER_ID") var reviewWriter : String,
+    @SerializedName("PROFILE_URL") var profileUrl: String,
     @SerializedName("USER_NICKNAME") var writer : String,
     @SerializedName("COMMENT_CONTENT") var comment : String,
     @SerializedName("WRITE_TIME") var writeTime : String
