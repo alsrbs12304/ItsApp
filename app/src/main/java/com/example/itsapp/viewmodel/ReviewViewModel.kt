@@ -10,6 +10,7 @@ import com.example.itsapp.model.vo.user.UserInfo
 import com.example.itsapp.retrofit.APIInterface
 import com.example.itsapp.retrofit.RetrofitClient
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 
 class ReviewViewModel(application: Application): AndroidViewModel(application) {
     val context = getApplication<Application>().applicationContext
@@ -17,11 +18,12 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
         APIInterface::class.java)
 
     val reviewLiveData = MutableLiveData<ReviewInfo>()
+    val MyReviewLiveData = MutableLiveData<ReviewInfo>()
     val reviewPointCountLiveData = MutableLiveData<DeviceInfo>()
     val writeReviewLiveData = MutableLiveData<String>()
     val deleteReviewLiveData = MutableLiveData<String>()
     val loginUserIdLiveData = MutableLiveData<UserInfo>()
-    val checkReviewLiveData = MutableLiveData<String>()
+    val ProfileImgLiveData = MutableLiveData<String>()
 
     fun getReviewAll(deviceName : String){
         viewModelScope.launch {
@@ -68,6 +70,13 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch {
             val data:String = service.deleteReview(deviceName, writer)
             deleteReviewLiveData.value = data
+        }
+    }
+
+    fun getMyReview(userId: String){
+        viewModelScope.launch {
+            val data : ReviewInfo = service.getMyReview(userId)
+            MyReviewLiveData.value = data
         }
     }
 }

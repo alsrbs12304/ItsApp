@@ -6,13 +6,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.itsapp.model.vo.BrandImage
-import com.example.itsapp.model.vo.user.User
 import com.example.itsapp.model.vo.user.UserInfo
-import com.example.itsapp.model.vo.userDetailInfo
 import com.example.itsapp.retrofit.APIInterface
 import com.example.itsapp.retrofit.RetrofitClient
 import com.example.itsapp.util.SharedPreference
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 
 class HomeViewModel(application: Application): AndroidViewModel(application){
     val context = getApplication<Application>().applicationContext
@@ -20,12 +19,13 @@ class HomeViewModel(application: Application): AndroidViewModel(application){
     val service: APIInterface = RetrofitClient.getInstance(context).create(
         APIInterface::class.java)
     val userIdLiveData = MutableLiveData<String>()
-    val secondJoinLiveData = MutableLiveData<String>()
-    val userLiveData = MutableLiveData<String>()
-    val participationLiveData = MutableLiveData<userDetailInfo>()
     val userInfoLiveData = MutableLiveData<UserInfo>()
     val retireLiveData = MutableLiveData<String>()
     val brandImgLiveData = MutableLiveData<BrandImage>()
+    val imgLiveData = MutableLiveData<String>()
+    val checkNicknameLiveData = MutableLiveData<String>()
+    val updateUserProfileLiveData = MutableLiveData<String>()
+    val updateUserInfoLiveData = MutableLiveData<String>()
 
     fun getLoginSession():String{
         var userSession = ""
@@ -39,27 +39,6 @@ class HomeViewModel(application: Application): AndroidViewModel(application){
         }
         userIdLiveData.postValue(userSession)
         return userSession
-    }
-
-    fun seceondJoin(userId:String){
-        viewModelScope.launch {
-            val data = service.seceondJoin(userId)
-            secondJoinLiveData.value = data
-        }
-    }
-
-    fun userJob(userSex:String,userAge:String,userJob:String){
-        viewModelScope.launch {
-            val data = service.userJob(userSex,userAge,userJob)
-            userLiveData.value = data
-        }
-    }
-
-    fun surveyParticipation(){
-        viewModelScope.launch {
-            val data = service.surveyParticipation()
-            participationLiveData.value = data
-        }
     }
     /*유저 정보*/
     fun userInfo(loginMethod:String){
@@ -78,7 +57,6 @@ class HomeViewModel(application: Application): AndroidViewModel(application){
     }
     /*탈퇴하기 버튼*/
     fun retireApp(loginMethod: String){
-        logoutPref()
         viewModelScope.launch {
             val data = service.retireApp(loginMethod)
             retireLiveData.value = data
@@ -89,6 +67,34 @@ class HomeViewModel(application: Application): AndroidViewModel(application){
         viewModelScope.launch {
             val data = service.brandImg()
             brandImgLiveData.value = data
+        }
+    }
+    //이미지 업로드
+    fun updateImage(image: MultipartBody.Part,userId:String){
+        viewModelScope.launch {
+            val data = service.updateImage(image,userId)
+            imgLiveData.value = data
+        }
+    }
+    /*닉네임 중복 검사*/
+    fun checkNick(userNickname: String){
+        viewModelScope.launch {
+            val data = service.checkNick(userNickname)
+            checkNicknameLiveData.value = data
+        }
+    }
+    /*회원 정보 수정 (프로필 o)*/
+    fun updateUserProfile(userId:String, userNickname: String, image: MultipartBody.Part){
+        viewModelScope.launch {
+            val data = service.updateUserProfile(userId,userNickname,image)
+            updateUserProfileLiveData.value = data
+        }
+    }
+    /*회원 정보 수정*/
+    fun updateUserInfo(userId:String, userNickname: String){
+        viewModelScope.launch {
+            val data = service.updateUserInfo(userId,userNickname)
+            updateUserInfoLiveData.value = data
         }
     }
 }

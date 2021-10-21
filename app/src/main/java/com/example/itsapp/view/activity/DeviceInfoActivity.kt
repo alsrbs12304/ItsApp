@@ -10,13 +10,16 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.itsapp.R
 import com.example.itsapp.model.vo.review.Review
 import com.example.itsapp.view.adapter.ReviewAdapter
 import com.example.itsapp.viewmodel.DeviceViewModel
 import com.example.itsapp.viewmodel.HomeViewModel
 import com.example.itsapp.viewmodel.ReviewViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_device_info.*
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class DeviceInfoActivity : AppCompatActivity() {
 
@@ -35,6 +38,7 @@ class DeviceInfoActivity : AppCompatActivity() {
             finish()
         }
 
+
         val userId = homeViewModel.getLoginSession()
 
         // 디바이스를 선택한 프래그먼트로 부터 deviceName을 넘겨 받아
@@ -43,6 +47,11 @@ class DeviceInfoActivity : AppCompatActivity() {
         val deviceName = intent.getStringExtra("deviceName")
 
         deviceViewModel.getDeviceInfo(deviceName!!)
+        deviceViewModel.choiceDeviceImg(deviceName)
+        liveData()
+
+//        deviceViewModel.choiceDeviceImg(deviceName)
+//        loadImg()
         deviceViewModel.deviceInfoLiveData.observe(this, Observer { deviceInfo ->
             if(deviceInfo.code.equals("200")){
                 device_brand.text = deviceInfo.jsonArray[0].deviceBrand
@@ -55,7 +64,6 @@ class DeviceInfoActivity : AppCompatActivity() {
                 rating_bar2.rating = deviceInfo.jsonArray[0].reviewPoint.toFloat()
             }
         })
-
         // 해당 디바이스 상세 정보(스펙)
         deviceViewModel.getSpec(deviceName)
         deviceViewModel.deviceSpecLiveData.observe(this, Observer { specInfo ->
@@ -74,6 +82,7 @@ class DeviceInfoActivity : AppCompatActivity() {
             if(deviceInfo.code.equals("200")){
                 go_to_review_write_activity.setOnClickListener {
                     val deviceName = deviceInfo.jsonArray[0].deviceName
+                    finish()
                     val intent = Intent(this, ReviewWriteActivity::class.java)
                     intent.putExtra("deviceName",deviceName)
                     startActivity(intent)
@@ -108,7 +117,7 @@ class DeviceInfoActivity : AppCompatActivity() {
         rv_review.addItemDecoration(DividerItemDecoration(this, 1));
 
         // DeviewInfoActivity에서 보여지는 3개의 리뷰는
-        // 리뷰의 좋아요 수가 제일 높은 상위 3개만 보여진다.
+        // 리뷰의 댓글 수가 제일 높은 상위 3개만 보여진다.
         reviewViewModel.getReviewThird(deviceName)
         reviewViewModel.reviewLiveData.observe(this, Observer { reviewInfo ->
             if(reviewInfo.code.equals("200")){
@@ -137,6 +146,17 @@ class DeviceInfoActivity : AppCompatActivity() {
                 Toast.makeText(this,"즐겨찾기 담기 성공",Toast.LENGTH_SHORT).show()
             }else{
                 Toast.makeText(this,"이미 담은 기기입니다.",Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+    fun liveData(){
+        deviceViewModel.choiceDeviceImgLiveData.observe(this, Observer {
+            if(it.code == "200"){
+                Glide.with(this)
+                    .load(it.jsonArray[0].imgUrl)
+                    .into(device_img)
+            }else{
+                Snackbar.make(home_fragment,"이미지 로드 오류",Snackbar.LENGTH_SHORT).show()
             }
         })
     }

@@ -3,36 +3,38 @@ package com.example.itsapp.view.fragment
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
+import com.example.itsapp.view.activity.MyReviewActivity
 import com.example.itsapp.R
 import com.example.itsapp.view.activity.FavoritesActivity
-import com.example.itsapp.view.activity.HomeActivity
-import com.example.itsapp.view.activity.MainActivity
 import com.example.itsapp.view.activity.SplashActivity
+import com.example.itsapp.view.activity.UpdateUserInfoActivity
 import com.example.itsapp.viewmodel.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.kakao.sdk.common.util.KakaoCustomTabsClient
 import com.kakao.sdk.talk.TalkApiClient
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_my_page.*
-import kotlinx.android.synthetic.main.fragment_my_page.view.*
-import kotlin.math.log
+import kotlinx.android.synthetic.main.fragment_my_page.profile_btn
 
 class MyPageFragment : Fragment() {
 
     private val viewModel:HomeViewModel by viewModels()
     private var userNickname:String=""
+    private var userId = ""
     private var loginMethod:String=""
+    private var profileUrl:String=""
+    private lateinit var selectedImageUri: Uri
     companion object{
         const val TAG : String = "로그"
 
@@ -61,13 +63,18 @@ class MyPageFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         loginMethod = viewModel.getLoginMethod()!!
+        mypage_login_method.text = loginMethod
         viewModel.userInfo(loginMethod)
         liveData()
-        mypage_login_method.text = loginMethod
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        /*내정보 수정*/
+        update_user_info.setOnClickListener {
+            startActivity(Intent(activity,UpdateUserInfoActivity::class.java))
+            activity?.overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        }
         /*탈퇴하기 버튼*/
         mypage_retire.setOnClickListener{
             val builder = AlertDialog.Builder(activity)
@@ -96,19 +103,30 @@ class MyPageFragment : Fragment() {
         go_to_favorites.setOnClickListener {
             startActivity(Intent(activity,FavoritesActivity::class.java))
         }
+
+        // 내 리뷰 (민균)
+        my_review_btn.setOnClickListener {
+            startActivity(Intent(activity, MyReviewActivity::class.java))
+        }
     }
     /*라이브데이터*/
     fun liveData(){
         viewModel.userInfoLiveData.observe(this, Observer {
+            userId = it.jsonArray.userId
             userNickname = it.jsonArray.userNickname
+            profileUrl =it.jsonArray.profileUrl
             Log.d(TAG, "liveData: $userNickname")
             mypage_nickname.text = userNickname
+            Glide.with(requireContext())
+                .load(profileUrl)
+                .fallback(R.drawable.profile_img)
+                .circleCrop()
+                .into(profile_btn)
         })
         viewModel.retireLiveData.observe(this, Observer {
             if(it=="200"){
                 disconnect()
                 val intent = Intent(activity,SplashActivity::class.java)
-                intent.putExtra("탈퇴","탈퇴")
                 startActivity(intent)
                 activity?.overridePendingTransition(R.anim.right_in, R.anim.left_out)
                 activity?.finish()

@@ -1,6 +1,7 @@
 package com.example.itsapp.view.activity
 
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -16,14 +17,16 @@ import com.example.itsapp.model.vo.spec.Spec
 import com.example.itsapp.view.adapter.FavoritesDeviceAdapter
 import com.example.itsapp.viewmodel.DeviceViewModel
 import com.example.itsapp.viewmodel.HomeViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_favorites.*
+import kotlinx.android.synthetic.main.activity_home.*
 
 
 class FavoritesActivity : AppCompatActivity() {
 
     val deviceList = arrayListOf<Device>()
     val specList = arrayListOf<Spec>()
-    val deviceAdapter = FavoritesDeviceAdapter(deviceList,specList)
+    val deviceAdapter = FavoritesDeviceAdapter(deviceList)
     private val viewModel: DeviceViewModel by viewModels()
     private val homeViewModel : HomeViewModel by viewModels()
 
@@ -37,11 +40,17 @@ class FavoritesActivity : AppCompatActivity() {
 
         val userId = homeViewModel.getLoginSession()
         viewModel.getFavorites(userId)
+        viewModel.deviceImg()
         viewModel.deviceFavoritesLiveData.observe(this, Observer { deviceInfo ->
             if(deviceInfo.code.equals("200")){
                 deviceAdapter.updateItem(deviceInfo.jsonArray)
+                empty_txt.visibility = View.INVISIBLE
+            }else if(deviceInfo.code.equals("204")){
+                empty_txt.visibility = View.VISIBLE
             }
         })
+
+
 
         // 즐겨찾기 삭제 버튼 클릭 시
         deviceAdapter.setItemClickListenerDelete(object : FavoritesDeviceAdapter.OnItemClickListenerDelete{
@@ -52,11 +61,21 @@ class FavoritesActivity : AppCompatActivity() {
                 builder.setPositiveButton("삭제") { dialog: DialogInterface?, which: Int ->
                     var deviceName = deviceAdapter.deviceList[position].deviceName
                     viewModel.deleteFavorites(userId,deviceName)
-                    Toast.makeText(v.context,"삭제되었습니다.",Toast.LENGTH_SHORT).show()
-                    viewModel.getFavorites(userId)
+                    deviceAdapter.updateItem2(position)
+                    finish() //인텐트 종료
+                    overridePendingTransition(0, 0) //인텐트 효과 없애기
+                    val intent = getIntent() //인텐트
+                    startActivity(intent) //액티비티 열기
+                    overridePendingTransition(0, 0) //인텐트 효과 없애기
                 }
                 builder.setNegativeButton("취소",null)
                 builder.show()
+            }
+        })
+
+        viewModel.deviceDeleteFavoritesLiveData.observe(this, Observer {
+            if(it.equals("200")){
+                Snackbar.make(favorites_activity, "즐겨찾기에서 삭제되었습니다..", Snackbar.LENGTH_SHORT).show()
             }
         })
     }

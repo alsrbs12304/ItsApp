@@ -11,6 +11,7 @@ import com.example.itsapp.retrofit.RetrofitClient
 import com.example.itsapp.util.MailSender
 import com.example.itsapp.util.SharedPreference
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import javax.mail.MessagingException
 import javax.mail.SendFailedException
 
@@ -24,13 +25,18 @@ class JoinViewModel(application: Application):AndroidViewModel(application) {
     val checkNicknameLiveData = MutableLiveData<String>()
     val kakaoLoginLiveData = MutableLiveData<String>()
     val kakaoUserInfoLD = MutableLiveData<String>()
-    val userIdLiveData = MutableLiveData<String>()
     val count = MutableLiveData<String>()
     lateinit var countDownTimer:CountDownTimer
 
-    fun join(userId : String, userPw : String , userName : String, userNickname: String, loginMethod:String){
+    fun join(userId : String, userPw : String , userName : String, userNickname: String, loginMethod:String, image: MultipartBody.Part ){
         viewModelScope.launch {
-            val data = service.join(userId,userPw,userName,userNickname,loginMethod)
+            val data = service.join(userId,userPw,userName,userNickname,loginMethod,image)
+            joinLiveData.value = data
+        }
+    }
+    fun joinWithoutProfile(userId : String, userPw : String , userName : String, userNickname: String, loginMethod:String){
+        viewModelScope.launch {
+            val data = service.joinWithoutProfile(userId,userPw,userName,userNickname,loginMethod)
             joinLiveData.value = data
         }
     }
@@ -52,36 +58,20 @@ class JoinViewModel(application: Application):AndroidViewModel(application) {
             kakaoLoginLiveData.value = data
         }
     }
-    fun kakaoUserInfo(userId:String, userNickname: String){
+    fun kakaoUserInfo(userId:String, userNickname: String, image: MultipartBody.Part){
         viewModelScope.launch {
-            val data = service.kakaoUserInfo(userId,userNickname)
+            val data = service.kakaoUserInfo(userId,userNickname,image)
             kakaoUserInfoLD.value =data
         }
     }
-    //o
-    fun getLoginSession():String{
-        var userSession = ""
-        val iterator = prefs.getCookies()?.iterator()
-        if(iterator!=null){
-            while(iterator.hasNext()){
-                userSession =iterator.next()
-                userSession = userSession.split(";")[0].split("=")[1]
-                Log.d("userInfo", "getLoginSession: $userSession")
-            }
-        }else if(iterator==null){
-            userIdLiveData.postValue(userSession)
-            return userSession
+    fun kakaoUserInfoWithOutProfile(userId:String, userNickname: String){
+        viewModelScope.launch {
+            val data = service.kakaoUserInfoWithOutProfile(userId,userNickname)
+            kakaoUserInfoLD.value =data
         }
-        userIdLiveData.postValue(userSession)
-        return userSession
     }
-    //ㅇ
     fun setLoginMethod(value:String){
         prefs.loginMethod = value
-    }
-    //o
-    fun getLoginMethod(): String? {
-        return prefs.loginMethod
     }
     fun countDown() {
         val MILLISINFUTURE = 180 * 1000 //총 시간 (180초 = 3분)

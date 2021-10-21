@@ -17,9 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".view.activity.MyReviewActivity"></activity>
+        <activity
+            android:name=".view.activity.UpdateUserInfoActivity"
+            android:exported="true" />
         <activity
             android:name=".view.activity.SplashActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,8 +31,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.ReviewDetailActivity" />
-        <activity android:name=".view.activity.FavoritesActivity"></activity>
-        <activity android:name=".view.activity.ReviewDetailActivity" />
+        <activity android:name=".view.activity.FavoritesActivity" />
         <activity android:name=".view.activity.ReviewActivity" />
         <activity android:name=".view.activity.NewsActivity" />
         <activity android:name=".view.activity.ShowIssueActivity" />

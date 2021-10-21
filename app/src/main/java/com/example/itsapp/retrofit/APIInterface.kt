@@ -14,15 +14,27 @@ import retrofit2.http.*
 
 interface APIInterface {
 
-    /*회원가입*/
-    @FormUrlEncoded
+    /*프로필 회원가입*/
+    @Multipart
     @POST("/android/join")
     suspend fun join(
+        @Query("userId") userId: String,
+        @Query("userPw") userPw: String,
+        @Query("userName") userName: String,
+        @Query("userNickName") userNickname : String,
+        @Query("loginMethod") loginMethod: String,
+        @Part image:MultipartBody.Part
+    ):String
+
+    /*회원가입*/
+    @FormUrlEncoded
+    @POST("/android/joinWithoutProfile")
+    suspend fun joinWithoutProfile(
         @Field("userId") userId: String,
         @Field("userPw") userPw: String,
         @Field("userName") userName: String,
         @Field("userNickName") userNickname : String,
-        @Field("loginMethod") loginMethod: String
+        @Field("loginMethod") loginMethod: String,
     ):String
 
     /*아이디 중복 검사*/
@@ -52,13 +64,20 @@ interface APIInterface {
     ):String
 
     /*카카오 닉네임 설정*/
-    @FormUrlEncoded
+    @Multipart
     @POST("/android/kakaoUserInfo")
     suspend fun kakaoUserInfo(
-        @Field("userId") userId:String,
-        @Field("userNickname") userNickname: String
+        @Query("userId") userId:String,
+        @Query("userNickname") userNickname: String,
+        @Part image:MultipartBody.Part
     ):String
-
+    /*카카오 닉네임 설정*/
+    @FormUrlEncoded
+    @POST("/android/kakaoUserInfoWithOutProfile")
+    suspend fun kakaoUserInfoWithOutProfile(
+        @Field("userId") userId:String,
+        @Field("userNickname") userNickname: String,
+    ):String
     /*비밀번호 변경*/
     @FormUrlEncoded
     @POST("/android/updatePw")
@@ -138,10 +157,11 @@ interface APIInterface {
     @FormUrlEncoded
     @POST("/android/writeComment")
     suspend fun writeComment(
-        @Field("deviceName") deviceName : String,
+        @Field("deviceName") deviceName: String,
         @Field("reviewWriter") reviewWriter: String,
         @Field("writer") writer: String,
-        @Field("commentContent") commentContent : String
+        @Field("commentContent") commentContent: String,
+        @Field("writeTime") writeTime: String
     ) : CommentInfo
 
     @GET("/android/getLoginUserId")
@@ -157,7 +177,8 @@ interface APIInterface {
 
     @GET("/android/deleteComment")
     suspend fun deleteComment(
-        @Query("commentId") commentId : Int
+        @Query("commentId") commentId: Int,
+        @Query("writer") writer: String
     ) : String
 
     @FormUrlEncoded
@@ -168,11 +189,20 @@ interface APIInterface {
 
     /*이미지 업로드*/
     @Multipart
-    @POST("/android/upload")
-    suspend fun uploadImage(@Part image:MultipartBody.Part) : String
+    @POST("/android/updateImage")
+    suspend fun updateImage(@Part image:MultipartBody.Part,@Query("userId") userId:String) : String
 
     @GET("/android/brandImg")
     suspend fun brandImg():BrandImage
+
+    @GET("/android/deviceImg")
+    suspend fun deviceImg():DeviceImage
+
+    //선택한 기기의 디바이스 for DeviceInfoActivity
+    @GET("/android/choiceDeviceImg")
+    suspend fun choiceDeviceImg(
+        @Query("deviceName") deviceName: String
+    ):DeviceImage
 
     @GET("/android/getSpec")
     suspend fun getSpec(
@@ -197,4 +227,29 @@ interface APIInterface {
         @Query("userId") userId: String,
         @Query("deviceName") deviceName: String
     ) : String
+
+    @GET("/android/getUserNickName")
+    suspend fun getUserNickName(
+        @Query("userId") userId: String
+    ) :UserInfo
+
+    @GET("/android/getMyReview")
+    suspend fun getMyReview(
+        @Query("userId") userId: String
+    ): ReviewInfo
+
+    @Multipart
+    @POST("/android/updateUserProfile")
+    suspend fun updateUserProfile(
+        @Query("userId") userId:String,
+        @Query("userNickName") userNickName:String,
+        @Part image:MultipartBody.Part
+    ):String
+
+    @FormUrlEncoded
+    @POST("/android/updateUserInfo")
+    suspend fun updateUserInfo(
+        @Field("userId") userId:String,
+        @Field("userNickName") userNickName:String,
+    ):String
 }

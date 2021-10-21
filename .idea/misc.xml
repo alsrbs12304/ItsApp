@@ -14,15 +14,17 @@
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/drawable/shadow.xml" value="0.2713541666666667" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/activity_add_user_info.xml" value="0.23641304347826086" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/activity_home.xml" value="0.24094202898550723" />
-        <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/activity_join.xml" value="0.1" />
+        <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/activity_join.xml" value="0.18624420401854713" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/activity_loading.xml" value="0.23641304347826086" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/activity_main.xml" value="0.24094202898550723" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/activity_news.xml" value="0.2" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/activity_splash.xml" value="0.136" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/activity_tips.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/activity_update_user_info.xml" value="0.2552083333333333" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/comment_item.xml" value="0.24320652173913043" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/device_item.xml" value="0.20729166666666668" />
+        <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/dialog_user_info.xml" value="0.2552083333333333" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/fragment_blog.xml" value="0.72" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/fragment_device.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/fragment_home.xml" value="0.13722826086956522" />
@@ -32,6 +34,7 @@
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/fragment_rank.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/issue_item.xml" value="0.24094202898550723" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/item_part.xml" value="0.24094202898550723" />
+        <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/my_review_item.xml" value="0.36770833333333336" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/layout/review_item.xml" value="0.24094202898550723" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/menu/more_menu.xml" value="0.2552083333333333" />
         <entry key="..\:/Users/jgh62/Desktop/Android Workspace/ItsApp/app/src/main/res/menu/tab_menu.xml" value="0.2552083333333333" />

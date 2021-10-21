@@ -9,15 +9,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.itsapp.R
 import com.example.itsapp.model.vo.review.Review
-import com.example.itsapp.model.vo.user.User
+import kotlinx.android.synthetic.main.my_review_item.view.*
+import kotlinx.android.synthetic.main.my_review_item.view.comment_count
+import kotlinx.android.synthetic.main.my_review_item.view.content_cons
+import kotlinx.android.synthetic.main.my_review_item.view.content_pros
+import kotlinx.android.synthetic.main.my_review_item.view.device_img
+import kotlinx.android.synthetic.main.my_review_item.view.profile_img
+import kotlinx.android.synthetic.main.my_review_item.view.review_point
+import kotlinx.android.synthetic.main.my_review_item.view.write_time
+import kotlinx.android.synthetic.main.my_review_item.view.writer
 import kotlinx.android.synthetic.main.review_item.view.*
 
-class ReviewAdapter(var reviewList:ArrayList<Review>) : RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
-
+class MyReviewAdapter (var reviewList:ArrayList<Review>) : RecyclerView.Adapter<MyReviewAdapter.ViewHolder>(){
     private lateinit var itemClickListener : OnItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.review_item,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.my_review_item,parent,false)
         return ViewHolder(view)
     }
 
@@ -28,8 +35,6 @@ class ReviewAdapter(var reviewList:ArrayList<Review>) : RecyclerView.Adapter<Rev
 //        holder.contentPros.text = reviewList.get(position).contentPros
 //        holder.contentCons.text = reviewList.get(position).contentCons
 //        holder.commnetCount.text = reviewList.get(position).commentCount.toString()
-
-
         holder.bindItems(reviewList.get(position))
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
@@ -44,6 +49,7 @@ class ReviewAdapter(var reviewList:ArrayList<Review>) : RecyclerView.Adapter<Rev
         notifyItemRemoved(position)
         notifyDataSetChanged()
     }
+
     fun updateItem(item: List<Review>){
         reviewList = item as ArrayList<Review>
         notifyDataSetChanged()
@@ -64,8 +70,10 @@ class ReviewAdapter(var reviewList:ArrayList<Review>) : RecyclerView.Adapter<Rev
             itemView.content_pros.text = data.contentPros
             itemView.content_cons.text = data.contentCons
             itemView.comment_count.text = data.commentCount.toString()
+            itemView.device_brand.text = data.deviceBrand
+            itemView.device_name.text = data.deviceName
+            Glide.with(itemView.context).load(data.imgurl).into(itemView.device_img)
             Glide.with(itemView.context).load(data.profileUrl).fallback(R.drawable.profile_img).circleCrop().into(itemView.profile_img)
-
         }
     }
 

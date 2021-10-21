@@ -22,9 +22,9 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        val intent = Intent();
-        val flag = intent.getStringExtra("from");
-
+        val intent = getIntent()
+        val flag = intent.getStringExtra("from")
+        Log.d("TAG", "onCreate: $flag")
         if(flag.isNullOrEmpty()){
             //Handler()가 Deprecated 되어 작업이 자동으로 손실,충돌,경쟁조건이 발생하는 버그 발생 가능
             //때문에 Looper를 넣어서 사용
@@ -101,5 +101,4 @@ class SplashActivity : AppCompatActivity() {
             }
         })
     }
-
 }
