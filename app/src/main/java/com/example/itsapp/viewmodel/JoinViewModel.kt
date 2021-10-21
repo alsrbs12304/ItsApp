@@ -34,6 +34,12 @@ class JoinViewModel(application: Application):AndroidViewModel(application) {
             joinLiveData.value = data
         }
     }
+    fun joinWithoutProfile(userId : String, userPw : String , userName : String, userNickname: String, loginMethod:String){
+        viewModelScope.launch {
+            val data = service.joinWithoutProfile(userId,userPw,userName,userNickname,loginMethod)
+            joinLiveData.value = data
+        }
+    }
     fun checkId(userId:String){
         viewModelScope.launch {
             val data = service.checkId(userId)
@@ -58,7 +64,12 @@ class JoinViewModel(application: Application):AndroidViewModel(application) {
             kakaoUserInfoLD.value =data
         }
     }
-    //ㅇ
+    fun kakaoUserInfoWithOutProfile(userId:String, userNickname: String){
+        viewModelScope.launch {
+            val data = service.kakaoUserInfoWithOutProfile(userId,userNickname)
+            kakaoUserInfoLD.value =data
+        }
+    }
     fun setLoginMethod(value:String){
         prefs.loginMethod = value
     }

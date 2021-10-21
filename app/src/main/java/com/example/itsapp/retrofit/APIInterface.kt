@@ -14,7 +14,7 @@ import retrofit2.http.*
 
 interface APIInterface {
 
-    /*회원가입*/
+    /*프로필 회원가입*/
     @Multipart
     @POST("/android/join")
     suspend fun join(
@@ -24,6 +24,17 @@ interface APIInterface {
         @Query("userNickName") userNickname : String,
         @Query("loginMethod") loginMethod: String,
         @Part image:MultipartBody.Part
+    ):String
+
+    /*회원가입*/
+    @FormUrlEncoded
+    @POST("/android/joinWithoutProfile")
+    suspend fun joinWithoutProfile(
+        @Field("userId") userId: String,
+        @Field("userPw") userPw: String,
+        @Field("userName") userName: String,
+        @Field("userNickName") userNickname : String,
+        @Field("loginMethod") loginMethod: String,
     ):String
 
     /*아이디 중복 검사*/
@@ -60,7 +71,13 @@ interface APIInterface {
         @Query("userNickname") userNickname: String,
         @Part image:MultipartBody.Part
     ):String
-
+    /*카카오 닉네임 설정*/
+    @FormUrlEncoded
+    @POST("/android/kakaoUserInfoWithOutProfile")
+    suspend fun kakaoUserInfoWithOutProfile(
+        @Field("userId") userId:String,
+        @Field("userNickname") userNickname: String,
+    ):String
     /*비밀번호 변경*/
     @FormUrlEncoded
     @POST("/android/updatePw")
