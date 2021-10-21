@@ -44,8 +44,13 @@ class FavoritesActivity : AppCompatActivity() {
         viewModel.deviceFavoritesLiveData.observe(this, Observer { deviceInfo ->
             if(deviceInfo.code.equals("200")){
                 deviceAdapter.updateItem(deviceInfo.jsonArray)
+                empty_txt.visibility = View.INVISIBLE
+            }else if(deviceInfo.code.equals("204")){
+                empty_txt.visibility = View.VISIBLE
             }
         })
+
+
 
         // 즐겨찾기 삭제 버튼 클릭 시
         deviceAdapter.setItemClickListenerDelete(object : FavoritesDeviceAdapter.OnItemClickListenerDelete{
@@ -57,7 +62,11 @@ class FavoritesActivity : AppCompatActivity() {
                     var deviceName = deviceAdapter.deviceList[position].deviceName
                     viewModel.deleteFavorites(userId,deviceName)
                     deviceAdapter.updateItem2(position)
-//                    viewModel.getFavorites(userId)
+                    finish() //인텐트 종료
+                    overridePendingTransition(0, 0) //인텐트 효과 없애기
+                    val intent = getIntent() //인텐트
+                    startActivity(intent) //액티비티 열기
+                    overridePendingTransition(0, 0) //인텐트 효과 없애기
                 }
                 builder.setNegativeButton("취소",null)
                 builder.show()
