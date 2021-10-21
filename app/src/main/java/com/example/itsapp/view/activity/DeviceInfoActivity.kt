@@ -82,6 +82,7 @@ class DeviceInfoActivity : AppCompatActivity() {
             if(deviceInfo.code.equals("200")){
                 go_to_review_write_activity.setOnClickListener {
                     val deviceName = deviceInfo.jsonArray[0].deviceName
+                    finish()
                     val intent = Intent(this, ReviewWriteActivity::class.java)
                     intent.putExtra("deviceName",deviceName)
                     startActivity(intent)
