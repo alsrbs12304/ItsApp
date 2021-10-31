@@ -29,7 +29,7 @@ class CommentAdapter(var commentList:ArrayList<Comment>) : RecyclerView.Adapter<
 //        holder.writeTime.text = commentList.get(position).writeTime
         holder.bindItems(commentList.get(position))
         holder.delete_comment_btn.setOnClickListener{
-            itemClickListener.onClick(it, position)
+            itemClickListener.onClick(it, position);
         }
     }
 
